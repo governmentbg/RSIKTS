@@ -1,0 +1,157 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Enums.Spravki;
+@model StatisticViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="col-md-3 spravka-container">
+    <input type="hidden" value="@Model.Id" />
+    <div class="spravka-header">
+        <table>
+            <tr>
+                <td><img src="~/img/spravki-images/Files-128.png" class="spravka-header-img"></td>
+                <td valign="middle">@Model.ShortDesctiption</td>
+            </tr>
+        </table>
+    </div>
+    <p class="spravka-description">@Model.LongDescription</p>
+    @if (Enum.IsDefined(typeof(Statistics), Model.Id))
+    {
+        if (Model.Id == (int)Statistics.SpisukLica)
+        {
+            <button class="spravka-print-btn" onclick="location.href='@Url.Action("LicaStatisticUpdateFilter", "Home", new { Area = "Spravki", statisticId = Model.Id })'">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.RegisturLicaPublichna)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#regisurLicaPublicFilterModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.BroiSekcii)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#broiNaSekciiteSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.Zamestvaniq)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#zamestvajiSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SustoqnieNaRegistraciite)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#sustoqnieNaRegistraciiteSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.Rehsetka)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#reshetkaSpravkaFilterModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.ZaetiPozicii)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#zaetiPoziciiPublicSpravkaFilterModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.ZaetiPoziciiObjo)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#zaetiPoziciiObjoPublicSpravkaFilterModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.RegisturLicaSlujebna)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spravkaSikFilterModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukNaSekciite)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukNaSekciiteSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukNaSekciite2)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukNaSekciiteSpravkaModal2">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.ControlSpisukNaSekciite)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#controlSpisukNaSekciiteSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukSystavSekciite)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukSystavNaSekciiteSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukRezervi)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukRezerviSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukPodvizjniSekcii)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukPodvizjniSekciiSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.IstoriaSik)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#istoriaSikSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukSekciiGranici)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukSekciiGraniciSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukSekciiGranici2)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#spisukSekciiGraniciSpravka2Modal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpravkaRZI)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#SpisukRziSpravkaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else if (Model.Id == (int)Statistics.SpisukSekciiLica)
+        {
+            <button class="spravka-print-btn" data-toggle="modal" data-target="#SpisukSekciiLicaModal">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+        else
+        {
+            <button class="spravka-print-btn" onclick="location.href='@Url.Action("LicaStatisticFilter", "Home",new { Area = "Spravki", statisticId = Model.Id})'">
+                <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+            </button>
+        }
+    }
+    else
+    {
+        <button class="spravka-print-btn">
+            <img src="~/img/spravki-images/execute.png" class="spravka-header-img">Изпълни
+        </button>
+    }
+
+</div>
+

@@ -1,0 +1,10 @@
+C:\VotingRegister\Web\Common\bin\Debug\netcoreapp2.2\Common.deps.json
+C:\VotingRegister\Web\Common\bin\Debug\netcoreapp2.2\Common.dll
+C:\VotingRegister\Web\Common\bin\Debug\netcoreapp2.2\Common.pdb
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.csproj.AssemblyReference.cache
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfoInputs.cache
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.AssemblyInfo.cs
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.csproj.CoreCompileInputs.cache
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.dll
+C:\VotingRegister\Web\Common\obj\Debug\netcoreapp2.2\Common.pdb

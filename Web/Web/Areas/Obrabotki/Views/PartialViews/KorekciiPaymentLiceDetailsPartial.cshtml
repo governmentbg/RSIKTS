@@ -1,0 +1,68 @@
+﻿@model Common.ViewModels.Obrabotki.PaymentCorrectionCompositeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<input asp-for="pIdLice" hidden/>
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th>Плащане за</th>
+            <th>Сума [евро]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var correction in Model.PaymentCorrectionList)
+        {
+            <tr>
+                <td style="text-align:left">@correction.Text</td>
+                <td style="text-align:right">@String.Format("{0:0.00}", correction.Pari)</td>
+            </tr>
+        }
+
+        @if (Model.PaymentCorrectionList.Count < 4)
+        {
+            @for (var i = Model.PaymentCorrectionList.Count; i < 4; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="row mt-2">
+    <div class="col-6 text-left" 
+         style="text-align:right; ">Обща сума:</div>
+    <div id="total-sum" 
+         class="col-6 text-right" 
+         style="padding-right: 18px;">
+            @String.Format("{0:0.00}", Model.TotalSum)
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-6 text-left">Каква следва да бъде: </div>
+    <div class="col-6 text-right" style="margin-right:0px;  ">
+        <input id="current-sum" 
+               type="number" 
+               min="0" 
+               name="pari" 
+               value="0.00"  
+               step=".01" 
+               style="text-align:right" 
+               onkeyup="ShowCorrectionAmount(event)"
+               onClick="this.select();"/>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-6 text-left">Стойност за корекция: </div>
+    <div id="final-correction" 
+         class="col-6 text-right" 
+         style="text-align:right; padding-right:18px; ">
+        0.00
+    </div>
+</div>
+

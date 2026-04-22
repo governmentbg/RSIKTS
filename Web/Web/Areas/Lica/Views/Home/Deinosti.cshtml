@@ -1,0 +1,61 @@
+﻿@using Common.ViewModels.Lica
+@using Common.Static
+@model LicaDeinostiComposite
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Deinosti";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+
+<h4 class="modal-title" style="margin-bottom:20px;">Присвояване/Изчистване на дейност </h4>
+
+<div id="alerts-container"></div>
+
+<div class="row">
+    <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto pl-0">
+        <label asp-for="AllDeinosti"></label>
+        <select asp-items="Model.AllDeinosti" 
+                class="selectpicker form-control show-tick col-12" 
+                data-live-search="true" 
+                data-size="5" 
+                id="deinost-select" 
+                onchange="UpdateLicaTable()" 
+                autocomplete="off"
+                title="Изберете дейност...">
+        </select>
+        <span asp-validation-for="AllDeinosti" class="text-danger validation-height col-md-12"></span>
+    </div>
+ 
+</div>
+
+<div class="row">
+    <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto pl-0">
+        <label asp-for="AllSik"></label>
+        <select asp-items="Model.AllSik" 
+                class="selectpicker form-control show-tick col-12" 
+                data-live-search="true" 
+                data-size="5" 
+                id="sik-select" 
+                onchange="UpdateLicaTable()" 
+                autocomplete="off">
+            <option value="000">
+                Всички
+            </option>
+        </select>
+        <span asp-validation-for="AllSik" class="text-danger validation-height col-md-12"></span>
+    </div>
+    
+    <div class="input-group col-md-1 lica-egn-col ml-auto">
+        <button class="btn lica-btn-save" onclick="MassUpdateLica()"><img class="lica-btn-save-img" src="~/img/lica-images/save.png" /></button>
+    </div>
+</div>
+
+
+
+<script src="~/js/lica-deinosti-mass-update.js"></script>
+<script src="~/js/lica-mass-update-crud.js"></script>
+
+<partial name="../PartialViews/LicaDeinostiTablePartial" model="Model.TableModel">

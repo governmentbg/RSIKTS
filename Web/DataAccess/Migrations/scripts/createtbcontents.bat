@@ -1,0 +1,1 @@
+c:\xampp\mysql\bin\mysqldump -u tbsoft2019 -pP@ssw0rd01 -t --compact --no-create-info --skip-add-locks --skip-comments --skip-disable-keys sso > tbcontents.sql

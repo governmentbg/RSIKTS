@@ -1,0 +1,293 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/lica.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+
+<div class="row lica-egn-row">
+    <div class="input-group col-lg-3 col-md-4 lica-egn-col">
+        <label class="lica-input-label" for="egn">Филтър: </label>
+        <input class="form-control lica-input-egn lica-input" type="text" id="egn" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary lica-btn-with-icon" type="button"><img src="~/img/lica-images/Search-Find-128.png" class="lica-right-input-icon " /></button>
+        </div>
+    </div>
+
+    <div class="input-group col-md-1 lica-egn-col ml-auto">
+        <button class="btn lica-btn-save"><img class="lica-btn-save-img" src="~/img/lica-images/save.png" /></button>
+    </div>
+</div>
+
+
+<div class="row lica-form-row">
+    <div class="col-md-12 lica-form">
+        <div class="row lica-info-form-row">
+
+            <div class="lica-form-tab-info col-md-2">
+                <p class="form-tab-info-text">Лични данни</p>
+            </div>
+
+            <form asp-area="Lica" asp-controller="Home" asp-action="Index" method="post" class="col-md-10">
+                <div class="tab">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="ime">Име</label>
+                            <input class="form-control lica-input" type="text" id="ime" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="surname">Презиме</label>
+                            <input class="form-control lica-input" type="text" id="surname" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="family-primary">Фамилия</label>
+                            <input class="form-control lica-input" type="text" id="family-primary" />
+                        </div>
+                    </div>
+
+                    <div class="row flex-row-reverse">
+                        <div class="form-group col-md-4">
+                            <label for="family-secondary">Фамилия II</label>
+                            <input class="form-control lica-input" type="text" id="family-secondary" />
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="lk">ЛК</label>
+                            <input class="form-control lica-input" type="text" id="lk" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="lk">ЛК</label>
+                            <input class="form-control lica-input" type="text" id="lk" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="mvr">РУ на МВР</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="mvr">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row flex-row-reverse">
+
+                        <div class="form-group col-md-8">
+                            <label for="nationality">Националност</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="nationality">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="telephone">Телефон</label>
+                            <input class="form-control lica-input" type="text" id="telephone" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="sik-number">СИК</label>
+                            <input class="form-control lica-input" type="text" id="sik-number" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="functions">функции</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="functions">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="reasonForHire">Решение за назначение</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="reasonForHire">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row flex-row-reverse">
+                        <div class="form-group col-md-12">
+                            <label for="political-power">Политическа сила</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="political-power">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="education">Образование</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="education">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="profesion">Специалност</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="profesion">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label class="checkbox-container">
+                                    Предаване на протоколите в РИК
+                                    <input class="form-check-input" type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label class="checkbox-container">
+                                    Секцията е по - голяма от 800 души по списък
+                                    <input class="form-check-input" type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label class="checkbox-container">
+                                    Лицето е с трудова злополука или професионално заболяване
+                                    <input class="form-check-input" type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="oblast-select">Област</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="oblast-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="objina-select">Община</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="objina-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="raion-select">Район</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="raion-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="naseleno-mqsto-select">Населено място</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="naseleno-mqsto-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="zip-code">Пощенски код</label>
+                            <input class="form-control lica-input" type="text" id="zip-code" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="ulica-select">Улица/ж.к.</label>
+                            <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="ulica-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="form-group col-md-4">
+                            <label for="number">Номер/Блок</label>
+                            <input class="form-control lica-input" type="text" id="number" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="entrace">Вход</label>
+                            <input class="form-control lica-input" type="text" id="entrace" />
+                        </div>
+                    </div>
+                    <div class="row flex-row-reverse">
+                        <div class="form-group col-md-4">
+                            <label for="floor">Етаж</label>
+                            <input class="form-control lica-input" type="text" id="floor" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="apartment">Ап.</label>
+                            <input class="form-control lica-input" type="text" id="apartment" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div style="text-align:center;margin-top:40px;">
+    <span class="step" onclick="showTab(0)"></span>
+    <span class="step" onclick="showTab(1)"></span>
+    <span class="step" onclick="showTab(2)"></span>
+</div>
+
+@section Scripts {
+    <script src="/js/lica-form-navigation.js"></script>
+    <script src="/js/bootstrap-select/js/bootstrap-select.js"></script>
+}

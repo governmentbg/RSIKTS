@@ -1,0 +1,7 @@
+C:\VotingRegister\RegiXClient\bin\Debug\RegiXClient.pdb
+C:\VotingRegister\RegiXClient\obj\Debug\RegiXClient.csproj.AssemblyReference.cache
+C:\VotingRegister\RegiXClient\obj\Debug\RegiXClient.csproj.CoreCompileInputs.cache
+C:\VotingRegister\RegiXClient\obj\Debug\RegiXClient.pdb
+C:\VotingRegister\RegiXClient\bin\Debug\RegiXClient.dll.config
+C:\VotingRegister\RegiXClient\bin\Debug\RegiXClient.dll
+C:\VotingRegister\RegiXClient\obj\Debug\RegiXClient.dll

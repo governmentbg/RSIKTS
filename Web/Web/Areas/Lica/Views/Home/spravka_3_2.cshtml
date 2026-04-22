@@ -1,0 +1,235 @@
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Newtonsoft.Json
+@using  System;
+
+@model List<Common.ViewModels.Lica.LicaForSpravka32ViewModel>
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+
+
+@{
+    var filter = Model.ElementAt(0).filter;
+}
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print-landscape.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div class="navbar-landscape">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="exportbtn"
+                type="button"
+                onclick="GenerateSpravkaExcelExport32();">
+            <img src="/img/navbar-images/ms-excel.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Експорт
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div id="printdiv" class="container-landscape">
+        <div>
+            <table style="width:100%;">
+                <tbody>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Община: <strong>СТОЛИЧНА</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>
+                                Отпечатано на:
+                                <script>document.write(new Date().toLocaleString());</script>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Административен район: <strong>@Model.ElementAt(0).NmRajon</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>Изготвил: @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).Names</p>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Изборен район: <strong>@Model.ElementAt(0).NmIzbRajon</strong></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--<p>&nbsp;</p>-->
+        </div>
+
+        <h3 style="text-align: center;">ФИНАНСОВА РЕКАПИТУЛАЦИЯ</h3>
+        <!--group section -->
+        <div>
+            <p style="text-align: center;">за периода от @Model.ElementAt(0).IzbDate1 - @Model.ElementAt(0).IzbDate2</p>
+            <p style="text-align: center;">@Model.ElementAt(0).IzbName, @Model.ElementAt(0).IzbTur</p>
+            <table id="spravka">
+                <thead>
+                    <tr>
+                        <th style="width: 40px; font-size: 14px;">@Model.ElementAt(0).Col1</th>
+                        <th style="width: 40px; font-size: 14px;">@Model.ElementAt(0).Col2</th>
+                        <th style="width: 40px; font-size: 14px;">@Model.ElementAt(0).Col3</th>
+                        <th style="width: 40px; font-size: 14px;">@Model.ElementAt(0).Col4</th>
+                        <th style="width: 40px; font-size: 14px;">@Model.ElementAt(0).Col5</th>
+                        <th style="width: 40px; font-size: 14px;">@Model.ElementAt(0).Col6</th>
+
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S01))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S01</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S02))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S02</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S03))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S03</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S04))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S04</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S05))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S05</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S06))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S06</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S07))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S07</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S08))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S08</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S09))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S09</th>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ElementAt(0).S10))
+                        {
+                            <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S10</th>
+                        }
+                        <th style="width: 50px; font-size: 14px;">@Model.ElementAt(0).S</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--detail section -->
+
+                    @for (var i = 1; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td style="text-align: center;">@(Model[i].Orders == 2 ? "" : i.ToString())</td>
+                            <td style="text-align: center;">@Model[i].Col2</td>
+                            <td style="text-align: left;">@Model[i].Col3</td>
+                            <td style="text-align: left;">@Model[i].Col4</td>
+                            <td style="text-align: right;">@Model[i].Col5</td>
+                            <td style="text-align: right;">@Model[i].Col6</td>
+
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S01))
+                            {
+                                <td style="text-align: right;">@Model[i].S01</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S02))
+                            {
+                                <td style="text-align: right;">@Model[i].S02</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S03))
+                            {
+                                <td style="text-align: right;">@Model[i].S03</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S04))
+                            {
+                                <td style="text-align: right;">@Model[i].S04</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S05))
+                            {
+                                <td style="text-align: right;">@Model[i].S05</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S06))
+                            {
+                                <td style="text-align: right;">@Model[i].S06</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S07))
+                            {
+                                <td style="text-align: right;">@Model[i].S07</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S08))
+                            {
+                                <td style="text-align: right;">@Model[i].S08</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S09))
+                            {
+                                <td style="text-align: right;">@Model[i].S09</td>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.ElementAt(0).S10))
+                            {
+                                <td style="text-align: right;">@Model[i].S10</td>
+                            }
+
+                            <td style="text-align: right;">@Model[i].S</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <!--end detail section -->
+            <!--e<p>&nbsp;</p>-->
+            <p>&nbsp;Кмет на район:</p>
+            <p>&nbsp;Гл.счетоводител:</p>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+
+
+<script>
+    function GenerateSpravkaExcelExport32() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSpravkaExcelExport32',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+</script>

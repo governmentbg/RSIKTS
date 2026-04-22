@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35130.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegixClientCore", "RegixClientCore.csproj", "{86481BF8-9E7C-43D9-82FB-4677F1E1744A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86481BF8-9E7C-43D9-82FB-4677F1E1744A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86481BF8-9E7C-43D9-82FB-4677F1E1744A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86481BF8-9E7C-43D9-82FB-4677F1E1744A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86481BF8-9E7C-43D9-82FB-4677F1E1744A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {138B6DC7-8347-4045-8D4C-3FF4054B774E}
+	EndGlobalSection
+EndGlobal

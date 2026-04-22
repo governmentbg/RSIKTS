@@ -1,0 +1,30 @@
+﻿@model Common.ViewModels.Raion.RaionAddViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link rel="stylesheet" href="~/css/raioni-main.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+
+<div class="row mb-2">
+    <h3>Локални номенклатури >> Административен район</h3>
+    <h3></h3>
+</div>
+<div id="raion-edit-body">
+    <partial name="Edit" model="Model">
+</div>
+
+
+@section Scripts {
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/ulici-dynamic-filter.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/raioni-main-crud-main.js"></script>
+    <script src="~/js/raioni-form-navigation.js"></script>
+    <script src="~/js/raioni-main-form-ajax.js"></script>
+}

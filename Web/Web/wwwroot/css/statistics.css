@@ -1,0 +1,68 @@
+﻿.spravka-input {
+    border-color: cornflowerblue;
+}
+
+.spravka-container {
+    height: 318px;
+    border: 1px solid cornflowerblue;
+    border-radius: 10px 10px 0px 0px;
+    padding: 0px 0px 5px 0px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+    box-shadow: 5px 5px 5px #888888;
+}
+
+.spravka-row {
+    justify-content: center;
+}
+
+.spravka-header {
+    padding: 5px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: cornflowerblue;
+    font-size: 24px;
+    color: white;
+    height: 100px;
+    line-height: 100%;
+}
+
+.spravka-header-img {
+    width: 64px;
+    height: 64px;
+    margin-right: 4px
+}
+
+.spravka-description {
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    height: 130px;
+}
+
+.spravka-print-btn {
+    width: 100%;
+    background-color: cornflowerblue;
+    border: none;
+    height: 70px;
+    color: white;
+    cursor: pointer;
+}
+
+.spravka-container:hover {
+    transform: scale(1.05);
+}
+
+.spravka-form:hover .spravka-header {
+    background-color: gray;
+}
+
+.spravka-form:hover .spravka-print-btn {
+    background-color: gray;
+}
+
+
+@media (max-width: 768px) {
+    .spravka-container {
+        margin-right: 0;
+    }
+}

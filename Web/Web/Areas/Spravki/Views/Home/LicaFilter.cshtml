@@ -1,0 +1,211 @@
+﻿@using Common.Enums
+@using Common.Enums.Spravki
+
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+@model Common.ViewModels.Lica.LicaFilterViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int IzborTur = IzboriServices.getIzborCurrentTur();
+}
+
+
+<link rel="stylesheet" href="~/css/filter.css" />
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+
+@{
+    var AllFitlteredRoli = Model.AllRoli.Where(r => Convert.ToInt32(string.IsNullOrEmpty(r.Value) ? "0" : r.Value) < 410);
+}
+
+<h3>@Model.StatisticId.GetDisplayValue()</h3>
+
+<input asp-for="StatisticId" type="hidden" id="statistic-id-hidden" />
+
+<div class="row filter-row mb-4 text-white" style="z-index:1;top: 125px;margin-top:30px;">
+    <div class="pos-f-t" style="width:100%;">
+        <div class="collapse p-4" id="navbarToggleExternalContent">
+            <form id="lice-filter-form">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Egn"></label>
+                        <input asp-for="Egn" class="form-control col-12 filter-property" type="text" />
+                        <span asp-validation-for="Egn" class="text-danger validation-height col-md-12"></span>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Sekciq"></label>
+                        <select asp-for="Sekciq"
+                                asp-items="Model.AllSekcii"
+                                class="selectpicker form-control show-tick col-12 filter-property"
+                                data-live-search="true"
+                                data-size="5"
+                                title="Всички"
+                                id="education">
+                        </select>
+                        <span asp-validation-for="Sekciq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Rolq"></label>
+                        <select asp-for="Rolq" asp-items="AllFitlteredRoli" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Rolq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Partiq"></label>
+                        <select asp-for="Partiq" asp-items="Model.AllPartii" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Partiq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Reshenie"></label>
+                        <select asp-for="Reshenie" asp-items="Model.AllResheniq" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Reshenie" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Deistvie"></label>
+                        <select asp-for="Deistvie" asp-items="Model.AllDeistviq" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Deistvie" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                </div>
+
+                @if (Model.StatisticId == Statistics.MORS && IzborTur > 1)
+                {
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label asp-for="SelectedTurs"></label>
+                            <select asp-for="SelectedTurs"
+                                    asp-items="Model.AllTurs"
+                                    class="selectpicker form-control show-tick col-12 filter-property-tur"
+                                    data-live-search="true"
+                                    data-size="5"
+                                    id="tur-select">
+                            </select>
+                        </div>
+                    </div>
+
+                }
+
+                <div class="form-row">
+                    <div class="form-group col-md-4 ml-auto">
+                        <button class="btn btn-success"
+                                style="width:49%"
+                                data-toggle="collapse"
+                                data-target="#navbarToggleExternalContent"
+                                aria-controls="navbarToggleExternalContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            Изпълни
+                        </button>
+                        <button class="btn btn-danger col-md-6"
+                                style="width:49%"
+                                onclick="ClearFilters()"
+                                type="button">
+                            Изчисти
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <nav class="navbar navbar-dark">
+            <button class="navbar-toggler filter-toggle-btn"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent"
+                    aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        <label>Важи за</label>
+        <select class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="seleciq-select">
+            <option value="0">
+                Всички
+            </option>
+            <option value="2">
+                Маркирани
+            </option>
+            <option value="1">
+                Немаркирани
+            </option>
+        </select>
+    </div>
+
+    <button disabled type="button"
+            class="float-left btn btn-success col-2 ml-auto mt-auto mb-auto"
+            onclick="GenerateReport()"
+            style="height:50px;"
+            id="generate-report-btn">
+        <span aria-hidden="true">Генериране</span>
+    </button>
+</div>
+
+<div class="row mb-4" id="lica-table-container" style="margin-top:20px;">
+    <table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+        <thead>
+            <tr>
+                <th style="width: 60px;  text-align:center;">ЕГН</th>
+                <th style="width: 150px; text-align:center;">Имена</th>
+                <th style="width: 60px;  text-align:center;">СИК</th>
+                <th style="width: 100px; text-align:center;">Длъжност</th>
+                <th style="width: 100px; text-align:center;">Партия</th>
+                <th style="width: 100px; text-align:center;">Телефон</th>
+                <th style="width: 100px; text-align:center;">Решение</th>
+                <th style="width: 30px;  text-align:center;">Марк.</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (var i = 0; i< 10; i++)
+                                                                                                            {
+            <tr>
+                <td style="height:49px;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                                                                                                            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/lica-filter-ids.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/lica-filter-form-ajax.js"></script>
+    <script>
+
+        $($(".filter-row")[0]).css("width", $("#lica-table").width() + 34);
+
+        $(window).resize(function () {
+            $($(".filter-row")[0]).css("width", $("#lica-table").width() + 34);
+        });
+
+    </script>
+
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".filter-property-tur").val("2");
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}

@@ -1,0 +1,510 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Common.Enums.User
+@using Common.Enums
+@using Common.ViewModels.Raion;
+
+@inject SignInManager<SSOUserIdentity> SignInManager
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+@inject Services.Interfaces.Raion.IRaionServices RaioniServices
+@inject Services.Interfaces.Nachislqvaniq.INachislqvaniqServices NachislqvaniqServices
+@{
+    var IsUserGlobal = false;
+    var userRegions = new UserWithRegionViewModel()
+    {
+        allRaioni = new List<RaionViewModel>()
+    };
+    var AllRegions = (ICollection<RaionViewModel>)new List<RaionViewModel>();
+    var IzborAlias = "";
+    var HasNachislqvaniq = false;
+    var IzborTur = IzboriServices.getIzborTur();
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        HasNachislqvaniq = NachislqvaniqServices.RaionHasNachislqvaniq(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+        userRegions = UserServices.GetUserWithRegions(UserManager.GetUserId(User));
+        AllRegions = RaioniServices.GetAllRaioni(null);
+        IzborAlias = IzboriServices.GetIzborDescription();
+        IsUserGlobal = UserServices.GetEditUserById(UserManager.GetUserId(User)).AdministrativenRaion == null ? true : false;
+    }
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Регистър СИК</title>
+    <script src="~/js/promise.min.js"></script>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+    </environment>
+    <script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidenav.css" />
+    <link rel="stylesheet" href="~/css/administrativen-raion.css" />
+    <link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-toggleable-lg border-bottom box-shadow mb-3">
+            <div class="container navbar-container">
+                <!-- Use any element to open the sidenav -->
+                <span class="sidenav-open-btn d-lg-block d-none" onclick="sideNavModule.OpenNav()"><img id="sidenav-ico" src="~/img/sidenav-icon.png" alt="hammer" class="nav-img"></span>
+                <div class="nav-item ml-2">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/navbar-images/home-icon.png" class="nav-img">
+                        <p class="nav-img-p">Столична община</p>
+                    </a>
+                </div>
+
+                <div class="nav-item ml-2">
+                    <a class="nav-link" asp-area="" asp-controller="Help" asp-action="Index">
+                        <img src="~/img/navbar-images/Help-128.png" class="nav-img">
+                        <p class="nav-img-p">Помощ</p>
+                    </a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-lg-inline-flex">
+
+                    <ul class="navbar-nav ml-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (HasNachislqvaniq)
+                            {
+                                <li class="nav-item disabled-menu-link">
+                                    <a class="nav-link">
+                                        <img src="~/img/navbar-images/ms-excel.png" class="nav-img">
+                                        <p class="nav-img-p">Импортиране лица</p>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Lica" asp-controller="Home" asp-action="ImportLica">
+                                        <img src="~/img/navbar-images/ms-excel.png" class="nav-img">
+                                        <p class="nav-img-p">Импортиране лица</p>
+                                    </a>
+                                </li>
+                            }
+
+                            if (HasNachislqvaniq)
+                            {
+                                <li class="nav-item disabled-menu-link">
+                                    <a class="nav-link">
+                                        <img src="~/img/navbar-images/register-lica.png" class="nav-img">
+                                        <p class="nav-img-p">Регистър лица</p>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Lica" asp-controller="Home" asp-action="Register">
+                                        <img src="~/img/navbar-images/register-lica.png" class="nav-img">
+                                        <p class="nav-img-p">Регистър лица</p>
+                                    </a>
+                                </li>
+                            }
+                            if (HasNachislqvaniq)
+                            {
+                                <li class="nav-item disabled-menu-link">
+                                    <a class="nav-link">
+                                        <img src="~/img/navbar-images/registur-sik.png" class="nav-img">
+                                        <p class="nav-img-p">Регистър СИК</p>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Sik" asp-controller="Home" asp-action="Register">
+                                        <img src="~/img/navbar-images/registur-sik.png" class="nav-img">
+                                        <p class="nav-img-p">Регистър СИК</p>
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" asp-area="Spravki" asp-controller="Home" asp-action="Kvoti">
+                                    <img src="~/img/sidenav-images/grid.png" class="nav-img">
+                                    <p class="nav-img-p">Квоти/Решетка</p>
+                                </a>
+                            </li>
+
+                            if (HasNachislqvaniq)
+                            {
+                                <li class="nav-item d-lg-none disabled-menu-link">
+                                    <a class="nav-link">
+                                        <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                                        <p class="nav-img-p">Регистри</p>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" asp-area="Registri" asp-controller="Home" asp-action="Index">
+                                        <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                                        <p class="nav-img-p">Регистри</p>
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" asp-area="Spravki" asp-controller="Home" asp-action="StatisticsPublic">
+                                    <img src="~/img/sidenav-images/spravki.png" class="nav-img">
+                                    <p class="nav-img-p">Справки за РИК/ОИК</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" asp-area="Spravki" asp-controller="Home" asp-action="StatisticsSlujebni">
+                                    <img src="~/img/sidenav-images/spravki.png" class="nav-img">
+                                    <p class="nav-img-p">Служебни справки</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" asp-area="Spravki" asp-controller="Home" asp-action="StatisticsDocumenti">
+                                    <img src="~/img/sidenav-images/spravki.png" class="nav-img">
+                                    <p class="nav-img-p">Служебни документи</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" asp-area="Obrabotki" asp-controller="Home" asp-action="Index">
+                                    <img src="~/img/sidenav-images/technical-service.png" class="nav-img">
+                                    <p class="nav-img-p">Обработки</p>
+                                </a>
+                            </li>
+
+                            if (HasNachislqvaniq)
+                            {
+                                <li class="nav-item d-lg-none disabled-menu-link">
+                                    <a class="nav-link">
+                                        <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                                        <p class="nav-img-p">Локални номенклатури</p>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" asp-area="Spravki" asp-controller="Home" asp-action="NomenklaturesLocal">
+                                        <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                                        <p class="nav-img-p">Локални номенклатури</p>
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" asp-area="Spravki" asp-controller="Home" asp-action="NomenklaturesPublic">
+                                    <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                                    <p class="nav-img-p">Глобални номенклатури</p>
+                                </a>
+                            </li>
+
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item d-none d-xl-block" style="padding-top:30px;">
+                                    Потребител
+                                    <br />
+                                    @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).UserName
+                                </li>
+                            }
+
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link"
+                                    asp-area="Admin"
+                                    asp-controller="Home"
+                                    asp-action="Menu">
+                                    <img src="~/img/sidenav-images/serviz.png" class="nav-img">
+                                    <p class="nav-img-p">Настройки</p>
+                                </a>
+                            </li>
+
+                            <!-- v.2 -->
+                            <li class="nav-item @(IzborTur==""?"administrativen-raion-select-container":"administrativen-raion-select-container2")">
+                                @{
+
+                                    if (SignInManager.IsSignedIn(User))
+                                    {
+                                        if (IsUserGlobal == false)
+                                        {
+                                            var regionName = userRegions.allRaioni.ElementAt(0).Name;
+                                            if (NachislqvaniqServices.RaionHasNachislqvaniq(userRegions.allRaioni.ElementAt(0).Id))
+                                            {
+                                                regionName = "* " + regionName;
+                                            }
+
+
+                                            <div class="col-md-12">
+                                                <p class="region-p">@regionName</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-12">
+                                                <select class="selectpicker form-control show-tick"
+                                                        data-live-search="true"
+                                                        data-size="5"
+                                                        id="administrativen-raion-select">
+
+                                                    @foreach (var region in AllRegions)
+                                                    {
+                                                        var regionName = region.Name;
+
+                                                        if (NachislqvaniqServices.RaionHasNachislqvaniq(region.Id))
+                                                        {
+                                                            regionName = "* " + regionName;
+                                                        }
+
+                                                        if (region.Id == userRegions.allRaioni.ElementAt(0).Id)
+                                                        {
+
+                                                            <option selected value="@region.Id">@regionName</option>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@region.Id">@regionName</option>
+                                                        }
+                                                    }
+                                                </select>
+
+                                                <!-- v.2 -->
+                                                <p class="region-p2"> @IzborTur</p>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </li>
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav ml-auto">
+                        <partial name="_LoginPartial" />
+
+                        <li class="nav-item d-lg-none">
+                            <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">
+                                <img src="~/img/sidenav-images/zaprogramata.png" class="nav-img">
+                                <p class="nav-img-p">За програмата</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="sideNavModule.CloseNav()">&times;</a>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a asp-area="Kvoti"
+               asp-controller="Home"
+               asp-action="Kvoti"
+               class="sidenav-link">
+                <img src="~/img/sidenav-images/grid.png" class="nav-img">
+                Квоти/Решетка
+            </a>
+
+            @if (HasNachislqvaniq)
+            {
+                <a class="disabled-menu-link">
+                    <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img"> Регистри
+                </a>
+            }
+            else
+            {
+                <a asp-area="Registri"
+                   asp-controller="Home"
+                   asp-action="Index"
+                   class="sidenav-link">
+                    <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                    Регистри
+                </a>
+            }
+
+            <a asp-area="Spravki"
+               asp-controller="Home"
+               asp-action="StatisticsPublic"
+               class="sidenav-link">
+                <img src="~/img/sidenav-images/spravki.png" class="nav-img">
+                Справки за РИК/ОИК
+            </a>
+
+            <a asp-area="Spravki"
+               asp-controller="Home"
+               asp-action="StatisticsSlujebni"
+               class="sidenav-link">
+                <img src="~/img/sidenav-images/spravki.png" class="nav-img">
+                Служебни справки
+            </a>
+
+            <a asp-area="Spravki"
+               asp-controller="Home"
+               asp-action="StatisticsDocumenti"
+               class="sidenav-link">
+                <img src="~/img/sidenav-images/spravki.png" class="nav-img">
+                Служебни документи
+            </a>
+
+            <a asp-area="Obrabotki"
+               asp-controller="Home"
+               asp-action="Index"
+               class="sidenav-link">
+                <img src="~/img/sidenav-images/technical-service.png" class="nav-img">
+                Обработки
+            </a>
+
+            <a asp-area="Spravki"
+               asp-controller="Home"
+               asp-action="NomenklaturesPublic"
+               class="sidenav-link">
+                <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                Глобални номенклатури
+            </a>
+
+
+            @if (User.IsInRole(Roles.Admin.GetDescription()) || User.IsInRole(Roles.Global.GetDescription()))
+            {
+                @if (HasNachislqvaniq)
+                {
+                    <a class="disabled-menu-link">
+                        <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img"> Локални номенклатури
+                    </a>
+                }
+                else
+                {
+                    <a asp-area="Spravki"
+                       asp-controller="Home"
+                       asp-action="NomenklaturesLocal"
+                       class="sidenav-link">
+                        <img src="~/img/sidenav-images/nomenklaturi.png" class="nav-img">
+                        Локални номенклатури
+                    </a>
+                }
+            }
+
+            <a asp-area="Admin" 
+                asp-controller="Home" 
+                asp-action="Menu" 
+                class="sidenav-link">
+                <img src="~/img/sidenav-images/serviz.png" class="nav-img"> 
+                Настройки
+            </a>
+        }
+
+        <a class="sidenav-link" asp-area="" asp-controller="About" asp-action="Index">
+            <img src="~/img/sidenav-images/zaprogramata.png" class="nav-img"> За програмата
+        </a>
+    </div>
+
+    <div id="loading-container"></div>
+
+    <div class="main-container">
+        <div class="container">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <footer class="border-top footer">
+        <div class="container text-right">
+            Copyright 2019, TB Soft Ltd
+        </div>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+        </script>
+    </environment>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/sidenav-toggle-module.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/loader.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/js/default-ajax-settings.js" asp-append-version="true"></script>
+
+    <script src="~/js/UpdateAdministrativenRaion.js"></script>
+    <script>
+
+        if ($("#administrativen-raion-select option:selected").text().indexOf("*") >= 0) {
+            AddToolTipToRegionSelect("Извършени финансови изчисления");
+        }
+
+        function AddToolTipToRegionSelect(tooltipText) {
+            $("button[data-id=administrativen-raion-select] .filter-option-inner-inner").attr('data-toggle', 'tooltip');
+            $("button[data-id=administrativen-raion-select] .filter-option-inner-inner").attr('data-placement', 'bottom');
+            $("button[data-id=administrativen-raion-select] .filter-option-inner-inner").attr('title', tooltipText);
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+        }
+
+    </script>
+
+    <script>
+        var elem = document.body;
+
+        /* View in fullscreen */
+        function openFullscreen() {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        }
+    </script>
+</body>
+
+
+</html>

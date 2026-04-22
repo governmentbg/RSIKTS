@@ -1,0 +1,90 @@
+﻿@using Common.Static;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Common.ViewModels.Kvoti.ReshetkaCompositeViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+
+<div class="row mb-2">
+    <h3>Решетка</h3>
+</div>
+
+<div id="alerts-container"></div>
+
+<div class="row mb-2">
+    <button class="btn btn-info ml-auto" onclick="UpdateReshetkaSumModal()">Сумарен Баланс</button>
+</div>
+
+<partial model="Model" name="../PartialViews/ReshetkaTablePartialView">
+
+<!-- Edit Modal -->
+<div class="modal fade" id="reshetka-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reshetka-edit-header">Редактиране</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <span id="majority-error" class="text-danger text-center"></span>
+            <form asp-area="Kvoti" asp-controller="Home" asp-action="EditReshetka" id="reshetka-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="reshetka-edit-modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-primary" id="reshetka-edit-modal-btn">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Details Modal -->
+<div class="modal fade" id="reshetka-details-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reshetka-details-header"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <div class="modal-body text-center mb-2" id="reshetka-details-modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sum Modal -->
+<div class="modal fade" id="reshetka-sum-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 1050px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reshetka-sum-header">Сумарен баланс</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="reshetka-sum-modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/reshetka-crud.js"></script>
+    <script src="~/js/reshetka-form-ajax.js"></script>
+    <script src="~/js/reshetka-partiq-filter.js"></script>
+    <script src="~/js/reshetka-mnozinstvo-check.js"></script>
+}

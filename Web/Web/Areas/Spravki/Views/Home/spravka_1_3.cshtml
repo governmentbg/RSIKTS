@@ -1,0 +1,130 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+
+@model List<Common.ViewModels.Spravki.SpisukNaSekciiteSpravkaViewModel>
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+@{var groups = Model.GroupBy(s => s.NmIzbRajon).ToList();}
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div style=" margin-left: 5px;position:fixed; width:110px;">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container">
+
+        <div>
+            <table style="width:100%;">
+                <tbody>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>
+                                Отпечатано на:
+                                <script>document.write(new Date().toLocaleString());</script>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>Изготвил: @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).Names</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>&nbsp;</p>
+        </div>
+
+        <h3 style="text-align: center;"><strong>Контролен Списък секции</strong></h3>
+
+        @for (var i = 0; i < groups.Count; i++)
+        {
+            <!--group section -->
+            <div>
+                <p>&nbsp;</p>
+                <p>@groups[i].ElementAt(0).NmIzbRajon</p>
+                @{var toa = Model.Where(s => s.NmIzbRajon == groups[i].ElementAt(0).NmIzbRajon).GroupBy(s => s.NmRajon).ToList();}
+
+                @for (var j = 0; j < toa.Count; j++)
+                {
+                    <p>@toa[j].ElementAt(0).NmRajon</p>
+                    <table id="spravka">
+                        <tbody>
+                            <tr>
+                                <th style="width: 5%;"><strong>Секция</strong></th>
+                                <th style="width: 35%;"><strong>Адрес</strong></th>
+                                <th style="width: 20%;"><strong>Вид</strong></th>
+                                <th style="width: 15%;"><strong>Признак</strong></th>
+                                <th style="width: 15%;"><strong>Състав</strong></th>
+                                <th style="width: 10%;"><strong>Статус</strong></th>
+                            </tr>
+                            @foreach (var spisuk in groups[i])
+                            {
+                                <tr>
+                                    <td style="text-align: left;">@spisuk.SikNumb</td>
+                                    <td style="text-align: left;">
+                                        <div>@spisuk.Address</div>
+                                        <div>
+                                            <a class="sik-address-second-row"> @spisuk.descript </a>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: left;">@spisuk.Vid</td>
+                                    <td style="text-align: left;">@spisuk.Priznak</td>
+                                    <td style="text-align: left;">@spisuk.Control</td>
+                                    <td style="text-align: left;">@spisuk.status</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+
+            if (groups[i] != groups[groups.Count - 1])
+            {
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+            }
+        }
+    </div>
+</div>
+
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>

@@ -1,0 +1,30 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Kvoti";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/registri-menu.css" />
+<link rel="stylesheet" href="~/css/nomenklatures.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Квоти/Решетка</h3>
+</div>
+
+<div class="row justify-content-center">
+
+    <div class="col-md-3 registri-menu-box pl-0 pr-0">
+        <button class="registri-menu-btn" onclick="location.href='@Url.Action("Index", "Home",new { Area = "Kvoti"})'">
+            <img class="registri-menu-btn-img" src="~/img/kvoti-images/quota.png" />
+            <p>Квоти</p>
+        </button>
+    </div>
+
+    <div class="col-md-3 registri-menu-box pl-0 pr-0">
+        <button class="registri-menu-btn" onclick="location.href='@Url.Action("Reshetka", "Home",new { Area = "Kvoti"})'">
+            <img class="registri-menu-btn-img" src="~/img/kvoti-images/grid.png" />
+            <p>Решетка</p>
+        </button>
+    </div>
+
+</div>

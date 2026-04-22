@@ -1,0 +1,31 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Static
+
+@model ICollection<NomeklatureViewModel>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "NomenklaturesLocal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/registri-menu.css" />
+<link rel="stylesheet" href="~/css/nomenklatures.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Локални номенклатури</h3>
+</div>
+
+@for (var i = 0; i < Math.Ceiling(Convert.ToDouble(Model.Count) / SpravkiSettings.NumberOfNomenklaturesPerRow); i++)
+{
+    <div class="row nomenklatura-row">
+        @{
+            var currentIndex = i * SpravkiSettings.NumberOfNomenklaturesPerRow;
+            for (var j = 0; j < SpravkiSettings.NumberOfNomenklaturesPerRow && currentIndex < Model.Count; j++)
+            {
+                <partial model="Model.ElementAt(currentIndex)" name="../PartialViews/NomenklaturesLocalPartial" />
+                currentIndex += 1;
+            }
+        }
+    </div>
+}

@@ -1,0 +1,75 @@
+﻿@using Common.Static
+@model Common.ViewModels.Lica.LicaMassUpdateComposite
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th style="text-align:center; vertical-align:top; width:5%;">Секция</th>
+            <th style="text-align:center; vertical-align:top; width:40%;">Имена</th>
+            <th style="text-align:center; vertical-align:top; width:20%;">Длъжност</th>
+            <th style="text-align:center; vertical-align:top; width:20%;">Политическа сила</th>
+            <th style="text-align:center; vertical-align:top; width:5%;">Марк.</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var lice in Model.AllLica)
+        {
+            <tr>
+                <td>@lice.Sekciq</td>
+                <td>
+                    @lice.Imena
+                </td>
+                <td>
+                    @lice.Dlujnost
+                </td>
+                <td>
+                    @lice.PoliticheskaSila
+                </td>
+                <td>
+                    <div class="form-group col-md-12 form-inline mt-sm-auto mb-lg-auto">
+                        <div class="mr-auto ml-auto">
+                            <label class="checkbox-container text-left">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       onchange="ToggleId(@lice.Id)"
+                                       autocomplete="off"
+                                       @(Array.Exists(lice.Deinosti, x => x == Model.SelectedDeinostiMassUpdateValue) ? "checked" : "")>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        }
+        @if (Model.AllLica.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.AllLica.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+
+@foreach (var lice in Model.AllLica)
+{
+    <script>
+        AddLiceId(@lice.Id);
+    </script>
+    @if(Array.Exists(lice.Deinosti, x => x == Model.SelectedDeinostiMassUpdateValue))
+    {
+        <script>
+            ToggleId(@lice.Id)
+        </script>
+    }
+}

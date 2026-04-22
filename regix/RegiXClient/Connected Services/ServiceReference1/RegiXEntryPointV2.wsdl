@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://egov.bg/RegiX" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RegiXEntryPointV2" targetNamespace="http://egov.bg/RegiX" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IRegiXEntryPointV2_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://egov.bg/RegiX" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://egov.bg/RegiX/SignedData" />
+      <xs:element name="Execute">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://egov.bg/RegiX/SignedData" minOccurs="1" maxOccurs="1" name="request" type="q1:RequestWrapper" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExecuteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://egov.bg/RegiX/SignedData" minOccurs="1" maxOccurs="1" name="ExecuteResult" type="q2:ResultWrapper" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckResult">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://egov.bg/RegiX/SignedData" minOccurs="1" maxOccurs="1" name="argument" type="q3:ServiceCheckResultWrapper" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckResultResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://egov.bg/RegiX/SignedData" minOccurs="1" maxOccurs="1" name="CheckResultResult" type="q4:ResultWrapper" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AcknowledgeResultReceived">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://egov.bg/RegiX/SignedData" minOccurs="1" maxOccurs="1" name="argument" type="q5:ServiceCheckResultWrapper" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AcknowledgeResultReceivedResponse">
+        <xs:complexType />
+      </xs:element>
+      <xs:element name="ExecuteCallback">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q6="http://egov.bg/RegiX/SignedData" minOccurs="1" maxOccurs="1" name="request" type="q6:ResultWrapper" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExecuteCallbackResponse">
+        <xs:complexType />
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://egov.bg/RegiX/SignedData" elementFormDefault="qualified" targetNamespace="http://egov.bg/RegiX/SignedData" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="RequestWrapper">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceRequestData" type="tns:ServiceRequestData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ServiceRequestData">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="RequestProcessing" type="tns:RequestProcessing" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ResponseProcessing" type="tns:ResponseProcessing" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Operation" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Argument">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:any />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="EIDToken" nillable="true" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="CallContext" type="tns:CallContext" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CallbackURL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="EmployeeEGN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="CitizenEGN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="SignResult" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ReturnAccessMatrix" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="RequestProcessing">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Verify" />
+              <xs:enumeration value="Decrypt" />
+              <xs:enumeration value="TransformFromPDF" />
+              <xs:enumeration value="Asynchronous" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+      <xs:simpleType name="ResponseProcessing">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Encrypt" />
+              <xs:enumeration value="TransformToPDF" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+      <xs:complexType name="CallContext">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceURI" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceType" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="EmployeeIdentifier" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="EmployeeNames" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="EmployeeAditionalIdentifier" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="EmployeePosition" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AdministrationOId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="AdministrationName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ResponsiblePersonIdentifier" nillable="true" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="LawReason" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Remark" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ResultWrapper">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceResultData" type="tns:ServiceResultData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ServiceResultData">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="IsReady" type="xs:boolean" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Data" nillable="true" type="tns:DataContainer" />
+          <xs:any minOccurs="0" maxOccurs="1" />
+          <xs:element minOccurs="1" maxOccurs="1" name="HasError" type="xs:boolean" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Error" nillable="true" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceCallID" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="VerificationCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DataContainer">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Request" type="tns:RequestContainer" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Response" type="tns:ResponseContainer" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Matrix" nillable="true">
+            <xs:complexType>
+              <xs:complexContent mixed="false">
+                <xs:extension base="tns:AccessMatrixType">
+                  <xs:attribute name="id" type="xs:ID" />
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" />
+      </xs:complexType>
+      <xs:complexType name="RequestContainer">
+        <xs:sequence>
+          <xs:any minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" />
+      </xs:complexType>
+      <xs:complexType name="ResponseContainer">
+        <xs:sequence>
+          <xs:any minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" />
+      </xs:complexType>
+      <xs:complexType name="AccessMatrixType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="HasAccess" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Name" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Properties" type="tns:ArrayOfAMPropertyType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfAMPropertyType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="unbounded" name="Property" type="tns:AMPropertyType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AMPropertyType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="HasAccess" type="xs:boolean" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ServiceCheckResultWrapper">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceCheckResultArgument" type="tns:ServiceCheckResultArgument" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ServiceCheckResultArgument">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="ServiceCallID" type="xs:decimal" />
+          <xs:element minOccurs="1" maxOccurs="1" name="VerificationCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IRegiXEntryPointV2_Execute_InputMessage">
+    <wsdl:part name="parameters" element="tns:Execute" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_Execute_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_CheckResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckResult" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_CheckResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_AcknowledgeResultReceived_InputMessage">
+    <wsdl:part name="parameters" element="tns:AcknowledgeResultReceived" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_AcknowledgeResultReceived_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AcknowledgeResultReceivedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_ExecuteCallback_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteCallback" />
+  </wsdl:message>
+  <wsdl:message name="IRegiXEntryPointV2_ExecuteCallback_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteCallbackResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IRegiXEntryPointV2">
+    <wsdl:operation name="Execute">
+      <wsdl:input wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/Execute" message="tns:IRegiXEntryPointV2_Execute_InputMessage" />
+      <wsdl:output wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/ExecuteResponse" message="tns:IRegiXEntryPointV2_Execute_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckResult">
+      <wsdl:input wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/CheckResult" message="tns:IRegiXEntryPointV2_CheckResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/CheckResultResponse" message="tns:IRegiXEntryPointV2_CheckResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeResultReceived">
+      <wsdl:input wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/AcknowledgeResultReceived" message="tns:IRegiXEntryPointV2_AcknowledgeResultReceived_InputMessage" />
+      <wsdl:output wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/AcknowledgeResultReceivedResponse" message="tns:IRegiXEntryPointV2_AcknowledgeResultReceived_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCallback">
+      <wsdl:input wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/ExecuteCallback" message="tns:IRegiXEntryPointV2_ExecuteCallback_InputMessage" />
+      <wsdl:output wsaw:Action="http://egov.bg/RegiX/IRegiXEntryPointV2/ExecuteCallbackResponse" message="tns:IRegiXEntryPointV2_ExecuteCallback_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IRegiXEntryPointV2" type="tns:IRegiXEntryPointV2">
+    <wsp:PolicyReference URI="#WSHttpBinding_IRegiXEntryPointV2_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Execute">
+      <wsdl:documentation />
+      <soap12:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/Execute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckResult">
+      <wsdl:documentation />
+      <soap12:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/CheckResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeResultReceived">
+      <wsdl:documentation />
+      <soap12:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/AcknowledgeResultReceived" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCallback">
+      <wsdl:documentation />
+      <soap12:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/ExecuteCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IRegiXEntryPointV2" type="tns:IRegiXEntryPointV2">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Execute">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/Execute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckResult">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/CheckResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeResultReceived">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/AcknowledgeResultReceived" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCallback">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/ExecuteCallback" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IRegiXEntryPointV21" type="tns:IRegiXEntryPointV2">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Execute">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/Execute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckResult">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/CheckResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcknowledgeResultReceived">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/AcknowledgeResultReceived" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteCallback">
+      <wsdl:documentation />
+      <soap:operation soapAction="http://egov.bg/RegiX/IRegiXEntryPointV2/ExecuteCallback" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RegiXEntryPointV2">
+    <wsdl:documentation />
+    <wsdl:port name="WSHttpBinding_IRegiXEntryPointV2" binding="tns:WSHttpBinding_IRegiXEntryPointV2">
+      <soap12:address location="https://service-regix.egov.bg/RegiXEntryPointV2.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://service-regix.egov.bg/RegiXEntryPointV2.svc</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IRegiXEntryPointV2" binding="tns:BasicHttpBinding_IRegiXEntryPointV2">
+      <soap:address location="https://service-regix.egov.bg/RegiXEntryPointV2.svc/basic" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IRegiXEntryPointV21" binding="tns:BasicHttpBinding_IRegiXEntryPointV21">
+      <soap:address location="https://service-regix.egov.bg/RegiXEntryPointV2.svc/serviceBus" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

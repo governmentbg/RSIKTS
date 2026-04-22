@@ -1,0 +1,72 @@
+﻿@using Common.ViewModels.Lica
+@using Common.Static
+@model ICollection<LiceGridViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th style="text-align:center;">ЕГН</th>
+            <th style="text-align:center;">Имена</th>
+            <th style="text-align:center;">СИК</th>
+            <th style="text-align:center;">Длъжност</th>
+            <th style="text-align:center;">Партия</th>
+            <th style="text-align:center;"></th>
+            <th style="text-align:center;"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var lice in Model)
+        {
+            <tr>
+                <td>@lice.EGN</td>
+                <td>
+                    @lice.Names
+                </td>
+                <td>
+                    @lice.Sik
+                </td>
+                <td>
+                    @lice.Dlujnost
+                </td>
+                <td>
+                    @lice.Partia
+                </td>
+                <td class="lica-register-td-icon">
+                    <button onclick="UpdateLiceEditModal(this, '@lice.Id')"
+                            class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn"
+                            type="button">
+                        <img src="~/img/lica-images/Edit-128.png"
+                             class="lica-right-input-icon-table lica-right-input-icon-table-edit" />
+                    </button>
+                </td>
+
+                <td class="lica-register-td-icon">
+                    <button onclick="DeleteLicePopup(this, '@lice.Id')"
+                            class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn"
+                            type="button">
+                        <img src="~/img/lica-images/Garbage-Closed-128.png"
+                             class="lica-right-input-icon-table lica-right-input-icon-table-garbage" />
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

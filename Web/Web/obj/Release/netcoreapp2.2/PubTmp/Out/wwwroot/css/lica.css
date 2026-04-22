@@ -1,0 +1,293 @@
+﻿.lica-input-label {
+    margin-right: 15px;
+    line-height: 225%;
+    border: 1px solid cornflowerblue;
+    border-right: none;
+    margin: 0;
+    padding-left: 5px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.lica-egn-row {
+    margin-bottom: 25px;
+}
+
+.lica-form {
+    padding: 0;
+    border: 1px solid cornflowerblue;
+}
+
+.lica-input-egn {
+    border: 1px solid cornflowerblue;
+    padding: 0;
+    padding-left: 5px;
+}
+
+.lica-right-input-icon {
+    height: 100%;
+}
+
+.lica-btn-with-icon {
+    padding: 0.375rem 0.75rem;
+    height: calc(2.25rem + 2px);
+    background-color: cornflowerblue;
+    border-color: cornflowerblue;
+
+}
+
+.lica-btn-with-icon:hover {
+    background-color: lightskyblue;
+    border-color: lightskyblue;
+}
+
+.lica-btn-with-icon:focus {
+    outline: none;
+}
+
+.lica-input {
+    border-color: cornflowerblue;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: red;
+}
+
+.tab {
+    display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+    height: 32px;
+    width: 32px;
+    margin: 0 2px;
+    background-color: cornflowerblue;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.step:hover {
+    background-color: gray;
+}
+
+/* Mark the active step: */
+.step.active {
+    opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+    background-color: #4CAF50;
+}
+
+.lica-prev-btn {
+    background-color: white;
+    border: none;
+    font-size: 72px;
+    color: cornflowerblue;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+.lica-egn-col {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding:0;
+}
+
+.lica-form-btn-row {
+    margin-top: 25px;
+    margin-left: 65px;
+    margin-right: 65px;
+}
+
+.lica-form-btn-row button{
+    width: 100%;
+    height: 50px;
+}
+
+.lica-form-btn-submit {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+}
+
+.lica-form-btn-exit {
+    background-color: lightcoral;
+    border: none;
+    color: white;
+}
+
+.lica-form-row {
+    height: 480px;
+}
+
+.lica-info-form-row{
+    height: 100%;
+}
+
+.lica-form-tab-info {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    color: white;
+    background-color: cornflowerblue;
+}
+
+.lica-btn-save{
+    background-color: white;
+    width: 100%;
+}
+
+.lica-btn-save-img{
+    height: 64px;
+    width: 64px;
+}
+
+.lica-btn-save-img:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+/* Customize the label (the container) */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 100%;
+    line-height: 200%;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 32px;
+    width: 32px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: cornflowerblue;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 10px;
+    top: 5px;
+    width: 10px;
+    height: 20px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.dropdown-toggle {
+    background-color: white;
+    border: 1px solid #ced4da;
+}
+
+.field-validation-error {
+    display: block;
+}
+
+.validation-height {
+    height: 25px;
+}
+
+#lica-edit-modal .modal-dialog {
+    max-width: 90%;
+}
+
+@media screen and (max-width: 991px) {
+    .lica-form-row {
+        height: 600px;
+    }
+
+    .validation-height {
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .form-tab-info {
+        padding: 25px;
+        margin-bottom: 5px;
+    }
+
+    .form-tab-info-text {
+        margin: 0;
+    }
+
+    .lica-form-row {
+        height: auto;
+    }
+
+    .lica-egn-col {
+        margin-left: 0;
+    }
+
+    .lica-form {
+        padding: 0;
+    }
+
+    .lica-egn-row {
+        margin-bottom: 0;
+    }
+
+    .lica-form-btn-row button {
+        margin-bottom: 25px;
+    }
+
+    .lica-form-btn-row {
+        margin-top: 25px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

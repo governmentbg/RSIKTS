@@ -1,0 +1,21 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "Персонални данни";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/profile.css">
+
+<div class="row">
+    <div class="col-md-9 profile-nav-container">
+        <p>Твоят профил съдържа лична информация само която вие сте ни дали. От тук можете да свалите и да видите какво пазим за вас.</p>
+        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
+            <button class="btn btn-primary" type="submit">Изтегляне</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

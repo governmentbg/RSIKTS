@@ -1,0 +1,152 @@
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Newtonsoft.Json
+
+@model List<Common.ViewModels.Spravki.ZamestvajiSpravkaViewModel>
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{
+    var groups = Model.GroupBy(s => s.NmIzbRajon).ToList(); ;
+    var filter = Model.ElementAt(0).filter;
+}
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print-landscape.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div class="navbar-landscape">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="exportbtn"
+                type="button"
+                onclick="GenerateSpisukLicaExcelExport23();">
+            <img src="/img/navbar-images/ms-excel.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Експорт
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container-landscape">
+        <table style="width:100%;">
+            <tbody>
+                <tr style="height:30px">
+                    <td style="text-align: left;">
+                        <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                    </td>
+                    <td style="text-align: right;">
+                        <p>
+                            Отпечатано на:
+                            <script>document.write(new Date().toLocaleString());</script>
+                        </p>
+                    </td>
+                </tr>
+                <tr style="height:30px">
+                    <td style="text-align: left;">
+                        <p>Административен район: <strong> @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name</strong></p>
+                    </td>                    </td>
+                    <td style="text-align: right;">
+                        <p>Изготвил: @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).Names</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 style="text-align: center;">Замествания</h3>
+        <!--group section -->
+        @for (var i = 0; i < groups.Count; i++)
+        {
+            <div>
+                <p>&nbsp;</p>
+                <p>@groups[i].ElementAt(0).NmIzbRajon</p>
+                <p>@groups[i].ElementAt(0).NmRajon</p>
+                <table style="height: 49px; width: 100%;" id="spravka">
+                    <tbody>
+                        <tr style="height: 31.75px;">
+                            <th style="width: 5%; height: 31.75px;"><strong>Секция</strong></th>
+                            <th style="width: 15%; text-align: center; height: 31.75px;"><strong>Длъжност</strong></th>
+                            <th style="width: 15%; text-align: center; height: 31.75px;"><strong>Заместващ</strong></th>
+                            <th style="width: 5%; text-align: center; height: 31.75px;"><strong>ЕГН на заместващ</strong></th>
+                            <th style="width: 5%; text-align: center; height: 31.75px;"><strong>Телефон на заместващ</strong></th>
+                            @*<th style="width: 10%; text-align: center; height: 31.75px;"><strong>Ваксина за заместващ</strong></th>*@
+                            <th style="width: 20%; text-align: center; height: 31.75px;"><strong>Заместван</strong></th>
+                            <th style="width: 10%; text-align: center; height: 31.75px;"><strong>ЕГН на заместван</strong></th>
+                            <th style="width: 20%; text-align: center; height: 31.75px;"><strong>Политическа сила</strong></th>
+                            <th style="width: 5%; text-align: center; height: 31.75px;"><strong>Дата</strong></th>
+                        </tr>
+                        <!--detail section -->
+                        @foreach (var data in groups[i])
+                        {
+                    <tr style="height: 28px;">
+                        <td style="height: 28px;">@data.SikFullCode</td>
+                        <td style="height: 28px; text-align: left;">@data.Rolia</td>
+                        <td style="height: 28px; text-align: left;">@data.ImeNovo</td>
+                        <td style="height: 28px; text-align: left;">@data.EgnNovo</td>
+                        <td style="height: 28px; text-align: left;">@data.Telefon</td>
+                        @*<td style="height: 28px; text-align: left;">@data.Deistvie</td>*@
+                        <td style="height: 28px; text-align: left;">@data.ImeStaro</td>
+                        <td style="height: 28px; text-align: left;">@data.EgnStaro</td>
+                        <td style="height: 28px; text-align: left;">@data.Partia</td>
+                        <td style="height: 28px; text-align: center;">@data.Koga</td>
+                    </tr>
+                        }
+                        <!--end detail section -->
+                    </tbody>
+                </table>
+            </div>
+            if (groups[i] != groups[groups.Count - 1])
+            {
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+            }
+        }
+    </div>
+</div>
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+<script>
+    function GenerateSpisukLicaExcelExport23() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSpisukLicaExcelExport23',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+</script>

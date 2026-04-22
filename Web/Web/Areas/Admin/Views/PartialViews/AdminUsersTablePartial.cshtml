@@ -1,0 +1,51 @@
+﻿@using Common.ViewModels.User
+@using Common.Static
+@model ICollection<AllUsersViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table table-bordered table-admin-register col-md-10" id="users-table">
+    <thead>
+        <tr>
+            <th style="text-align:center">Активен</th>
+            <th>Имена</th>
+            <th>Потребител</th>
+            <th>Роля</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var user in Model)
+        {
+        <tr>
+            <td style="text-align:center">@(!user.IsDeleted ? "Да" : "Не")</td>
+            <td>@user.Names</td>
+            <td>@user.Username</td>
+            <td>
+                @foreach (var role in user.Roles)
+                {
+                    <span>@role</span>
+                }
+            </td>
+            <td class="admin-register-td-icon"><button onclick="UpdateAdminEditModal(this,'@user.Id')" class="btn btn-outline-secondary admin-btn-with-icon-table admin-right-input-icon-table-btn" type="button"><img src="~/img/admin-images/Edit-128.png" class="admin-right-input-icon-table admin-right-input-icon-table-edit" /></button></td>
+            <td class="admin-register-td-icon"><button onclick="DeleteUserPopup(this,'@user.Id')" class="btn btn-outline-secondary admin-btn-with-icon-table admin-right-input-icon-table-btn" type="button"><img src="~/img/admin-images/Garbage-Closed-128.png" class="admin-right-input-icon-table admin-right-input-icon-table-garbage" /></button></td>
+        </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

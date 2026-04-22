@@ -1,0 +1,33 @@
+﻿@model Common.ViewModels.Kvoti.KvotiEditViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ParameterEdit";
+}
+
+
+<input type="hidden" asp-for="Id" />
+
+<div class="row mb-4">
+    <label asp-for="Precedatel"></label>
+    <input asp-for="Precedatel" class="form-control col-md-12" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" min="0" />
+    <span asp-validation-for="Precedatel" class="text-danger"></span>
+</div>
+
+
+<div class="row mb-4">
+    <label asp-for="ZamestnikPrecedatel"></label>
+    <input asp-for="ZamestnikPrecedatel" class="form-control col-md-12" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" min="0" />
+    <span asp-validation-for="ZamestnikPrecedatel" class="text-danger"></span>
+</div>
+
+<div class="row mb-4">
+    <label asp-for="Sekretar"></label>
+    <input asp-for="Sekretar" class="form-control col-md-12" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" min="0" />
+    <span asp-validation-for="Sekretar" class="text-danger"></span>
+</div>
+
+<div class="row mb-4">
+    <label asp-for="Chlenove"></label>
+    <input asp-for="Chlenove" class="form-control col-md-12" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" min="0" />
+    <span asp-validation-for="Chlenove" class="text-danger"></span>
+</div>

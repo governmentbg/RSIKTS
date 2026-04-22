@@ -1,0 +1,204 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Common.ViewModels.Lica.LicaImportCompositeViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Nachislqvaniq.INachislqvaniqServices NachislqvaniqServices
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var HasNachislqvaniq = NachislqvaniqServices.RaionHasNachislqvaniq(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/import.css">
+<link rel="stylesheet" type="text/css" href="~/css/lica-register.css">
+<link rel="stylesheet" type="text/css" href="~/js/bootstrap-select/css/bootstrap-select.css">
+
+<div class="row mb-2">
+    <h3>Регистри >> Импортиране лица</h3>
+</div>
+
+<div id="alerts-container"></div>
+
+@if (!HasNachislqvaniq)
+{
+    <div class="row">
+        <div class="form-group col-md-6 pl-md-0 mb-md-0 mb-sm-3">
+            <label></label>
+            <div class="custom-file" id="customFile" lang="es">
+                <input type="file"
+                       class="custom-file-input"
+                       id="exampleInputFile"
+                       aria-describedby="fileHelp"
+                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                <label class="custom-file-label" for="exampleInputFile" id="file-name-label">
+                    Изберете файл...
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-md-6 pr-md-0 mb-md-0 mb-sm-2 required-select">
+            <label class="m-0">Политическа сила</label>
+            <select asp-for="PoliticheskaSila"
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-md-12"
+                    data-live-search="true" data-size="5" id="political-power">
+            </select>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="ml-auto col-lg-2 col-md-3 col-sm-12 no-padding lica-register-btn-add-col mb-2">
+            <button onclick="SendLicaToImport()"
+                    class="btn lica-register-btn-add">
+                + Добави
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+            <thead>
+                <tr>
+                    <th>ЕГН</th>
+                    <th>Име</th>
+                    <th>Презиме</th>
+                    <th>Фамилия</th>
+                    <th>
+                        № на СИК
+                    </th>
+                    <th>
+                        Длъжност
+                    </th>
+                    <th>
+                        Образование
+                    </th>
+                    <th>
+                        Специалност
+                    </th>
+                    <th>
+                        Телефон
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="lica-table-body"></tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="row mb-2">
+        <h4>Недостъпен! Извършени финансови изчисления. </h4>
+    </div>
+}
+
+<!-- Table Modal -->
+<div class="modal fade" id="lice-import-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 1200px;">
+        <div class="modal-content" style="height:650px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lica-import-header">Грешни данни</h5>
+
+                <button class="btn btn-success ml-auto mr-auto"
+                        type="button"
+                        onclick='location.href="@Url.Action("GetFileForInvalidImport", "Home",new { Area = "Lica"})"'>
+                    Експорт
+                    <img src="/img/navbar-images/ms-excel.png"
+                         class="nav-img"
+                         style="height:32px;">
+                </button>
+
+                <button type="button" aria-label="Close" onclick="$('#lice-import-modal').modal('hide')"
+                        style="
+                            float: right; font-size: 1.5rem;
+                            font-weight: 700;
+                            line-height: 1;
+                            color: #000;
+                            text-shadow: 0 1px 0 #fff;
+                            opacity: .5;
+                            background-color: transparent;
+                            border: 0;
+                            -webkit-appearance: none;
+                                cursor: pointer;
+                                position: absolute;
+                            top: 0;
+                            right: 0;
+                            padding: 0.75rem 1.25rem;">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+
+            <div class="modal-body text-center" id="lica-import-modal-body" style="overflow-y:scroll">
+                <div class="row">
+                    <table class="table table-bordered table-lica-register col-md-12" id="lica-import-table">
+                        <thead>
+                            <tr>
+                                <th style="vertical-align:top">
+                                    ЕГН
+                                </th>
+                                <th style="vertical-align:top">
+                                    Име
+                                </th>
+                                <th style="vertical-align:top">
+                                    Презиме
+                                </th>
+                                <th style="vertical-align:top">
+                                    Фамилия
+                                </th>
+                                <th style="vertical-align:top">
+                                    СИК
+                                </th>
+                                <th style="vertical-align:top">
+                                    Длъжност
+                                </th>
+                                <th style="vertical-align:top">
+                                    Образование
+                                </th>
+                                <th style="vertical-align:top">
+                                    Специалност
+                                </th>
+                                <th style="vertical-align:top">
+                                    Телефон
+                                </th>
+                                <th style="vertical-align:top; min-width: 250px">
+                                    Описание
+                                </th>
+                                <th style="vertical-align:top">
+                                    Вид
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="lica-import-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/xlsx.js"></script>
+    <script src="~/js/jszip.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/import-parse-excel.js"></script>
+    <script src="~/js/import-parsed-lica.js"></script>
+    <script src="~/js/update-file-input-label.js"></script>
+    <script src="~/js/lica-import-invalid-records.js"></script>
+
+    <style type="text/css">
+        lica-import-modal-body td.orange {
+            color: #ff9933;
+        }
+
+        lica-import-modal-body td.blue {
+            color: #F00;
+        }
+    </style>
+}
+

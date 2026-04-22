@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/registri-menu.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Регистри</h3>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-3 registri-menu-box">
+        <button class="registri-menu-btn" onclick="location.href='@Url.Action("ImportLica", "Home",new { Area = "Lica"})'">
+            <img class="registri-menu-btn-img" src="~/img/navbar-images/ms-excel.png" />
+            <p>Импортиране на лица</p>
+        </button>
+    </div>
+    <div class="col-md-3 registri-menu-box">
+        <button class="registri-menu-btn" onclick="location.href='@Url.Action("Register", "Home",new { Area = "Lica"})'">
+            <img class="registri-menu-btn-img" src="~/img/navbar-images/register-lica.png" />
+            <p>Регистър лица</p>
+        </button>
+    </div>
+    <div class="col-md-3 registri-menu-box">
+        <button class="registri-menu-btn" onclick="location.href='@Url.Action("Register", "Home",new { Area = "Sik"})'">
+            <img class="registri-menu-btn-img" src="~/img/navbar-images/registur-sik.png" />
+            <p>Регистър СИК</p>
+        </button>
+    </div>
+</div>

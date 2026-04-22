@@ -1,0 +1,237 @@
+﻿.admin-register-input-row {
+    margin-bottom: 5px;
+}
+
+.admin-register-input {
+    border: 1px solid cornflowerblue;
+    padding: 0;
+    padding-left: 5px;
+    height: 50px;
+    width: 100%;
+}
+
+.admin-right-input-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.admin-btn-with-icon {
+    height: 100%;
+    border: none;
+    background-color: white;
+    padding: 0;
+}
+
+.admin-right-input-icon:hover {
+    content: url(../img/admin-images/Search-Find-128-Blue-Light.png);
+}
+
+.table-admin-register {
+    border: 2px solid cornflowerblue;
+    margin-bottom: 0;
+}
+
+.table-admin-register thead {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.table-admin-register thead tr th {
+    border: none;
+    border-right: 1px solid cornflowerblue;
+    border-bottom: 1px solid cornflowerblue;
+    height: 56px;
+}
+
+.table-admin-register tbody tr td {
+    height: 45px;
+    border: none;
+    border-bottom: 1px solid cornflowerblue;
+    border-right: 1px solid cornflowerblue;
+}
+
+.table-admin-register tbody tr:hover {
+    background-color: gray;
+    color: white;
+}
+
+.admin-register-td-icon {
+    height: 45px;
+    width: 45px;
+    padding: 0 !important;
+}
+
+.admin-btn-with-icon-table {
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+}
+
+.admin-right-input-icon-table {
+    height: 100%;
+    width: 100%;
+}
+
+.admin-right-input-icon-table-edit:hover {
+    content: url(../img/admin-images/Edit-128-Light.png);
+    transition: none;
+    background-color: none;
+}
+
+.admin-right-input-icon-table-garbage:hover {
+    content: url(../img/admin-images/Garbage-Closed-128-Light.png);
+    background-color: none;
+}
+
+.admin-right-input-icon-table-btn {
+    transition: none;
+}
+
+.admin-register-btn-add {
+    width: 100%;
+    /*    background-color: green; 
+        color: white;
+    */
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: white;
+    color: green;
+    border: 1px solid green; /* Green */
+}
+
+.admin-register-btn-add:hover {
+    background-color: lightgreen;
+}
+
+.admin-register-btn {
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 14px;
+    background-color: cornflowerblue;
+    color: white;
+    height: 88px;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+}
+
+.admin-register-btn:hover {
+    background-color: gray;
+}
+
+.admin-register-form-tab-info > .admin-register-from-tab-info-col:last-of-type .admin-register-btn {
+    border-bottom: 2px solid cornflowerblue;
+}
+
+.admin-register-btn-row {
+    margin-top: 25px;
+}
+
+.admin-register-btn-row > div:first-of-type {
+    padding-right: 15px;
+}
+
+.admin-register-btn-row > div:last-of-type {
+    padding-left: 15px;
+}
+
+.admin-register-table-row {
+    height: 100%;
+}
+
+.admin-register-form-tab-info {
+    padding: 0;
+    padding-right: 8px;
+}
+
+.admin-register-search-col {
+    padding: 0;
+}
+
+.admin-register-from-tab-info-col {
+    padding: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+#admin-edit-modal .modal-dialog {
+    max-width: 90%;
+}
+
+@media screen and (max-width: 991px) {
+    .admin-register-form-tab-info {
+        padding-right: 0;
+    }
+
+    .admin-register-form-tab-info > .admin-register-from-tab-info-col:last-of-type .admin-register-btn {
+        border-bottom: none;
+    }
+
+    .admin-register-table-row {
+        flex-direction: column-reverse;
+    }
+
+    .table-admin-register {
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .admin-register-btn-add-col {
+        padding-left: 15px;
+    }
+
+    .admin-register-from-tab-info-col {
+        border-bottom: 5px solid white;
+    }
+
+    .admin-register-form-tab-info {
+        max-width: 100%;
+    }
+
+    .admin-register-btn {
+        border-bottom: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .admin-register-btn-add-col {
+        padding-left: 0;
+    }
+
+    .admin-register-btn-row > div:first-of-type {
+        padding-right: 0;
+    }
+
+    .admin-register-btn-row > div:last-of-type {
+        padding-left: 0;
+    }
+
+    .admin-register-btn-row > div {
+        padding: 0;
+    }
+
+    .admin-register-btn-row > div {
+        padding: 0;
+    }
+
+    .admin-register-btn-row {
+        margin-top: 0;
+    }
+
+    .admin-register-btn {
+        height: 50px;
+    }
+
+    .admin-register-search-col {
+        margin-bottom: 5px;
+    }
+
+    .table-admin-register {
+        margin-bottom: 5px;
+    }
+}

@@ -1,0 +1,103 @@
+﻿@using Common.Static;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<Common.ViewModels.Parameters.NomenclaturesViewModel>
+
+@{
+    ViewData["Title"] = "CommonIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Допълнителни настройки -> Номенклатури</h3>
+</div>
+
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th style="text-align:center;">Номенклатура</th>
+            <th style="text-align:center; width:150px;">Активна</th>
+            <th style="text-align:center; width:150px;">Тип</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- TODO tablicata n_nomenclatures (NKOD,NIME,MIN_BROI_SIK,MAX_BROI_SIK,STATUS)-->
+        @foreach (var nomenclature in Model)
+        {
+            <tr>
+                <td>
+                    @nomenclature.Description
+                </td>
+                <td style="text-align:center">
+                    @(nomenclature.Status? "Да" : "Не")
+                </td>
+                <td style="text-align:center">
+                    @(nomenclature.Tip == 1 ? "Локална" : "Глобална")
+                </td>
+                <td class="lica-register-td-icon">
+                    <button onclick="UpdateNomenlaturesEditModal(this, '@nomenclature.Id')"
+                            class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn"
+                            type="button">
+                        <img src="~/img/lica-images/Edit-128.png"
+                             class="lica-right-input-icon-table lica-right-input-icon-table-edit" />
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
+
+<!-- Edit Modal -->
+<div class="modal fade"
+     id="nomenclatures-edit-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="parameters-edit-header">Редактиране</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Parameters" 
+                  asp-controller="Home" 
+                  asp-action="EditNomenclature"
+                  id="nomenclature-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="nomenclature-edit-modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-primary">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/parameters-crud.js"></script>
+    <script src="~/js/parameters-nomenclature-form-ajax.js"></script>
+}

@@ -1,0 +1,17 @@
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.csproj.AssemblyReference.cache
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.AssemblyInfoInputs.cache
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.AssemblyInfo.cs
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.csproj.CoreCompileInputs.cache
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegixClientCore.deps.json
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegixClientCore.runtimeconfig.json
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegixClientCore.runtimeconfig.dev.json
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegixClientCore.dll
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegixClientCore.pdb
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.dll
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.pdb
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.genruntimeconfig.cache
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegiXClient.dll
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegiXClient.pdb
+C:\VotingRegister\RegixClientCore\bin\Debug\netcoreapp2.1\RegiXClient.dll.config
+C:\VotingRegister\RegixClientCore\obj\Debug\netcoreapp2.1\RegixClientCore.csproj.CopyComplete

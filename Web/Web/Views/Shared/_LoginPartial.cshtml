@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@inject SignInManager<SSOUserIdentity> SignInManager
+@inject UserManager<SSOUserIdentity> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item"> 
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <img src="~/img/login-images/login-user-white.png" class="nav-img">
+            <p class="nav-img-p">Профил</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <form class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">           
+            <button type="submit" class="nav-link-btn-link">
+                <img src="~/img/login-images/logout-128.png" class="nav-img">
+                <p class="nav-img-p">Изход</p>
+            </button>
+        </form>
+    </li>
+}
+else
+{
+    <!--<li class="nav-item">
+        <div class="image-space-placeholder"></div>
+
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>-->
+
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+            <img src="~/img/login-images/login-user-white.png" class="nav-img">
+            <p class="nav-img-p">Вход</p>
+        </a>
+    </li>
+}

@@ -1,0 +1,154 @@
+﻿@model Common.ViewModels.Kvoti.ReshetkaEditViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ParameterEdit";
+}
+
+<input type="hidden" asp-for="SikId" />
+
+@{
+    var data = ViewBag.maxmembers;
+}
+
+<div class="row justify-content-center p-2">
+    <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+        <label class="ml-auto pr-2" style="text-align:right; vertical-align:text-top;" 
+               asp-for="PrecedatelPartiqId">
+        </label>
+    </div>
+    <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+        <select asp-for="PrecedatelPartiqId" 
+                asp-items="Model.AllPoliticheskiSili" 
+                class="selectpicker form-control show-tick col-12" 
+                data-live-search="true" 
+                data-size="5" 
+                id="precedatel-select">
+        </select>
+    </div>
+</div>
+
+
+<div class="row justify-content-center p-2">
+    <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+        <label class="ml-auto pr-3" style="text-align:right; vertical-align:text-top;" 
+               asp-for="ZamestnikPrecedatelPartiqId">
+        </label>
+    </div>
+
+    <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+        <select asp-for="ZamestnikPrecedatelPartiqId" 
+                asp-items="Model.AllPoliticheskiSili" 
+                class="selectpicker form-control show-tick col-12" 
+                data-live-search="true" 
+                data-size="5" 
+                id="zamestnik-precedatel-select">
+        </select>
+    </div>
+</div>
+
+<div class="row justify-content-center p-2">
+    <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+        <label class="ml-auto pr-2" asp-for="SekretarPartiqId"></label>
+    </div>
+    <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+        <select asp-for="SekretarPartiqId"
+                asp-items="Model.AllPoliticheskiSili" 
+                class="selectpicker form-control show-tick col-12" 
+                data-live-search="true" 
+                data-size="5" 
+                id="sekretar-select"></select>
+    </div>
+</div>
+
+@if (data >= 1)
+{
+    <div class="row justify-content-center p-2">
+        <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+            <label class="ml-auto pr-2" asp-for="Chlen1PartiqId"></label>
+        </div>
+        <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+            <select asp-for="Chlen1PartiqId" 
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-12"
+                    data-live-search="true" data-size="5" id="profesion"></select>
+        </div>
+    </div>
+}
+
+@if (data >= 2)
+{
+    <div class="row justify-content-center p-2">
+        <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+            <label class="ml-auto pr-2" asp-for="Chlen2PartiqId"></label>
+        </div>
+        <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+            <select asp-for="Chlen2PartiqId" 
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-12"
+                    data-live-search="true" data-size="5" id="profesion"></select>
+        </div>
+    </div>
+}
+
+@if (data >= 3)
+{
+
+    <div class="row justify-content-center p-2">
+        <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+            <label class="ml-auto pr-2" asp-for="Chlen3PartiqId"></label>
+        </div>
+        <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+            <select asp-for="Chlen3PartiqId" 
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-12"
+                    data-live-search="true" data-size="5" id="profesion"></select>
+        </div>
+    </div>
+}
+
+@if (data >= 4)
+{
+
+    <div class="row justify-content-center p-2">
+        <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+            <label class="ml-auto pr-2" asp-for="Chlen4PartiqId"></label>
+        </div>
+        <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+            <select asp-for="Chlen4PartiqId" 
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-12"
+                    data-live-search="true" data-size="5" id="profesion"></select>
+        </div>
+    </div>
+}
+
+@if (data >= 5)
+{
+
+    <div class="row justify-content-center p-2">
+        <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+            <label class="ml-auto pr-2" asp-for="Chlen5PartiqId"></label>
+        </div>
+        <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+            <select asp-for="Chlen5PartiqId" 
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-12"
+                    data-live-search="true" data-size="5" id="profesion"></select>
+        </div>
+    </div>
+}
+
+@if (data >= 6)
+{
+    <div class="row justify-content-center p-2">
+        <div class="form-group col-md-3 form-inline mt-sm-auto mb-lg-auto p-0">
+            <label class="ml-auto pr-2" asp-for="Chlen6PartiqId"></label>
+        </div>
+        <div class="form-group col-md-9 form-inline mt-sm-auto mb-lg-auto p-0">
+            <select asp-for="Chlen6PartiqId" 
+                    asp-items="Model.AllPoliticheskiSili"
+                    class="selectpicker form-control show-tick col-12"
+                    data-live-search="true" data-size="5" id="profesion"></select>
+        </div>
+    </div>
+}

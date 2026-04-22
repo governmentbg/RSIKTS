@@ -1,0 +1,94 @@
+﻿@using Common.ViewModels.Lica
+@using Common.Static
+@model ICollection<LiceGridViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+@{
+    var izboriMaxTur = IzboriServices.GetIzborMaxTUR();
+    int cnt = 0;
+}
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            @if (izboriMaxTur > 1)
+            {
+             <th style="width: 30px;  text-align:center; ">Тур</th>
+            }
+            <th style="width: 60px;  text-align:center; ">ЕГН</th>
+            <th style="width: 120px; text-align:center;">Имена</th>
+            <th style="width: 60px;  text-align:center;">СИК</th>
+            <th style="width: 100px; text-align:center;">Длъжност</th>
+            <th style="width: 100px; text-align:center;">Партия</th>
+            <th style="width: 100px; text-align:center;">Телефон</th>
+            <th style="width: 100px; text-align:center;">Дейност</th>
+            <th style="width: 100px; text-align:center;">Решение</th>
+            <th style="width: 30px;  text-align:center;"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var lice in Model)
+        {
+        <tr>
+            @if (izboriMaxTur > 1)
+            {
+                <td>@lice.Tur</td>
+            }
+            <td>@lice.EGN</td>
+            <td>
+                @lice.Names
+            </td>
+            <td>
+                @lice.Sik
+            </td>
+            <td>
+                @lice.Dlujnost
+            </td>
+            <td>
+                @lice.Partia
+            </td>
+            <td>
+                @lice.Telefon
+            </td>
+            <td>
+                @lice.Deistvie
+            </td>
+            <td>
+                @lice.Reshenie
+            </td>
+            <td class="lica-register-td-icon">
+                <button onclick="UpdateLiceEditModal(this, '@lice.Id')"
+                        class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn"
+                        type="button">
+                    <img src="~/img/lica-images/Edit-128.png"
+                         class="lica-right-input-icon-table lica-right-input-icon-table-edit" />
+                </button>
+            </td>
+        </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    @if (izboriMaxTur > 1)
+                    {
+                        <td></td>
+                    }
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

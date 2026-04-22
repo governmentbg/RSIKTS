@@ -1,0 +1,115 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.Spravki
+@using Common.ViewModels.User
+
+@model SpravkaRziFilter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject SignInManager<SSOUserIdentity> SignInManager
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+
+@{
+    var IsUserGlobal = false;
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        IsUserGlobal = UserServices.GetEditUserById(UserManager.GetUserId(User)).AdministrativenRaion == null ? true : false;
+    }
+}
+
+<style>
+    .modal .filter-option-inner-inner {
+        color: black;
+    }
+</style>
+
+
+<div class="modal fade"
+     id="SpisukRziSpravkaModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="SpisukRziSpravkaModal"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Справка</h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form target="_blank"
+                      asp-area="Spravki"
+                      asp-controller="Home"
+                      asp-action="GetSpisukRziSpravka"
+                      method="get">
+
+                    @if (IsUserGlobal)
+                    {
+                        <label asp-for="IzbRaionNkod"></label>
+                        <select asp-for="IzbRaionNkod"
+                                asp-items="Model.AllIzbRaioni"
+                                class="selectpicker form-control show-tick col-12 filter-property"
+                                data-live-search="true"
+                                data-size="5"
+                                title="Всички"
+                                id="izbraion-raion-select">
+                        </select>
+                    }
+                    <label asp-for="Deistvie"></label>
+                    <select asp-for="Deistvie"
+                            asp-items="Model.AllDeistviq"
+                            class="selectpicker form-control show-tick col-12 filter-property"
+                            data-live-search="true"
+                            data-size="5"
+                            title="Не е избрано"
+                            id="education">
+                    </select>
+                    <span asp-validation-for="Deistvie"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger col-md-3"
+                                style="margin-right:150px;"
+                                onclick="ClearFilters()"
+                                type="button">
+                            Изчисти
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Изпълни
+                        </button>
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal">
+                            Затвори
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}

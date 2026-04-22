@@ -1,0 +1,84 @@
+﻿@model Common.ViewModels.Obrabotki.AdminOptionsFilter
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    int izboriTur = IzboriServices.getIzborCurrentTur();
+    var izboriMaxTur = IzboriServices.GetIzborMaxTUR();
+}
+
+    <form asp-area="Obrabotki"
+          asp-controller="Home"
+          asp-action="ResolveNewIzborOption"
+          id="new-izbor-form"
+          class="form-horizontal"
+          autocomplete="off">
+
+        @if (izboriMaxTur > 1 && izboriTur == 1)
+        {
+            <label class="container-chekcmark">
+                Тур 2
+                <input type="radio" checked="checked" value="0" asp-for="Option">
+                <span class="checkmark"></span>
+            </label>
+        }
+
+        @if (izboriMaxTur==1 || (izboriMaxTur > 1 && izboriTur == 2)) 
+        {
+            <label class="container-chekcmark">
+                Нови избори
+                <input type="radio" checked="checked" value="1" asp-for="Option" id="new-izbor-radio">
+                <span class="checkmark"></span>
+            </label>
+
+            <div id="new-izbor-form-container">
+                <div class="form-group col-md-12" id="tip-select-container">
+                    <label asp-for="Tip"></label>
+                    <select asp-for="Tip" asp-items="Model.AllTipove" class="selectpicker form-control show-tick" data-live-search="true" data-size="5"></select>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="Naimenovanie"></label>
+                    <input asp-for="Naimenovanie"
+                           class="form-control"
+                           placeholder="*"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '*'" />
+                    <span asp-validation-for="Naimenovanie" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="DateTur1" id="lbldatetur1"></label>
+                    <input asp-for="DateTur1" 
+                           class="form-control" 
+                           placeholder="*" 
+                           onfocus="this.placeholder = ''" 
+                           onblur="this.placeholder = '*'" 
+                           type="date" />
+                    <span asp-validation-for="DateTur1" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-12" id="DateTur2Group">
+                    <label asp-for="DateTur2"></label>
+                    <input asp-for="DateTur2" 
+                           class="form-control" 
+                           placeholder="*" 
+                           onfocus="this.placeholder = ''" 
+                           onblur="this.placeholder = '*'" 
+                           type="date" />
+                    <span asp-validation-for="DateTur2" class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+        <label class="container-chekcmark">
+            Изтриване на БД
+            <input type="radio" value="2" asp-for="Option">
+            <span class="checkmark"></span>
+        </label>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+            <button type="submit" class="btn btn-primary">Изпълни</button>
+        </div>
+    </form>

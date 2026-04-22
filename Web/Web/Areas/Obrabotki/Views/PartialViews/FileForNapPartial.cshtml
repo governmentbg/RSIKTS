@@ -1,0 +1,68 @@
+﻿@using Common.ViewModels.User
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+@model Common.ViewModels.Obrabotki.ObrabotkiFileForNapViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    var izboriTur = IzboriServices.getIzborTur();
+    if (izboriTur == "Тур 2")
+    {
+        Model.SelectedTurs = 2;
+    }
+    var raion = UserServices.GetUserRegion(UserManager.GetUserId(User)).Name;
+}
+
+<!-- Add Modal -->
+<div class="modal fade" id="file-for-nap-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 800px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lica-add-header">Генериране на файл за НАП  [район @raion]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form asp-area="Lica" asp-controller="Home" asp-action="GetFileForNap" id="lica-add-form" class="form-horizontal">
+                    <label asp-for="SelectedTurs"></label>
+                    <select asp-for="SelectedTurs"
+                            asp-items="Model.AllTurs"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true" data-size="5">
+                    </select>
+                    
+
+                    <label class="container-chekcmark">
+                        Редовни данни
+                        <input type="radio" checked="checked" value="0" asp-for="NapFileOption">
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <label class="container-chekcmark">
+                        Kоригиращи данни
+                        <input type="radio" value="1" asp-for="NapFileOption">
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <label class="container-chekcmark">
+                        Заличаващи данни
+                        <input type="radio" value="8" asp-for="NapFileOption">
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затваряне</button>
+                        <button type="submit" class="btn btn-primary">Генериране</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

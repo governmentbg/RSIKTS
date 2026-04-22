@@ -1,0 +1,14 @@
+﻿@inject SignInManager<Common.ViewModels.User.SSOUserIdentity> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column profile-nav">
+    <li class="profile-nav profile-nav-with-icon nav-item d-md-none d-sm-none d-none d-lg-block"><img class="profile-options-icon" src="~/img/admin-images/login-user.png"/></li>
+    <li class="profile-nav nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Профил</a></li>
+    <li class="profile-nav nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Парола</a></li>
+    @if (hasExternalLogins)
+    {
+        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+    }
+    <li class="profile-nav nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Персонални данни</a></li>
+</ul>

@@ -1,0 +1,60 @@
+﻿.administrativen-raion-select-container .dropdown-toggle {
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    border: 2px solid lightgray;
+    border-radius: 1px;
+    color: white;
+}
+
+.administrativen-raion-select-container .bootstrap-select {
+    height: 100% !important;
+    background-color: rgba(0,0,0,0);
+    width: 200px !important;
+}
+
+.administrativen-raion-select-container .btn.dropdown-toggle {
+    padding: 25px;
+}
+
+.region-p {
+    font-size: 24px;
+    text-align: center;
+    height: 100%;
+    line-height: 275%;
+}
+
+/* v.2 -->*/
+.administrativen-raion-select-container2 .dropdown-toggle {
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    border: 2px solid lightgray;
+    border-radius: 1px;
+    color: white;
+}
+
+.administrativen-raion-select-container2 .bootstrap-select {
+    height: 100% !important;
+    background-color: rgba(0,0,0,0);
+    width: 200px !important;
+}
+
+.administrativen-raion-select-container2 .btn.dropdown-toggle {
+    padding: 10px;
+}
+
+.region-p2 {
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+}

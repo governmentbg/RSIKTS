@@ -1,0 +1,43 @@
+﻿@model Common.ViewModels.About.AboutViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Регистър СИК</h1>
+
+<body>
+    <div style="padding-bottom:10px;padding-top:10px;">
+        Версия: @Model.AssemblyVersion
+    </div>
+
+    <div style="padding-bottom:20px;">
+        Компилирана на: @Model.AssemblyTitle
+    </div>
+
+    <hr>
+
+    <div class="row" style="background-color:lightcyan;">
+        <div class="col-sm-2">
+            <img src="~/img/Logo.png" 
+                 style="width:120px; height:110px;margin-top:40px;margin-bottom:300px;" />
+        </div>
+        <div class="col-sm-10" style="margin-top:50px;">
+            <div class="col-md-12">
+                Copyright 2019, TbSoft
+            </div>
+
+            <div class="col-md-12">
+                Home page: https://www.tbsoft.bg
+            </div>
+            <div class="col-md-12">
+                Тelephone: +359 888 405030
+            </div>
+            <div class="col-md-12">
+                Email: krassimir.kirilov@gmail.com
+            </div>
+        </div>
+    </div>
+
+</body>

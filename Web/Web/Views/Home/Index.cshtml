@@ -1,0 +1,171 @@
+﻿@using Common.Enums.User
+@model Common.ViewModels.Izbori.IzboriCompositeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="~/css/home.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+<link rel="stylesheet" href="~/css/chartist.min.css">
+<script>
+    window.onload = function () {
+      var data = {
+              // A labels array that can contain any sort of values
+              labels: 
+                  @Html.Raw(Json.Serialize(@Model
+                                                .DashboardSpravka
+                                                .SustoqnieNaRegistraciite
+                                                .Select(s => s.Col1).ToList()))
+              ,
+              // Our series array that contains series objects or in this case series data arrays
+              series: [
+                  @Html.Raw(Json.Serialize(@Model
+                                                .DashboardSpravka
+                                                .SustoqnieNaRegistraciite
+                                                .Select(s => s.Col3).ToList()))
+          ]
+      };
+
+      new Chartist.Bar('.ct-chart'
+            , data
+            ,{
+              stackBars: true,
+              axisY: {
+                labelInterpolationFnc: function(value) {
+                  return (value)+ '';
+                }
+              }
+            }
+        );
+    }
+</script>
+
+<div style="width:100%; " class="row home-info-row text-center font-weight-bold">
+    <div class="col-md-12 text-center font-weight-bold izbori-text">
+        @Model.IzborAlias
+    </div>
+
+    <!--
+    <div class="col-md-12 text-center font-weight-bold izbori-text">
+        @Model.IzborTur
+    </div>
+
+        @{
+            if (Model.IsUserGlobal == false)
+            {
+                <div class="col-md-2 d-none">
+                    <p class="region-p">@Model.UserRegions.ElementAt(0).Name</p>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6 d-none">
+                    <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="administrativen-raion-select">
+                        @foreach (var region in Model.AllRegions)
+                        {
+                            if (region.Id == Model.UserRegions.ElementAt(0).Id)
+                            {
+                                <option selected value="@region.Id">@region.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@region.Id">@region.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            }
+        }
+    -->
+
+</div>
+
+<div class="row data-picker-row">
+        <div class="Dashboard">
+            <div class="Table">
+                <div class="Row">
+                    <div class="Cell" style="width:300px">
+                        <div class="item" style="height:202px;">
+                            <p class="par">
+                                <div style="padding-bottom:20px;">
+                                    <img src="~/img/SofiaGERB.png" class="mb-4 objina-img" />
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="Cell" style="width:350px">              
+                        <div class="item" style="height:202px;">
+                            <p class="par">Брой лица по политически сили</p>
+                            <div class="ct-chart ct-perfect-fourth"  
+                                 style="height:180px; width:100%;">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Cell" style="width:250px;">
+                        <div class="item" style="height:99px">
+                            <p class="par">Брой въведени секции</p>
+                            <h1 class="counter-center">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C1</h1>
+                        </div>
+
+                        <div class="item" style="height:100px">
+                            <p class="par">Брой въведени лица</p>
+                            <h1 class="counter-center">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C2</h1>
+                        </div>
+                    </div>
+
+                    <div class="Cell" style="width:250px;">
+                        <div class="item" style="height:38px;">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td> <p class="par">Председатели</p></td>
+                                    <td> <h2 class="counter-right">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C3</h2></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="item" style="height:38px;">
+                            <table style="width:100%">
+                                <tr>
+                                    <td> <p class="par">Зам. председатели</p></td>
+                                    <td> <h2 class="counter-right">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C4</h2></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="item" style="height:38px;">
+                            <table style="width:100%">
+                                <tr>
+                                    <td> <p class="par">Секретари</p></td>
+                                    <td> <h2 class="counter-right">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C5</h2></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="item" style="height:38px;">
+                            <table style="width:100%">
+                                <tr>
+                                    <td> <p class="par">Членове</p></td>
+                                    <td> <h2 class="counter-right">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C6</h2></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="item" style="height:38px;">
+                            <table style="width:100%">
+                                <tr>
+                                    <td> <p class="par">Резерви</p></td>
+                                    <td> <h2 class="counter-right">@Model.DashboardSpravka.Razpredeleniq.ElementAt(0).C7</h2></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/UpdateAdministrativenRaion.js"></script>
+    <script src="~/js/chartist.min.js"></script>
+}

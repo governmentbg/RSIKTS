@@ -1,0 +1,71 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Static
+@model SikSpravkaFilter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="modal fade"
+     id="spisukRezerviSpravkaModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="spisukRezerviSpravkaModal"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title">Справка</h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form target="_blank"
+                      asp-area="Lica"
+                      asp-controller="Home"
+                      asp-action="GetSystavRezervi"
+                      method="get">
+
+                    <label asp-for="SikIds"></label>
+                    <select asp-for="SikIds" asp-items="Model.AllSik"
+                            class="selectpicker form-control show-tick col-12 filter-property"
+                            data-live-search="true" data-size="5" title="Всички">
+                    </select>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger col-md-3"
+                                style="margin-right:150px;"
+                                onclick="ClearFilters()"
+                                type="button">
+                            Изчисти
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Изпълни
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Затвори
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}

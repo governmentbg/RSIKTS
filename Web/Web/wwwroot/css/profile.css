@@ -1,0 +1,86 @@
+﻿.profile-nav{
+    border: 1px solid cornflowerblue;
+    height: 100%;
+}
+
+.profile-nav .nav-item{
+    margin: 0;
+    height: 25%;
+    background-color: cornflowerblue;
+    padding:0;
+}
+
+.profile-nav .nav-item:hover {
+    background-color: gray;
+    border: inherit;
+}
+
+.profile-nav.profile-nav-with-icon.nav-item:hover {
+    margin: 0;
+    height: 25%;
+    background-color: cornflowerblue;
+    padding: 0;
+}
+
+.profile-nav .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-nav-container{
+    border: 1px solid cornflowerblue;
+    height: 500px;
+}
+
+.profile-col{
+    padding: 0;
+}
+
+.profile-nav-container input{
+    border: 1px solid cornflowerblue;
+    border-radius: 0;
+}
+
+.profile-register-form-icon-holder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+.profile-register-form-icon-holder:hover {
+    background-color: cornflowerblue !important;
+    border-bottom: 2px solid white !important;
+}
+
+.profile-options-icon{
+    background-color: white;
+    border-radius: 100%;
+    height: 95%;
+    width: 50%;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.profile-register-form-icon {
+    width: 85px;
+    height: 85px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+@media screen and (max-width: 991px) {
+    .profile-nav .nav-item {
+        height: 33.33%;
+    }
+}
+
+
+
+
+
+

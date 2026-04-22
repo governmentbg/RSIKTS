@@ -1,0 +1,39 @@
+﻿.admin-menu-box {
+    height: 200px;
+    margin: 15px;
+    box-shadow: 5px 5px 5px #888888;
+    background-color: cornflowerblue;
+}
+
+.admin-menu-btn {
+    width: 100%;
+    height: 100%;
+    background-color: cornflowerblue;
+    border: none;
+    color: white;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.admin-menu-btn-img{
+    width: 100px;
+    height: 100px;
+}
+
+.admin-menu-box:hover {
+    background-color: gray;
+    transform: scale(1.05);
+}
+
+.admin-menu-btn:hover {
+    background-color: gray;
+}
+
+#new-izbor-form-container {
+    display: block;
+    border: 1px solid cornflowerblue;
+    margin: 15px;
+}
+

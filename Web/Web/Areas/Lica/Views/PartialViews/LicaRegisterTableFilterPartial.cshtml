@@ -1,0 +1,91 @@
+﻿@using Common.ViewModels.Lica
+@using Common.Static
+@model ICollection<LiceGridViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="~/css/lica.css" />
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th style="width: 60px; text-align:center;">ЕГН</th>
+            <th style="width: 150px; text-align:center;">Имена</th>
+            <th style="width: 60px;" text-align:center;>СИК</th>
+            <th style="width: 100px; text-align:center;">Длъжност</th>
+            <th style="width: 100px; text-align:center;">Партия</th>
+            <th style="width: 100px; text-align:center;">Телефон</th>
+            <th style="width: 100px; text-align:center;">Решение</th>
+            <th style="width: 30px; text-align:center;">Марк.</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var lice in Model)
+        {
+        <tr>
+            <td>@lice.EGN</td>
+            <td>
+                @lice.Names
+            </td>
+            <td>
+                @lice.Sik
+            </td>
+            <td>
+                @lice.Dlujnost
+            </td>
+            <td>
+                @lice.Partia
+            </td>
+            <td>
+                @lice.Telefon
+            </td>
+            <td>
+                @lice.Reshenie
+            </td>
+            <td class="lica-register-td-icon">
+                <div class="form-group col-md-6 form-inline mt-2">
+                    <div>
+                        <label class="checkbox-container text-left">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   onchange="ToggleId(@lice.Id)"
+                                   id="zamestitel-check">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        }
+
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<script>
+    allLicaIds = [];
+</script>
+
+@foreach (var lice in Model)
+{
+    <script>
+        
+        AddLiceId(@lice.Id);
+    </script>
+}

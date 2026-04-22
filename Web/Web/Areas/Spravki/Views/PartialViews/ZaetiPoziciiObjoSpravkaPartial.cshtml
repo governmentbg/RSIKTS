@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.Spravki
+@using Common.ViewModels.User
+
+@model IzbRaionWithSikFilter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject SignInManager<SSOUserIdentity> SignInManager
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+
+@{
+    var IsUserGlobal = false;
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        IsUserGlobal = UserServices.GetEditUserById(UserManager.GetUserId(User)).AdministrativenRaion == null ? true : false;
+    }
+}
+
+<style>
+    .modal .filter-option-inner-inner {
+        color: black;
+    }
+</style>
+
+
+<div class="modal fade" id="zaetiPoziciiObjoPublicSpravkaFilterModal" tabindex="-1" role="dialog" aria-labelledby="zaetiPoziciiObjoPublicSpravkaFilterModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Справка</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form target="_blank"
+                      asp-area="Spravki"
+                      asp-controller="Home"
+                      asp-action="GetZaetiPoziciiObjoSpravka" method="get">
+
+                        @if (IsUserGlobal)
+                        {
+                            <label asp-for="IzbRaionNkod"></label>
+                            <select asp-for="IzbRaionNkod"
+                                    asp-items="Model.AllIzbRaioni"
+                                    class="selectpicker form-control show-tick col-12"
+                                    data-live-search="true"
+                                    data-size="5"
+                                    id="izbraion-select">
+                            </select>
+                        }
+                        else
+                        {
+                            <p> Натиснете бутона 'Изпълни'.</p>
+                        }
+                    <!--
+    <label asp-for="AdministrativenRaion"></label>
+    <select asp-for="AdministrativenRaion" asp-items="Model.AllAdministrativniRaioni" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="izbraion-raion-select"></select>
+    -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Изпълни</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

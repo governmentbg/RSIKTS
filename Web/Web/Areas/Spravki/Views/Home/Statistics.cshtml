@@ -1,0 +1,69 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Static
+@model SpravkiCompositeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/statistics.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">@(Model.typestatistics==1? "Справки за РИК/ОИК" : (Model.typestatistics == 2 ? "Служебни справки": "Служебни документи"))</h3>
+</div>
+
+@for (var i = 0; i < Math.Ceiling(Convert.ToDouble(Model.AllStatistics.Count) / SpravkiSettings.NumberOfStatisticsPerRow); i++)
+{
+    <div class="row spravka-row">
+        @{
+            var currentIndex = i * SpravkiSettings.NumberOfStatisticsPerRow;
+            for (var j = 0; j < SpravkiSettings.NumberOfStatisticsPerRow && currentIndex < Model.AllStatistics.Count; j++)
+            {
+                <partial model="Model.AllStatistics.ElementAt(currentIndex)" name="../PartialViews/StatisticsPartial" />
+                currentIndex += 1;
+            }
+        }
+    </div>
+}
+
+<partial name="../PartialViews/SpravkaSikFilterModalPartial" model="Model.SlujebnaSpravka221FiletModel">
+<partial name="../PartialViews/RegisturLicaPublicSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/ControlSpisukNaSekciiteSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukNaSekciiteSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukNaSekciiteSpravkaPartial2" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/BroiNaSekciiteSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/ZaetiPoziciiSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/ZaetiPoziciiObjoSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/ReshetkaSpravkaPartial" model="Model.PartiaFilter">
+<partial name="../PartialViews/ZamestvajiSpravkaPartial" model="Model.SlujebnaSpravka221FiletModel">
+<partial name="../PartialViews/SustoqnieNaRegistraciiteSpravkaPartial" model="Model.RoliFilter">
+<partial name="../PartialViews/SpisukSystavNaSekciiteSpravkaModal" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukRezerviSpravkaModal" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukPodvizjniSekciiSpravkaModal" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/IstoriaSikSpravkaModal" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukSekciiGraniciSpravkaPartial" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukSekciiGraniciSpravkaPartial2" model="Model.IzbRaionFilter">
+<partial name="../PartialViews/SpisukRziPartial" model="Model.RziFilter">
+<partial name="../PartialViews/SpisukSekciiLica" model="Model.IzbRaionFilter">
+
+@section Scripts{
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/lica-filter-form-ajax.js"></script>
+    <script src="~/js/IzbRaionFilter-Dynamic.js"></script>
+    <script>
+        $('form').submit(function () {
+            $('.modal').modal('hide');
+        });
+    </script>
+
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@using Common.ViewModels.Sik
+@using Common.Static
+@model ICollection<SikBasicViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table table-bordered table-lica-register col-md-12" id="sik-table">
+    <thead>
+        <tr>
+            <th style="text-align:center; width:5%;">СИК</th>
+            <th style="text-align:center; width:65%;">Адрес и допълнително описание</th>
+            <th style="text-align:center; width:15%;">Вид</th>
+            <th style="text-align:center; width:10%;">Активна</th>
+            <th style="text-align:center; width:5%;"></th>
+            <th style="text-align:center; width:5%;"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var sik in Model)
+        {
+        <tr>
+            <td class="sik-table-cell">@sik.Id</td>
+            <td>
+                <div>@sik.Address</div>
+                <div>
+                    <a class="sik-address-second-row"> @sik.Descript </a>
+                </div>
+            </td>
+
+            <td>@sik.Vid</td>
+            <td  class="sik-table-cell">
+                @(sik.Status == true ? "Да" : "Не")
+            </td>
+            <td class="lica-register-td-icon">
+                <button onclick="UpdateSikEditModal(this, '@sik.IdSek')"
+                        class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn"
+                        type="button">
+                    <img src="~/img/lica-images/Edit-128.png" class="lica-right-input-icon-table lica-right-input-icon-table-edit" />
+                </button>
+            </td>
+            <td class="lica-register-td-icon">
+                <button onclick="location.href='@Url.Action("RegisterBySik", "Home",new { Area = "Lica", sik = sik.IdSek})'"
+                        class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn" type="button">
+                    <img src="~/img/sik-images/sik_members_blue.png" class="lica-right-input-icon-table sik-right-input-icon-table-garbage" />
+                </button>
+            </td>
+        </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

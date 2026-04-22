@@ -1,0 +1,64 @@
+﻿@using Common.ViewModels.User
+@using Common.ViewModels.Spravki
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+@model TurWithSikSpravkaFilter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    var izboriTur = IzboriServices.getIzborTur();
+    if(izboriTur == "Тур 2")
+    {
+        Model.SelectedTurs = 2;
+    }
+    var raion = UserServices.GetUserRegion(UserManager.GetUserId(User)).Name;
+}
+
+
+<div class="modal fade" id="spravka32SikFilterModal" tabindex="-1" role="dialog" aria-labelledby="spravka32SikFilterModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Рекапитулация [район @raion] </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form target="_blank" asp-area="Lica"
+                      asp-controller="Home"
+                      asp-action="Spravka32" method="get">
+                    <label asp-for="SelectedTurs"></label>
+                    <select asp-for="SelectedTurs"
+                            asp-items="Model.AllTurs"
+                            class="selectpicker form-control show-tick col-12 filter-property-tur"
+                            data-live-search="true" data-size="5" title="Няма"></select>
+
+                    <label asp-for="SikIds"></label>
+                    <select asp-for="SikIds"
+                            asp-items="Model.AllSik"
+                            class="selectpicker form-control show-tick col-12 filter-property"
+                            data-live-search="true" data-size="5" title="Всички"></select>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger col-md-3"
+                                style="margin-right:150px;"
+                                onclick="ClearFilters()"
+                                type="button">
+                            Изчисти
+                        </button>
+
+
+                        <button type="submit" class="btn btn-primary">Изпълни</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
