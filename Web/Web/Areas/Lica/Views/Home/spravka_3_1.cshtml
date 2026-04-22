@@ -1,0 +1,194 @@
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Newtonsoft.Json
+@model List<Common.ViewModels.Lica.LicaForVedomostSpravkaViewModel>
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{
+    var filter = Model.ElementAt(0).filter;
+}
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div style=" margin-left: 5px;position:fixed; width:110px;">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="exportbtn"
+                type="button"
+                onclick="GenerateSpisukLicaExcelExport312();">
+            <img src="/img/navbar-images/ms-excel.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Експорт
+        </button>
+
+        <button class="prnbtn"
+                id="exportbtn1"
+                type="button"
+                onclick="GenerateSpisukLicaExcelExport311();">
+            <img src="/img/navbar-images/ms-excel.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Експорт за Банка
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container">
+        <div>
+            <table style="width:100%;">
+                <tbody>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Община: <strong>СТОЛИЧНА</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>
+                                Отпечатано на:
+                                <script>document.write(new Date().toLocaleString());</script>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Административен район: <strong>@Model.ElementAt(0).NmRajon</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>Изготвил: @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).Names</p>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Изборен район: <strong>@Model.ElementAt(0).NmIzbRajon</strong></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>&nbsp;</p>
+        </div>
+
+        <h3 style="text-align: center;"><strong>Списък - Ведомост</strong></h3>
+        <!--group section -->
+        <div>
+            <p style="text-align: center;">
+                &nbsp;на членовете на секционните избирателни комисии, участвали в
+                &nbsp;@Model.ElementAt(0).IzbName, @Model.ElementAt(0).IzbrTur на @Model.ElementAt(0).IzbrDate
+            </p>
+
+            <p>&nbsp;</p>
+            <table id="spravka">
+                <thead>
+                    <tr>
+                        <th style="width: 61px;"><strong>№</strong></th>
+                        <th style="width: 121px;"><strong>СИК</strong></th>
+                        <th style="width: 370px;"><strong>Длъжност</strong></th>
+                        <th style="width: 370px;"><strong>Име, презиме и фамилия</strong></th>
+                        <th style="width: 370px;"><strong>ЕГН</strong></th>
+                        <th style="width: 112px;"><strong>Сума за получаване в евро</strong></th>
+                        <th style="width: 102px;"><strong>Подпис</strong></th>
+                    </tr>
+                </thead>
+
+                <!--detail section -->
+                <tbody>
+                    @{
+                        int cnt = 0;
+                        decimal suma = 0;
+                        foreach (var lice in Model)
+                        {
+                            cnt++;
+                            suma += lice.Suma;
+                            <tr>
+                                <td style="text-align: right;">@cnt</td>
+                                <td style="text-align: center;">@lice.SikFullCode</td>
+                                <td style="text-align: left;">@lice.Rolia</td>
+                                <td style="text-align: left;">@lice.Imena</td>
+                                <td style="text-align: left;">@lice.EGN</td>
+                                <td style="text-align: right;">@lice.Suma.ToString()</td>
+                                <td style="text-align: left;">&nbsp;</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td style="text-align: left;">Всичко</td>
+                            <td style="text-align: right;">@suma.ToString()</td>
+                            <td style="text-align: left;">&nbsp;</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p>&nbsp;</p>
+            <p>&nbsp;Кмет на район:</p>
+            <p>&nbsp;Гл.счетоводител:</p>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+<script>
+    function GenerateSpisukLicaExcelExport311() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSpisukLicaExcelExport311',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+
+    function GenerateSpisukLicaExcelExport312() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSpisukLicaExcelExport312',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+</script>

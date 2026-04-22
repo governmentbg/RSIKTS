@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.Spravki
+@using Common.ViewModels.User
+
+@inject SignInManager<SSOUserIdentity> SignInManager
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+
+@model IzbRaionWithSikFilter
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    var IsUserGlobal = false;
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        IsUserGlobal = UserServices.GetEditUserById(UserManager.GetUserId(User)).AdministrativenRaion == null ? true : false;
+    }
+}
+
+<div class="modal fade"
+     id="istoriaSikSpravkaModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="istoriaSikSpravkaModal"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title">Справка</h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form target="_blank"
+                      asp-area="Spravki"
+                      asp-controller="Home"
+                      asp-action="GetSikIstoria"
+                      method="get">
+
+                    @if (IsUserGlobal)
+                    {
+                        <label asp-for="IzbRaionNkod"></label>
+                        <select asp-for="IzbRaionNkod"
+                                asp-items="Model.AllIzbRaioni"
+                                class="selectpicker form-control show-tick col-12"
+                                data-live-search="true"
+                                data-size="5"
+                                id="izbraion-select">
+                        </select>
+
+                        <label asp-for="AdministrativenRaion"></label>
+                        <select asp-for="AdministrativenRaion"
+                                asp-items="Model.AllAdministrativniRaioni"
+                                class="selectpicker form-control show-tick col-12"
+                                data-live-search="true"
+                                data-size="5"
+                                id="izbraion-raion-select"></select>
+                    }
+
+                    <label asp-for="DateOt"></label>
+                    <input asp-for="DateOt"
+                           class="form-control"
+                           placeholder="DD/MM/YYYY"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '*'"
+                           required pattern="\d{2}-\d{2}-\d{4}"
+                           type="date" />
+
+                    <label asp-for="DateDo"></label>
+                    <input asp-for="DateDo"
+                           class="form-control"
+                           placeholder="DD/MM/YYYY"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '*'"
+                           required pattern="\d{2}-\d{2}-\d{4}"
+                           type="date" />
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger col-md-3"
+                                style="margin-right:150px;"
+                                onclick="ClearFilters()"
+                                type="button">
+                            Изчисти
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Изпълни
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Затвори
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}

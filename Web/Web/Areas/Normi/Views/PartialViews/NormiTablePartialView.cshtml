@@ -1,0 +1,72 @@
+﻿@using Common.Static
+@using Common.Enums.User
+@using Common.Enums
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<Common.ViewModels.List.CodePositionsWithMoneyViewModel>
+
+<table class="table table-bordered table-lica-register col-md-12" id="normi-table">
+    <thead>
+        <tr>
+            <th style="text-align: center;">Код</th>
+            <th style="text-align: center;">Описание</th>
+            <th style="text-align: center; width:150px;">Активно</th>
+            <th style="text-align: center; width:200px;">Сума[евро]</th>
+            <!--v.2-->
+            @if (User.IsInRole(Roles.Admin.GetDescription()))
+            {
+                <th style="text-align: center;"></th>
+            }
+            </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var norma in Model)
+        {
+            <tr>
+                <td>@norma.Nkode</td>
+                <td>
+                    @norma.Nime
+                </td>
+                <td style="text-align: center;">
+                    @(norma.Status == true ? "Да" : "Не")
+                </td>
+                <td style="text-align: right;">
+                    @norma.Money
+                </td>
+
+                <!--v.2-->
+                @if (User.IsInRole(Roles.Admin.GetDescription()))
+                {
+                    <td class="lica-register-td-icon">
+                        <button onclick="UpdateCodePositionEditModal(this, '@norma.Id')"
+                                class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn"
+                                type="button">
+                            <img src="~/img/lica-images/Edit-128.png"
+                                 class="lica-right-input-icon-table lica-right-input-icon-table-edit" />
+                        </button>
+                    </td>
+                }
+            </tr>
+        }
+
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <!--v.2-->
+                    @if (User.IsInRole(Roles.Admin.GetDescription()))
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,18 @@
+﻿@using Common.Enums.User
+@using Common.Enums
+@using Common.ViewModels.User
+@model AllUsersComposite
+
+
+<div class="col-md-12 admin-register-from-tab-info-col">
+    <button class="btn admin-register-btn" onclick="UpdatePagination(this,@Model.CurrentPage, null)">Всички</button>
+</div>
+<div class="col-md-12 admin-register-from-tab-info-col">
+    <button class="btn admin-register-btn" onclick="UpdatePagination(this,@Model.CurrentPage, '@Roles.Global.GetDescription()')">@Roles.Global.GetDescription()и</button>
+</div>
+<div class="col-md-12 admin-register-from-tab-info-col">
+    <button class="btn admin-register-btn" onclick="UpdatePagination(this,@Model.CurrentPage, '@Roles.Admin.GetDescription()')">@Roles.Admin.GetDescription()и</button>
+</div>
+<div class="col-md-12 admin-register-from-tab-info-col">
+    <button class="btn admin-register-btn " onclick="UpdatePagination(this,@Model.CurrentPage, '@Roles.Partiq.GetDescription()')">@Roles.Partiq.GetDescription()</button>
+</div>

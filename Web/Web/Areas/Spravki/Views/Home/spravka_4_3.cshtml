@@ -1,0 +1,120 @@
+@model List<Common.ViewModels.Spravki.ReshetkaSpravkaViewModel>
+
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{var groups = Model.GroupBy(s => new { s.NmIzbRajon, s.NmRajon, s.WnSila }).ToList();}
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div style=" margin-left: 5px;position:fixed; width:110px;">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    @for (var i = 0; i < groups.Count; i++)
+    {
+
+        <div class="container">
+            <table style="width:100%;">
+                <tbody>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>
+                                Отпечатано на:
+                                <script>document.write(new Date().toLocaleString());</script>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <div>@IzboriServices.GetCode("56")</div>
+                            <div>@IzboriServices.GetCode("57")</div>
+                        </td>
+                        <td style="text-align: right;">
+                            <p>Изготвил: @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).Names</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+            <h3 style="text-align: center;"><strong>Разпределение на лицата </strong></h3>
+            <h3 style="text-align: center;"><strong>по длъжности, секции и политически сили</strong></h3>
+            <!--group section -->
+
+            <div>
+                <p>&nbsp;</p>
+                <p>@groups[i].ElementAt(0).NmIzbRajon</p>
+                <p>@groups[i].ElementAt(0).NmRajon</p>
+                <p>@groups[i].ElementAt(0).WnSila</p>
+                <table style="height: 49px; width: 100%;" id="spravka">
+                    <tbody>
+                        <tr style="height: 31.75px;">
+                            <th style="width: 12.5356%; height: 31.75px;"><strong>&nbsp;Секция</strong></th>
+                            <th style="width: 15.6695%; text-align: center; height: 31.75px;"><strong>Общ брой лица</strong></th>
+                            <th style="width: 17.2365%; text-align: center; height: 31.75px;"><strong>Председател</strong></th>
+                            <th style="width: 18.9459%; text-align: center; height: 31.75px;"><strong>Зам. председател</strong></th>
+                            <th style="width: 17.8063%; text-align: center; height: 31.75px;"><strong>Секретар</strong></th>
+                            <th style="width: 12.3932%; text-align: center; height: 31.75px;"><strong>Членове</strong></th>
+                        </tr>
+                        <!--detail section -->
+                        @foreach (var data in groups[i])
+                        {
+                            <tr style="height: 28px;">
+                                <td style="width: 12.5356%; height: 28px;">&nbsp;@data.SikNumb</td>
+                                <td style="width: 15.6695%; height: 28px; text-align: right;">@data.Col1</td>
+                                <td style="width: 17.2365%; height: 28px; text-align: right;">@data.Col2</td>
+                                <td style="width: 18.9459%; height: 28px; text-align: right;">@data.Col3</td>
+                                <td style="width: 17.8063%; height: 28px; text-align: right;">@data.Col4</td>
+                                <td style="width: 12.3932%; height: 28px; text-align: right;">@data.Col5</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (groups[i] != groups[groups.Count - 1])
+            {
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+            }
+        </div>
+    }
+</div>
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+
+

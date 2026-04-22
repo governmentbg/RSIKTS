@@ -1,0 +1,256 @@
+﻿@model Common.ViewModels.Obrabotki.ObrabotkiCompositeModel
+@using Common.ViewModels.User
+@using Microsoft.AspNetCore.Identity
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Services.Interfaces.Nachislqvaniq.INachislqvaniqServices NachislqvaniqServices
+@inject Services.Interfaces.Raion.IRaionServices RaioniServices
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices _izboriServices;
+@{
+    int regionHasBulstat = RaioniServices.RegionHasBulstat(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+    var HasNachislqvaniq = NachislqvaniqServices.RaionHasNachislqvaniq(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/obrabotki.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Обработки</h3>
+</div>
+
+@if (HasNachislqvaniq)
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn disabled-link">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/document-2-64.png" />
+                <p>Присвояване/Изчистване на дейност</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn disabled-link">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/document-2-64.png" />
+                <p>Присвояване/Изчистване на решение</p>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" onclick="location.href='@Url.Action("Deinosti", "Home",new { Area = "Lica"})'">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/document-2-64.png" />
+                <p>Присвояване/Изчистване на дейност</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" onclick="location.href='@Url.Action("Resheniq", "Home",new { Area = "Lica"})'">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/document-2-64.png" />
+                <p>Присвояване/Изчистване на решение</p>
+            </button>
+        </div>
+    </div>
+}
+
+@if (HasNachislqvaniq)
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" onclick="$('#financi-remove-modal').modal('show')">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/calculator-4-128.png" />
+                <p>Отмяна на финансови изчисления</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" onclick="$('#file-for-nap-modal').modal('show')">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/text-file-5-128.png" />
+                <p>Създаване на Файл за НАП</p>
+            </button>
+        </div>
+
+        @if (_izboriServices.GetIzborMaxTUR() > 1)
+        {
+            <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+                <button title="Корекция с балансираща сума на грешни или пропуснати плащания за Тур 1"
+                        class="obrabotki-menu-btn" onclick="location.href='@Url.Action("KorekciiPaymentFilter", "Home", new { Area = "Obrabotki" })'">
+                    <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payment-correction.png" />
+                    <p>Корекция на плащане в Тур 1</p>
+                </button>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        @if (regionHasBulstat == 0)
+        {
+            <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+                <button class="obrabotki-menu-btn" onclick="$('#financi-generate-modal').modal('show')">
+                    <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/calculator-4-128.png" />
+                    <p>Финансови изчисления</p>
+                </button>
+            </div>
+        }
+        else
+        {
+            if (regionHasBulstat == -1)
+            {
+                <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+                    <button class="obrabotki-menu-btn"
+                            onclick="Swal.fire({type: 'error',title: 'Липсващ БУЛСТАТ!',text: 'Моля въведете първо булстат на района.'})">
+                        <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/calculator-4-128.png" />
+                        <p>Финансови изчисления</p>
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+                    <button class="obrabotki-menu-btn"
+                            onclick="Swal.fire({type: 'error',title: 'Няма данни за Административния район!',text: 'Моля въведете първо данните за района.'})">
+                        <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/calculator-4-128.png" />
+                        <p>Финансови изчисления</p>
+                    </button>
+                </div>
+            }
+        }
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn disabled-link">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/text-file-5-128.png" />
+                <p>Създаване на Файл за НАП</p>
+            </button>
+        </div>
+    </div>
+}
+
+@if (HasNachislqvaniq)
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" data-toggle="modal" data-target="#vedomostSpravkaSikFilterModal">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payroll.png" />
+                <p>Ведомост</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" data-toggle="modal" data-target="#spravka32SikFilterModal">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payroll.png" />
+                <p>Рекапитулация</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn" onclick="location.href='@Url.Action("LicaStatisticFilter", "Home",new { Area = "Spravki", statisticId = 33})'">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payroll.png" />
+                <p>Касов ордер</p>
+            </button>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn disabled-link">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payroll.png" />
+                <p>Ведомост</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn disabled-link">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payroll.png" />
+                <p>Рекапитулация</p>
+            </button>
+        </div>
+        <div class="col-md-3 obrabotki-menu-box pl-0 pr-0">
+            <button class="obrabotki-menu-btn disabled-link">
+                <img class="obrabotki-menu-btn-img" src="~/img/obrabotki-images/payroll.png" />
+                <p>Касов ордер</p>
+            </button>
+        </div>
+
+    </div>
+}
+
+
+@section Scripts{
+
+    <script>
+        $('form').submit(function () {
+            $('.modal').modal('hide');
+        });
+    </script>
+
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".filter-property-tur").val("2");
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}
+
+<partial name="../PartialViews/VedomostSpravkaPartial" model="Model.TurAndSikFilter">
+    <partial name="../PartialViews/Spravka32Partial" model="Model.TurAndSikFilter">
+        <partial name="../PartialViews/FileForNapPartial" model="Model.FileForNapViewModel">
+
+
+            <div class="modal" tabindex="-1" role="dialog" id="financi-generate-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Финансови изчисления</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-area="Obrabotki" asp-controller="Home" asp-action="NachislqvaneOsigurovki" method="get">
+                            <div class="modal-body text-center">
+                                <p>
+                                    <strong>Внимание!!!</strong>
+                                </p>
+                                <p>
+                                    След завършването на тази операция, ще се забрани работата с настройките, регистрите и локалните номенклатури.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick='window.location.replace("/Obrabotki/Home/NachislqvaneOsigurovki");'>Продължи</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказване</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" tabindex="-1" role="dialog" id="financi-remove-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Финансови изчисления</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-area="Obrabotki" asp-controller="Home" asp-action="NachislqvaneOsigurovki" method="get">
+                            <div class="modal-body text-center">
+                                <p>
+                                    <strong>Внимание!!!</strong>
+                                </p>
+                                <p>
+                                    След завършването на тази операция, ще бъдат изтрити всички финансови изчисления.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick='window.location.replace("/Obrabotki/Home/NachislqvaneOsigurovki");'>Продължи</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказване</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>

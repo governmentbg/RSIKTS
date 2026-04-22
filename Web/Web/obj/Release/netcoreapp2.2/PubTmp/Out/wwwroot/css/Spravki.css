@@ -1,0 +1,69 @@
+﻿html {
+    min-height: 100%;
+}
+
+body {
+    background-color: lightgray;
+    min-height: 100%;
+}
+
+.container {
+    position: relative;
+    margin: 5px auto;
+    background-color: white;
+    padding: 20px;
+    min-height: 900px;
+    width: 800px;
+}
+
+.navbar-landscape {
+    position: relative;
+    margin: 5px auto;
+    width: 1200px;
+    min-height: 60px;
+}
+
+.container-landscape {
+    position: relative;
+    margin: 5px auto;
+    background-color: white;
+    padding: 20px;
+    width: 1200px;
+    min-height: 750px;
+}
+
+#spravka {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#spravka td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: smaller;
+    height: 30px;
+}
+
+#spravka th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#spravka tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#spravka tr:hover {
+    background-color: #ddd;
+}
+
+#spravka th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+    height: 35px;
+    text-align: center;
+}

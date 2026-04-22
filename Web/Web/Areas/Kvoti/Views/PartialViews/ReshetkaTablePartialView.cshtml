@@ -1,0 +1,154 @@
+﻿@using Common.Static;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Common.ViewModels.Kvoti.ReshetkaCompositeViewModel
+
+<table class="table table-bordered table-lica-register col-md-12" id="reshetka-table">
+    <thead>
+        <tr>
+            <th style="width: 80px; text-align: center;vertical-align: top;">Секция</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Председател</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Зам. председател</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Секретар</th>
+
+            @if (Model.SikMaxMembers >= 1)
+            {
+                <th style="width: 100px; text-align: center;vertical-align: top;">Член</th>
+            }
+            @if (Model.SikMaxMembers >= 2)
+            {
+                <th style="width: 100px; text-align: center;vertical-align: top;">Член</th>
+            }
+            @if (Model.SikMaxMembers >= 3)
+            {
+                <th style="width: 100px; text-align: center;vertical-align: top;">Член</th>
+            }
+            @if (Model.SikMaxMembers >= 4)
+            {
+                <th style="width: 100px; text-align: center;vertical-align: top;">Член</th>
+            }
+            @if (Model.SikMaxMembers >= 5)
+            {
+                <th style="width: 100px; text-align: center;vertical-align: top;">Член</th>
+            }
+            @if (Model.SikMaxMembers >= 6)
+            {
+                <th style="width: 100px; text-align: center;vertical-align: top;">Член</th>
+            }
+            <th style="width: 30px; text-align: center;vertical-align: top;"></th>
+            <th style="width: 30px; text-align: center;vertical-align: top;"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var reshetka in Model.ReshetkaData)
+        {
+            <tr style="height:20px;">
+                <td>
+                    @reshetka.SikFullCode
+                </td>
+                <td style="text-align: center;">
+                    @reshetka.PrecedatelPartiq
+                </td>
+                <td style="text-align: center;">
+                    @reshetka.ZamestnikPrecedatelPartiq
+                </td>
+                <td style="text-align: center;">
+                    @reshetka.SekretarPartiq
+                </td>
+
+                @if (Model.SikMaxMembers >= 1)
+                {
+                    <td style="text-align: center;">
+                        @reshetka.Chlen1Partiq
+                    </td>
+                }
+
+                @if (Model.SikMaxMembers >= 2)
+                {
+                    <td style="text-align: center;">
+                        @reshetka.Chlen2Partiq
+                    </td>
+                }
+
+                @if (Model.SikMaxMembers >= 3)
+                {
+                    <td style="text-align: center;">
+                        @reshetka.Chlen3Partiq
+                    </td>
+                }
+
+                @if (Model.SikMaxMembers >= 4)
+                {
+                    <td style="text-align: center;">
+                        @reshetka.Chlen4Partiq
+                    </td>
+                }
+
+                @if (Model.SikMaxMembers >= 5)
+                {
+                    <td style="text-align: center;">
+                        @reshetka.Chlen5Partiq
+                    </td>
+                }
+
+                @if (Model.SikMaxMembers >= 6)
+                {
+                    <td style="text-align: center;">
+                        @reshetka.Chlen6Partiq
+                    </td>
+                }
+                <td class="lica-register-td-icon">
+                    <button onclick="UpdateKvotiEditModal(this, '@reshetka.Id','@reshetka.SikFullCode')" class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn" type="button">
+                        <img src="~/img/lica-images/Edit-128.png" class="lica-right-input-icon-table lica-right-input-icon-table-edit" />
+                    </button>
+                </td>
+
+                <td class="lica-register-td-icon">
+                    <button onclick="UpdateReshetaDetailstModal(this, '@reshetka.Id','@reshetka.SikFullCode')" class="btn btn-outline-secondary lica-btn-with-icon-table lica-right-input-icon-table-btn" type="button">
+                        <img src="~/img/kvoti-images/Report-Editor-256.png" class="lica-right-input-icon-table kvoti-right-input-icon-table-details" />
+                    </button>
+                </td>
+            </tr>
+        }
+
+        @if (Model.ReshetkaData.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.ReshetkaData.Count; i++)
+            {
+                <tr style="height:20px;">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    @if (Model.SikMaxMembers >= 1)
+                    {
+                        <td></td>
+                    }
+                    @if (Model.SikMaxMembers >= 2)
+                    {
+                        <td></td>
+                    }
+                    @if (Model.SikMaxMembers >= 3)
+                    {
+                        <td></td>
+                    }
+                    @if (Model.SikMaxMembers >= 4)
+                    {
+                        <td></td>
+                    }
+                    @if (Model.SikMaxMembers >= 5)
+                    {
+                        <td></td>
+                    }
+                    @if (Model.SikMaxMembers >= 6)
+                    {
+                        <td></td>
+                    }
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

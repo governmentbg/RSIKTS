@@ -1,0 +1,190 @@
+﻿@model List<Common.ViewModels.Lica.LicaForSpravka211ViewModel>
+
+
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{var groups = Model.GroupBy(s => s.SikFullCode).ToList();}
+
+
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print-landscape.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div class="navbar-landscape">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container-landscape">
+
+        <!--group section -->
+        @for (var i = 0; i < groups.Count; i++)
+        {
+            <div>
+                <table style="width:100%;">
+                    <tbody>
+                        <tr style="height:30px">
+                            <td style="text-align: left;">
+                                <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                            </td>
+                            <td style="text-align: right;">
+                            </td>
+                        </tr>
+
+                        <tr style="height:30px">
+                            <td style="text-align: left;">
+                                <p><strong> @groups[0].ElementAt(0).NmIzbRajon</strong></p>
+                            </td>
+                            <td style="text-align: right;">
+                            </td>
+                        </tr>
+
+                        <tr style="height:30px">
+                            <td style="text-align: left;">
+                                <p>
+                                    Община: СТОЛИЧНА
+                                </p>
+                            </td>
+                            <td>
+                                <p style="text-align: right;margin-right:50px;">
+                                    Председател на @IzboriServices.GetCode("58"):.................
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr style="height:30px">
+                            <td style="text-align: left;">
+                                <p>
+                                    Административен район: @groups[0].ElementAt(0).NmRajon
+                                </p>
+                            </td>
+                            <td>
+                                <p style="text-align: right;margin-right:50px;">
+                                    Секретар на @IzboriServices.GetCode("58"):.......................
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr style="height:30px">
+                            <td style="text-align: left;">
+                                <p>
+                                    Секционна избирателна комисия №: @groups[i].ElementAt(0).SikFullCode
+                                </p>
+                            </td>
+                            <td style="text-align: right;">
+                                <p>
+                                </p>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <h3 style="text-align: center;">Списък на секционна избирателна комисия</h3>
+
+            <div>
+                <p>&nbsp;</p>
+
+                <table id="spravka">
+                    <tbody>
+                        <tr>
+                            <th style="width: 60px; "><strong>№</strong></th>
+                            <th style="width: 130px;"><strong>Длъжност</strong></th>
+                            <th style="width: 180px;"><strong>Име, Презиме, Фамилия</strong></th>
+                            <th style="width: 90px;"><strong>ЕГН</strong></th>
+                            <th style="width: 110px;"><strong>Образование</strong></th>
+                            <th style="width: 110px;"><strong>Специалност</strong></th>
+                            <th style="width: 140px;"><strong>Партия/Коалиция</strong></th>
+                            <th style="width: 110px;"><strong>Телефон</strong></th>
+                        </tr>
+
+                        @{int cnt = 0;
+                            foreach (var lice in groups[i])
+                            {
+                                cnt++;
+                                <!--detail section -->
+                                <tr>
+                                    <td style="text-align: left;">@cnt</td>
+                                    <td style="text-align: left;">@lice.Rolia</td>
+                                    <td style="text-align: left;">@lice.Imena</td>
+                                    <td style="text-align: left;">@lice.Egn</td>
+                                    <td style="text-align: left;">@lice.Obrazovanie</td>
+                                    <td style="text-align: left;">@lice.Specialnost</td>
+                                    <td style="text-align: left;">@lice.Sila</td>
+                                    <td style="text-align: left;">@lice.Telephone</td>
+                                </tr>
+                                <!--end detail section -->
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+                <div class="pos-f-t" style="width:70%;">
+                    Адрес на СИК:
+                    <br />
+                    @groups[i].ElementAt(0).SikAddress
+                    <br />
+                    @groups[i].ElementAt(0).descript
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:20px;margin-right:50px;">
+                <div class="pos-f-t" style="width:100%;text-align:right">
+                    Кмет на район:......................
+                </div>
+            </div>
+
+
+            <div class="row" style="margin-top:30px;margin-right:50px;">
+                <div class="pos-f-t" style="width:100%;text-align:right">
+                    Секретар на район:................
+                </div>
+            </div>
+
+            if (groups[i] != groups[groups.Count - 1])
+            {
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+            }
+
+        }
+    </div>
+</div>
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>

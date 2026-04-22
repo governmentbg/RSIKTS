@@ -1,0 +1,46 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Enums.Spravki
+
+@{
+    ViewData["Title"] = "IndexAdditionalSets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-menu.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Допълнителни настройки</h3>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-3 admin-menu-box pl-0 pr-0">
+        <button class="admin-menu-btn" onclick="location.href='@Url.Action("Index", "Home",new { Area = "Parameters"})'">
+            <img class="admin-menu-btn-img" src="~/img/admin-images/technical-service.png" />
+            <p>Общи настройки</p>
+        </button>
+    </div>
+
+    <div class="col-md-3 admin-menu-box pl-0 pr-0">
+        <button class="admin-menu-btn" onclick="location.href='@Url.Action("CommonIndex", "Home",new { Area = "Parameters"})'">
+            <img class="admin-menu-btn-img" src="~/img/admin-images/technical-service.png" />
+            <p>Настройки за изборен район</p>
+        </button>
+    </div>
+
+    <div class="col-md-3 admin-menu-box pl-0 pr-0">
+        <button class="admin-menu-btn" 
+                onclick="location.href='@Url.Action("NomenIndex", "Home",new { Area = "Parameters"})'">
+            <img class="admin-menu-btn-img" src="~/img/admin-images/technical-service.png" />
+            <p>Номенклатури</p>
+        </button>
+    </div>
+
+    <div class="col-md-3 admin-menu-box pl-0 pr-0">
+        <button class="admin-menu-btn" 
+                onclick="location.href='@Url.Action("IzbDateIndex", "Home",new { Area = "Parameters"})'">
+            <img class="admin-menu-btn-img" src="~/img/admin-images/technical-service.png" />
+            <p>Дати на изборите</p>
+        </button>
+    </div>
+</div>
+

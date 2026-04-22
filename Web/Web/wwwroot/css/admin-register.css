@@ -1,0 +1,59 @@
+﻿.admin-form-tab-info {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    color: white;
+    background-color: cornflowerblue;
+}
+.admin-register-form{
+    width: 100%;    
+}
+
+.admin-register-form-icon-holder{
+    background-color: white;
+    padding: 10px;
+    padding-bottom: 20px;
+    border-radius: 100px;
+}
+
+.admin-register-form-icon{
+    height: 100%;
+    width: 100%;
+}
+
+.admin-btn-with-icon {
+    height: 100%;
+    border: none;
+    background-color: white;
+    padding: 0;
+}
+
+.admin-btn-icon{
+    height: 48px;
+    width:48px;
+}
+
+#raion-select-container{
+    display: none;
+}
+
+#partiq-select-container{
+    display: none;
+}
+
+.dropdown-toggle {
+    background-color: white;
+    border: 1px solid #ced4da;
+}
+
+@media screen and (max-width: 767px) {
+    .admin-form-tab-info {
+        padding-bottom: 0px;
+    }
+
+    .admin-register-form-icon-holder {
+        width: 150px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

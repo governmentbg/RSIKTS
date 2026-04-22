@@ -1,0 +1,67 @@
+﻿@using Common.Static;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<Common.ViewModels.Kvoti.ReshetkaDetailsViewModel>
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th style="width: 200px; text-align: center;vertical-align: top;">Партия</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Брой рък. членове</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Общо</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var reshetka in Model)
+        {
+            <tr>
+                <td style="text-align: left;">
+                    @reshetka.Nime
+                </td>
+
+                <td class="text-right">
+                    @reshetka.BroiRukChlenove
+                </td>
+
+                <td class="text-right">
+                    @reshetka.Objo
+                </td>
+               </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="kvoti-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reshetka-edit-header">Редактиране</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Kvoti" asp-controller="Home" asp-action="EditKvota" id="kvoti-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="kvoti-edit-modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-primary">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

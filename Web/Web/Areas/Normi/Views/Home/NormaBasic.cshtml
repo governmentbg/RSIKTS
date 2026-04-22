@@ -1,0 +1,65 @@
+﻿@model Common.ViewModels.List.NormaBasicComposite
+@inject Services.Interfaces.Izbori.IIzboriServices _izboriServices;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+
+<div class="row mb-2 text-center">
+    @{
+        var data = ViewBag.Message;
+    }
+    <h3 style="width: 100%">@data</h3>
+</div>
+
+@if (_izboriServices.GetIzborMaxTUR() > 1)
+{
+    <div class="form-group col-md-6 pr-0 pl-0 mb-2">
+        <span>Тур</span>
+        <select class="selectpicker form-control show-tick col-md-12"
+                data-live-search="true"
+                data-size="5"
+                id="tur-type">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+    </div>
+}
+
+<input asp-for="NormaName" type="hidden" id="norma-name"/>
+
+<partial model="Model.Data" name="../PartialViews/NormiTablePartialView" />
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="normi-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="normi-edit-header">Редактиране</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Normi" asp-controller="Home" asp-action="EditNorma" id="normi-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="normi-edit-modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-primary">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/normi-form-ajax.js"></script>
+    <script src="~/js/normi-curd-main.js"></script>
+}

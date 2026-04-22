@@ -1,0 +1,135 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Newtonsoft.Json
+
+@model List<Common.ViewModels.Spravki.SpravkaSekciiLicaViewModel>
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{
+    var filter = Model.ElementAt(0).filter;
+}
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div style=" margin-left: 5px;position:fixed; width:110px;">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="exportbtn"
+                type="button"
+                onclick="GenerateSekciiLicaExport();">
+            <img src="/img/navbar-images/ms-excel.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Експорт
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container">
+        <div>
+            <table style="width:100%;">
+                <tbody>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                        </td>
+                    </tr>
+
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Община: СТОЛИЧНА</p>
+                        </td>
+                        <td style="text-align: right;"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>&nbsp;</p>
+        </div>
+
+        <h3 style="text-align: center;"> СПРАВКА за брой секции и брой лица по длъжности и дейности</h3>
+        <p>
+            @(Model[0].NmIzbRajon.Length > 0? "Избирателен район: "+ Model[0].NmIzbRajon :"")
+        </p>
+        <p>
+            @(Model[0].NmRajon.Length > 0? "Административен район: "+ Model[0].NmRajon :"")
+        </p>
+        <table id="spravka">
+            <tbody>
+                <tr>
+                    <th style="width: 30px; "><strong>№</strong></th>
+                    <th style="width: 200px;"><strong>Показател</strong></th>
+                    <th style="width: 60px;"><strong>СИК Основни</strong></th>
+                    <th style="width: 60px; "><strong>СИК Служебни</strong></th>
+                    <th style="width: 60px;"><strong>ПСИК </strong></th>
+                    <th style="width: 60px;"><strong>ОБЩО</strong></th>
+                </tr>
+
+                @foreach (var row in Model)
+                {
+                    <!--detail section -->
+                    <tr>
+                        <td style="text-align: left;">@row.rowno.ToString("#.#").Replace(",", ".")</td>
+                        <td style="text-align: left;">@row.Pokazatel</td>
+                        <td style="text-align: right;">@row.SIK0</td>
+                        <td style="text-align: right;">@row.SIK1</td>
+                        <td style="text-align: right;">@row.PSIK</td>
+                        <td style="text-align: right;">@row.Total</td>
+                    </tr>
+                    <!--end detail section -->
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+<script>
+    function GenerateSekciiLicaExport() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSekciiLicaExport',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+</script>

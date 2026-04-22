@@ -1,0 +1,169 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Newtonsoft.Json
+
+@model List<Common.ViewModels.Spravki.SpisykPodvizjniSekciiViewModel>
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{
+    var groups = Model.GroupBy(u =>  u.NmRajon).ToList(); 
+    var filter = "";
+}
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div style=" margin-left: 5px;position:fixed; width:110px;">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container">
+        <table style="width:100%;">
+            <tbody>
+                <tr style="height:30px">
+                    <td style="text-align: left;">
+                        <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                    </td>
+                    <td style="text-align: right;">
+                        <p>
+                            Отпечатано на:
+                            <script>document.write(new Date().toLocaleString());</script>
+                        </p>
+                    </td>
+                </tr>
+                <tr style="height:30px">
+                    <td style="text-align: left;">
+                        <div>@IzboriServices.GetCode("56")</div>
+                        <div>@IzboriServices.GetCode("57")</div>
+
+                        <!--
+                            <p>Административен район: <strong> @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name</strong></p>
+    -->
+                    </td>
+                    <td style="text-align: right;">
+                        <p>Изготвил: @UserServices.GetIdentityUserById(UserManager.GetUserId(User)).Names</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="text-align: center;">Обхват на подвижни секции</h3>
+
+        <!--group section -->
+        @for (var i = 0; i < groups.Count; i++)
+        {
+            <div>
+                <p>&nbsp;</p>
+
+                <table style="width:100%;">
+                    <tbody>
+                        <tr style="height:30px">
+                            <td style="text-align: left; width:50%">
+                                <p>@groups[i].ElementAt(0).NmIzbRajon</p>
+                            </td>
+                            <td style="text-align: right;">
+                            </td>
+                        </tr>
+
+                        <tr style="height:30px">
+                            <td style="text-align: left; width:50%">
+                                <p>Административен район:@groups[i].ElementAt(0).NmRajon</p>
+                            </td>
+                            <td style="text-align: left;">
+                                <p>Брой избиратели: @groups[i].ElementAt(0).SumVoter</p>
+                            </td>
+                        </tr>
+
+                        <tr style="height:30px">
+                            <td style="text-align: left; width:50%">
+                                <p>Секция №:<strong>@groups[i].ElementAt(0).SikNumb</strong></p>
+                            </td>
+                            <td style="text-align: left;">
+                                <p>Адрес: @groups[i].ElementAt(0).Address</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Облужвани райони:</p>
+
+            var siktoa = Model.Where(u => u.SikNumb == groups[i].ElementAt(0).SikNumb).ToList();
+
+            <div>
+                <table style="height: 49px; width: 100%;" id="spravka">
+                    <tbody>
+                        <tr style="height: 31.75px;">
+                            <th style="width: 70%; height: 31.75px;"><strong>Административен район</strong></th>
+                            <th style="width: 30%; text-align: center; height: 31.75px;"><strong>Брой избиратели</strong></th>
+                        </tr>
+                        <!--detail section -->
+                        @foreach (var data in siktoa)
+                        {
+                            <tr style="height: 28px;">
+                                <td style="height: 28px;">@data.ObsRajon</td>
+                                <td style="height: 28px; text-align: right;">@data.Voters</td>
+                            </tr>
+                        }
+                        <!--end detail section -->
+                    </tbody>
+                </table>
+            </div>
+
+            if (groups[i] != groups[groups.Count - 1])
+            {
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+            }
+        }
+    </div>
+</div>
+
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+<script>
+    function GenerateSpisukLicaExcelExport23() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSpisukLicaExcelExport23',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+</script>

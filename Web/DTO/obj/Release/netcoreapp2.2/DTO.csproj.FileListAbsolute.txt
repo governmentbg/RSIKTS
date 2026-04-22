@@ -1,0 +1,13 @@
+C:\VotingRegister\Web\DTO\bin\Release\netcoreapp2.2\DTO.deps.json
+C:\VotingRegister\Web\DTO\bin\Release\netcoreapp2.2\DTO.dll
+C:\VotingRegister\Web\DTO\bin\Release\netcoreapp2.2\DTO.pdb
+C:\VotingRegister\Web\DTO\bin\Release\netcoreapp2.2\Common.dll
+C:\VotingRegister\Web\DTO\bin\Release\netcoreapp2.2\Common.pdb
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.AssemblyInfoInputs.cache
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.AssemblyInfo.cs
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.csproj.CoreCompileInputs.cache
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.csproj.CopyComplete
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.dll
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.pdb
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.csproj.AssemblyReference.cache
+C:\VotingRegister\Web\DTO\obj\Release\netcoreapp2.2\DTO.GeneratedMSBuildEditorConfig.editorconfig

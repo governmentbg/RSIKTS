@@ -1,0 +1,92 @@
+﻿/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: -2px;
+    background-color: cornflowerblue; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    white-space: nowrap;
+    border-right: white solid 2px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 4px 4px 4px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.disabled-link {
+    background-color: #8c8c8c !important;
+    color: lightgray !important;
+    cursor: no-drop !important;
+    font-style: italic !important;
+}
+
+.disabled-menu-link {
+    background-color: cornflowerblue !important;
+    color: #cccccc !important;
+    cursor: no-drop !important;
+    font-style: italic !important;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav-link:hover {
+    background-color: gray;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav .nav-img {
+    width: 64px;
+    margin: auto;
+}
+
+.sidenav-open-btn {
+    font-size: 32px;
+    user-select: none;
+    cursor: pointer;
+    margin-right: 25px;
+}
+
+#sidenav-ico {
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+}
+
+@media screen and (max-width: 992px) {
+    .sidenav-open-btn {
+        margin-right: 0;
+    }
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,41 @@
+﻿@model ICollection<Common.ViewModels.Raion.RaionMainViewModel>
+@using Common.Static
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<table class="table table-bordered table-raioni-main-register col-md-12" id="raioni-main-table">
+    <thead>
+        <tr>
+            <th>Код</th>
+            <th>Наименование</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var raion in Model)
+        {
+            <tr>
+                <td>@raion.ToaId</td>
+                <td>@raion.Name</td>
+              
+                <td class="raioni-main-register-td-icon"><button onclick="UpdateRaionEditModal(this, '@raion.Nrec')" class="btn btn-outline-secondary raioni-main-btn-with-icon-table raioni-main-right-input-icon-table-btn" type="button"><img src="~/img/raioni-main-images/Edit-128.png" class="raioni-main-right-input-icon-table raioni-main-right-input-icon-table-edit" /></button></td>
+                <td class="raioni-main-register-td-icon"><button onclick="DeleteRaioniMainPopup(this, '@raion.Nrec')" class="btn btn-outline-secondary raioni-main-btn-with-icon-table raioni-main-right-input-icon-table-btn" type="button"><img src="~/img/raioni-main-images/Garbage-Closed-128.png" class="raioni-main-right-input-icon-table raioni-main-right-input-icon-table-garbage" /></button></td>
+
+            </tr>
+        }
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/sik.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+
+<div class="row sik-number-row">
+    <div class="input-group col-lg-3 col-md-4 sik-number-col">
+        <label class="sik-input-label" for="sik">СИК (филтър): </label>
+        <input class="form-control sik-number-input" type="text" class="sik-input" id="sik" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary sik-btn-with-icon" type="button"><img src="~/img/sik-images/Search-Find-128.png" class="sik-right-input-icon" /></button>
+        </div>
+    </div>
+    <div class="input-group col-md-1 sik-number-col ml-auto">
+        <button class="btn sik-btn-save"><img class="sik-btn-save-img" src="~/img/lica-images/save.png" /></button>
+    </div>
+</div>
+
+
+<div class="row sik-form-row">
+    <div class="row col-md-12 sik-form">
+
+        <div class="sik-form-tab-info col-md-2">
+            <p class="form-tab-info-text">Данни за СИК</p>
+        </div>
+
+        <form asp-area="Lica" asp-controller="Home" asp-action="Index" method="post" class="col-md-10">
+            <div class="tab">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="oblast">Област</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="oblast">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="objina">Община</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="objina">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="raion">Район</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="raion">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="naselenoMqsto">Населено Място</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="naselenoMqsto">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="kmetstvo">Кметство</label>
+                        <input class="form-control sik-input" type="text" id="kmetstvo" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="zipCode">Пощенски код</label>
+                        <input class="form-control sik-input" type="text" id="zipCode" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="ulica">Улица</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="ulica">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="kmetstvo">Номер</label>
+                        <input class="form-control sik-input" type="text" id="nomer" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="jk">ЖК</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="ulica">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="block">Блок</label>
+                        <input class="form-control sik-input" type="text" id="block" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="adress">Описание</label>
+                        <input class="form-control sik-input" type="text" id="adress" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="opisanie">Допълнително описание</label>
+                        <input class="form-control sik-input" type="text" id="opisanie" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab">
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="status">Статус</label>
+                        <select class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="status">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="prefiks">Префикс</label>
+                        <input class="form-control sik-input" type="text" id="prefiks" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="text-align:center;margin-top:40px;">
+    <span class="step" onclick="showTab(0)"></span>
+    <span class="step" onclick="showTab(1)"></span>
+</div>
+
+@section Scripts {
+    <script src="/js/lica-form-navigation.js"></script>
+    <script src="/js/bootstrap-select/js/bootstrap-select.js"></script>
+}

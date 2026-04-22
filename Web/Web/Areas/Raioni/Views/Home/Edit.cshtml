@@ -1,0 +1,181 @@
+﻿@model Common.ViewModels.Raion.RaionAddViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<form asp-area="Raioni" 
+      asp-controller="Home" 
+      asp-action="EditRaion" 
+      id="raion-edit-form" 
+      class="form-horizontal">
+
+    <input type="hidden" asp-for="Nrec" />
+
+    <div class="row raioni-main-number-row">
+
+        <div class="input-group col-lg-2 col-md-4 raioni-main-number-col">
+        </div>
+        <div class="input-group col-lg-8 col-md-5 raioni-main-number-col" id="pagination-container">
+        </div>
+        <div id="alerts-container" class="col-10" style="padding-left:0px;"></div>
+
+        <div class="col-lg-2 col-md-3 col-sm-12 no-padding raioni-main-btn-add-col">
+            <button type="submit" class="btn lica-btn-save">
+                <img class="lica-btn-save-img" src="~/img/lica-images/save.png" />
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row" style="width:98%";>
+        <div class="col-md-12 lica-form">
+            <div class="row lica-info-form-row">
+
+                <div class="raioni-form-tab-info col-md-2">
+                    <p class="form-tab-info-text">Данни за района</p>
+                </div>
+
+                <div class="col-md-10" style="height:535px;">
+                    <div class="tab">
+                        <div class="row">
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Oblast" class="control-label"></label>
+                                <select asp-for="Oblast" asp-items="Model.AllOblasti" class="selectpicker form-control show-tick col-md-12" data-live-search="true" data-size="5"></select>
+                                <span asp-validation-for="Oblast" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Objina" class="control-label"></label>
+                                <select asp-for="Objina" asp-items="Model.AllObjini" class="selectpicker form-control show-tick col-md-12" data-live-search="true" data-size="5"></select>
+                                <span asp-validation-for="Objina" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="AdministrativenRaion" class="control-label"></label>
+                                <select asp-for="AdministrativenRaion" asp-items="Model.AllAdministrativniRaioni" class="selectpicker form-control show-tick col-md-12" data-live-search="true" data-size="5"></select>
+                                <span asp-validation-for="AdministrativenRaion" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8">
+                                <label asp-for="NaselenoMqsto"></label>
+                                <select asp-for="NaselenoMqsto" asp-items="Model.AllNaseleniMesta" class="selectpicker form-control show-tick col-md-12" data-live-search="true" data-size="5" id="naselno-mqsto-select"></select>
+                                <span asp-validation-for="NaselenoMqsto" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4">
+                                <label asp-for="ZipCode"></label>
+                                <input asp-for="ZipCode" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="ZipCode" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Ulica"></label>
+                                <select asp-for="Ulica" asp-items="Model.AllUlici" class="selectpicker form-control show-tick col-md-12" data-live-search="true" data-size="5" id="ulica-select"></select>
+                                <span asp-validation-for="Ulica" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Nomer"></label>
+                                <input asp-for="Nomer" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Nomer" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Kvartal"></label>
+                                <select asp-for="Kvartal" asp-items="Model.AllKvartali" class="selectpicker form-control show-tick col-md-12" data-live-search="true" data-size="5"></select>
+                                <span asp-validation-for="Kvartal" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Blok"></label>
+                                <input asp-for="Blok" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Blok" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Vhod"></label>
+                                <input asp-for="Vhod" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Vhod" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Etaj"></label>
+                                <input asp-for="Etaj" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Etaj" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Apartament"></label>
+                                <input asp-for="Apartament" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Apartament" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Telephone"></label>
+                                <input asp-for="Telephone" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Telephone" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab">
+                        <div class="row">
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="BroiSekcii"></label>
+                                <input asp-for="BroiSekcii" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="BroiSekcii" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Predstavka"></label>
+                                <input asp-for="Predstavka" class="form-control lica-input col-md-12" type="text" readonly />
+                                <span asp-validation-for="Predstavka" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="RikOrSik"></label>
+                                <input asp-for="RikOrSik" class="form-control lica-input col-md-12" type="text" readonly />
+                                <span asp-validation-for="RikOrSik" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="MaxBroiChlenove"></label>
+                                <input asp-for="MaxBroiChlenove" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="MaxBroiChlenove" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="KmetNaRaion"></label>
+                                <input asp-for="KmetNaRaion" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="KmetNaRaion" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Precedatel"></label>
+                                <input asp-for="Precedatel" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Precedatel" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-8 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Sekretar"></label>
+                                <input asp-for="Sekretar" class="form-control lica-input col-md-12" type="text" />
+                                <span asp-validation-for="Sekretar" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-inline col-md-4 mt-sm-auto mb-lg-auto">
+                                <label asp-for="Bulstat"></label>
+                                <input asp-for="Bulstat" class="form-control lica-input col-md-12" type="text" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                                <span asp-validation-for="Bulstat" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<div style="text-align:center;margin-top:20px;">
+    <span class="step" onclick="showTab(0)"></span>
+    <span class="step" onclick="showTab(1)"></span>
+</div>

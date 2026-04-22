@@ -1,0 +1,5 @@
+
+ec912002fbf7267c53357b29c2139efefa29401c
+
+icacls "C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys\ec912002fbf7267c53357b29c2139efefa29401c" /grant kkirilov:R
+

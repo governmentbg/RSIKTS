@@ -1,0 +1,43 @@
+﻿@media print {
+    .noPrint {
+        display: none;
+    }
+
+    #printbtn {
+        display: none;
+    }
+
+    @page {
+        size: landscape;
+    }
+
+    body {
+        color: #000;
+        background-color: #fff;
+    }
+
+    header, footer, aside, nav, form, iframe, .menu, .hero, .adslot {
+        display: none;
+    }
+
+}
+
+.prnbtn {
+    background-color: cornflowerblue;
+    color: white;
+    cursor: pointer;
+    width: 100px;
+}
+
+/* When you mouse over the navigation links, change their color */
+.prnbtn:hover {
+    background-color: gray;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tfoot {
+    display: table-header-group;
+}

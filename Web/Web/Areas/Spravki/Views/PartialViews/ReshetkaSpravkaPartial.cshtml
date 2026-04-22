@@ -1,0 +1,38 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Static
+@model PartiaFilterViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+    .modal .filter-option-inner-inner{
+        color: black;
+    }
+</style>
+
+
+<div class="modal fade" id="reshetkaSpravkaFilterModal" tabindex="-1" role="dialog" aria-labelledby="reshetkaSpravkaFilterModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Справка</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form target="_blank" asp-area="Spravki" asp-controller="Home" asp-action="GetReshetkaSpravka" method="get">
+                    <label asp-for="Sila"></label>
+                    <select asp-for="Sila" asp-items="Model.AllSili" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="izbraion-raion-select"></select>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Изпълни</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

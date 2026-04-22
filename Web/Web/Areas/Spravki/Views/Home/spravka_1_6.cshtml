@@ -1,0 +1,158 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Newtonsoft.Json
+
+@model List<Common.ViewModels.Spravki.LicaForSpravkaRziViewModel>
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Izbori.IIzboriServices IzboriServices
+
+
+@{
+    var groups = Model.GroupBy(s => s.TOA)
+                      .ToList();
+
+    var filter = Model.ElementAt(0).filter;
+}
+
+
+<link rel="stylesheet" href="~/lib/sweet-alert/sweetalert2.min.css">
+<link rel="stylesheet" href="~/css/spravka-print.css" />
+<link rel="stylesheet" href="~/css/spravki.css" />
+
+<div id="wrapper">
+    <div style=" margin-left: 5px;position:fixed; width:110px;">
+        <button class="prnbtn"
+                id="printbtn"
+                type="button"
+                onclick="printpage()">
+            <img src="~/img/spravki-images/Print-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Печат
+        </button>
+
+        <button class="prnbtn"
+                id="exportbtn"
+                type="button"
+                onclick="GenerateSpisukRziExport();">
+            <img src="/img/navbar-images/ms-excel.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Експорт
+        </button>
+
+        <button class="prnbtn"
+                id="closebtn"
+                type="button"
+                onclick="closepage();">
+            <img src="~/img/navbar-images/logout-128.png"
+                 class="nav-img"
+                 style="height:32px;">
+            <br />
+            Изход
+        </button>
+    </div>
+
+    <div class="container">
+        <div>
+            <table style="width:100%;">
+                <tbody>
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Избори: <strong>@IzboriServices.GetIzborDescription()</strong></p>
+                        </td>
+                        <td style="text-align: right;">
+                        </td>
+                    </tr>
+
+                    <tr style="height:30px">
+                        <td style="text-align: left;">
+                            <p>Община: СТОЛИЧНА</p>
+                        </td>
+                        <td style="text-align: right;"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>&nbsp;</p>
+        </div>
+
+        <h3 style="text-align: center;"> Списък за CРЗИ</h3>
+        <!--group section -->
+        @for (var i = 0; i < groups.Count; i++)
+        {
+
+            <p>
+                Административен район: @groups[i].ElementAt(0).NmRajon
+                @groups[i].ElementAt(0).TOA
+            </p>
+
+            <div>
+                @{var toa = Model.Where(s => s.TOA == groups[i].ElementAt(0).TOA).GroupBy(s => s.TOA).ToList();}
+
+                @{int cnt = 0;
+                    for (var j = 0; j < toa.Count; j++)
+                    {
+                        <table id="spravka">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30px; "><strong>№</strong></th>
+                                    <th style="width: 100px;"><strong>ЕГН</strong></th>
+                                    <th style="width: 180px;"><strong>Име, Презиме, Фамилия</strong></th>
+                                    <th style="width: 60px; "><strong>Секция</strong></th>
+                                    <th style="width: 110px;"><strong>Телефон</strong></th>
+                                    <th style="width: 120px;"><strong>Ваксиниране</strong></th>
+                                </tr>
+
+                                @foreach (var lice in toa[j])
+                                {
+                                    cnt++;
+                                    <!--detail section -->
+                                    <tr>
+                                        <td style="text-align: left;">@cnt</td>
+                                        <td style="text-align: left;">@lice.Egn</td>
+                                        <td style="text-align: left;">@lice.Imena</td>
+                                        <td style="text-align: left;">@lice.SikFullCode</td>
+                                        <td style="text-align: left;">@lice.Telephone</td>
+                                        <td style="text-align: left;">@lice.Deinost</td>
+                                    </tr>
+                                    <!--end detail section -->
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            </div>
+            if (groups[i] != groups[groups.Count - 1])
+            {
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+            }
+
+        }
+    </div>
+</div>
+
+<script src="~/js/print.js"></script>
+<script src="~/lib/sweet-alert/sweetalert2.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+<script>
+    function GenerateSpisukRziExport() {
+
+        $.ajax({
+            type: "POST",
+            url: '\GenerateSpisukRziExport',
+            data: @Html.Raw(JsonConvert.SerializeObject(filter)),
+            success: function (data) {
+                console.log(data);
+                window.location.href = "/Spravki/Home/DownloadReport/?fileName=" + data;
+            }
+        });
+    }
+</script>

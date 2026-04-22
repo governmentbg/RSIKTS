@@ -1,0 +1,65 @@
+﻿@model Common.ViewModels.Spravki.SpravkiCompositeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="~/css/filter.css" />
+<link rel="stylesheet" href="~/css/lica-register.css" />
+
+<div class="row filter-row mb-4 text-white">
+    <div class="pos-f-t" style="width:100%;">
+        <div class="collapse p-4" id="navbarToggleExternalContent">
+            <form id="lice-filter-form">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Egn"></label>
+                        <input asp-for="Egn" class="form-control col-12" type="text" />
+                        <span asp-validation-for="Egn" class="text-danger validation-height col-md-12"></span>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Sekciq"></label>
+                        <select asp-for="Sekciq" asp-items="Model.AllSekcii" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Sekciq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Rolq"></label>
+                        <select asp-for="Rolq" asp-items="Model.AllRoli" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Rolq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Partiq"></label>
+                        <select asp-for="Partiq" asp-items="Model.AllPartii" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Partiq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Reshenie"></label>
+                        <select asp-for="Reshenie" asp-items="Model.AllResheniq" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Reshenie" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Deistvie"></label>
+                        <select asp-for="Deistvie" asp-items="Model.AllDeistviq" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Deistvie" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-2 ml-auto">
+                        <button class="btn btn-success">Изпълни</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <nav class="navbar navbar-dark">
+            <button class="navbar-toggler filter-toggle-btn" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<div class="row mb-4" id="lica-table-container">
+   
+</div>
+
+
+<script src="~/js/lica-filter-ids.js"></script>
+

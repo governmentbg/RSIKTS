@@ -1,0 +1,284 @@
+﻿.lica-register-input-row{
+    margin-bottom: 5px;
+    height: 50px
+}
+
+.lica-register-input{
+    border: none;
+    border-bottom: 1px solid cornflowerblue;
+    height: 100%;
+}
+
+.lica-right-input-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.lica-btn-with-icon {
+    height: 100%;
+    border: none;
+    background-color: white;
+    padding: 0;
+}
+
+.lica-right-input-icon:hover {
+    content: url(../img/lica-images/Search-Find-128-Blue-Light.png);
+}
+
+.table-lica-register{
+    border: 2px solid cornflowerblue;
+    margin-bottom: 0;
+}
+
+.table-lica-register thead{
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.table-lica-register thead tr th {
+    border: none;
+    border-right: 1px solid cornflowerblue;
+    border-bottom: 1px solid cornflowerblue;
+    height: 40px;
+}
+
+.table-lica-register tbody tr td {
+    height: 45px;
+    border: none;
+    border-bottom: 1px solid cornflowerblue;
+    border-right: 1px solid cornflowerblue;
+}
+
+.table-lica-register tbody tr:hover{
+    background-color: gray;
+    color: white;
+}
+
+.lica-register-td-icon {
+    height: 45px;
+    width: 45px;
+    padding: 0 !important;
+}
+
+.lica-btn-with-icon-table {
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+}
+
+.lica-right-input-icon-table {
+    height: 48px;
+    width: 48px;
+}
+
+.lica-right-input-icon-table-edit:hover {
+    content:url(../img/lica-images/Edit-128-Light.png);
+    transition: none;
+    background-color: none;
+}
+
+.lica-right-input-icon-table-garbage:hover {
+    content: url(../img/lica-images/Garbage-Closed-128-Light.png);
+    background-color: none;
+}
+
+.lica-right-input-icon-table-btn {
+    transition: none;
+}
+
+.lica-register-btn-add {
+    width: 100%;
+    /*    background-color: green; 
+        color: white;
+    */
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: white;
+    color: green;
+    border: 1px solid green; /* Green */
+}
+
+    .lica-register-btn-add:hover {
+        background-color: green;
+        color: white;
+    }
+
+.lica-register-btn {
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 14px;
+    background-color: cornflowerblue;
+    color: white;
+    height: 88px;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+}
+
+.lica-register-btn:hover{
+    background-color: gray;
+}
+
+.lica-register-form-tab-info > .lica-register-from-tab-info-col:last-of-type .lica-register-btn {
+    border-bottom: 2px solid cornflowerblue;
+}
+
+.lica-register-btn-row{
+    margin-top:25px;
+}
+
+.lica-register-btn-row > div:first-of-type {
+    padding-right: 15px;
+}
+
+.lica-register-btn-row > div:last-of-type {
+    padding-left: 15px;
+}
+
+.lica-register-table-row {
+    height: 100%;
+}
+
+.lica-register-form-tab-info{
+    padding: 0;
+    padding-right: 8px;
+}
+
+.lica-register-search-col {
+    padding: 0;
+    padding-right: 8px;
+}
+
+.lica-register-from-tab-info-col{
+    padding: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.lica-register-input-label {
+    margin-right: 15px;
+    line-height: 310%;
+    border: 1px solid cornflowerblue;
+    border-right: none;
+    margin: 0;
+    padding-left: 5px;
+    height: 50px;
+}
+
+.lica-register-input-egn {
+
+    border: 1px solid cornflowerblue;
+    padding: 0;
+    padding-left: 5px;
+    height: 50px;
+}
+
+.lica-register-input {
+    border-color: cornflowerblue;
+    border-radius: 0;
+}
+
+#lica-add-modal .modal-dialog {
+    max-width: 90%;
+}
+
+
+#lica-table{
+    background-color: white;
+}
+
+
+
+@media screen and (max-width: 991px) {
+    .lica-register-form-tab-info {
+        padding-right: 0;
+    }
+
+        .lica-register-form-tab-info > .lica-register-from-tab-info-col:last-of-type .lica-register-btn {
+            border-bottom: none;
+        }
+
+    .lica-register-table-row {
+        flex-direction: column-reverse;
+    }
+
+    .table-lica-register {
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .lica-register-btn-add-col {
+        padding-left: 15px;
+    }
+
+    .lica-register-from-tab-info-col {
+        border-bottom: 5px solid white;
+    }
+
+    .lica-register-form-tab-info {
+        max-width: 100%;
+    }
+
+    .lica-register-btn {
+        border-bottom: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    #pagination-container {
+        margin-bottom: 5px;
+    }
+
+    .lica-register-input-row {
+        height: auto;
+    }
+
+    .lica-register-btn-add-col {
+        padding-left: 0;
+    }
+
+    .lica-register-btn-row > div:first-of-type {
+        padding-right: 0;
+    }
+
+    .lica-register-btn-row > div:last-of-type {
+        padding-left: 0;
+    }
+
+    .lica-register-btn-row > div {
+        padding: 0;
+    }
+
+    .lica-register-btn-row > div {
+        padding: 0;
+    }
+
+    .lica-register-btn-row {
+        margin-top: 0;
+    }
+
+    .lica-register-btn {
+    }
+
+    .lica-register-btn {
+        height: 50px;
+    }
+
+    .lica-register-search-col {
+        margin-bottom: 5px;
+    }
+
+    .table-lica-register {
+        margin-bottom: 5px;
+    }
+}
+
+
+
+

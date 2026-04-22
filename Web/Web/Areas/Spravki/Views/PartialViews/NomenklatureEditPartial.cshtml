@@ -1,0 +1,250 @@
+﻿@model Common.ViewModels.Spravki.NomenklatureEditFullViewModel
+@using Common.Enums.Spravki
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="~/css/lica.css" />
+
+<input asp-for="NomenklatureId" type="hidden" />
+
+@if (Model.NomenklatureId == NomenklatureIds.NaseleniMesta)
+{
+<div class="row">
+    <div class="col-md-12 form-group">
+        <label asp-for="Nkod"></label>
+        <input asp-for="Nkod" class="form-control" maxlength="45" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+        <span asp-validation-for="Nkod" class="text-danger"></span>
+    </div>
+</div>
+}
+else
+{
+    <input asp-for="Nkod" type="hidden" />
+}
+
+<div class="row">
+    <div class="col-md-12 form-group">
+        <label asp-for="Nime"></label>
+        <input asp-for="Nime" class="form-control" maxlength="45" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+        <span asp-validation-for="Nime" class="text-danger"></span>
+    </div>
+</div>
+
+
+
+@if (Model.Has_ID_Shablon)
+{
+
+    <input asp-for="ID_Shablon" type="hidden" />
+
+}
+
+@if (Model.Has_Pkode)
+{
+
+    <input asp-for="Pkode" type="hidden" />
+
+}
+
+
+@if (Model.Has_ID_Party)
+{
+
+    <input asp-for="ID_Party" type="hidden" />
+
+}
+
+@if (Model.Has_Short_Name)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Short_Name"></label>
+            <input asp-for="Short_Name" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+            <span asp-validation-for="Short_Name" class="text-danger"></span>
+        </div>
+    </div>
+}
+
+<!--
+@if (Model.Has_Izb_Alias)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Izb_Alias"></label>
+            <input asp-for="Izb_Alias" class="form-control" />
+        </div>
+    </div>
+}
+-->
+
+@if (Model.Has_Status_Sh)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Status_Sh"></label>
+            <input asp-for="Status_Sh" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Status_List)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Status_List"></label>
+            <input asp-for="Status_List" class="form-control" />
+        </div>
+    </div>
+}
+
+
+@if (Model.Has_Temp)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Temp"></label>
+            <input asp-for="Temp" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Legal_Code)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Legal_Code"></label>
+            <input asp-for="Legal_Code" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Status_Partii)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Status_Partii"></label>
+            <input asp-for="Status_Partii" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Status_ndocs)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Status_ndocs"></label>
+            <input asp-for="Status_ndocs" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Leva_tur1)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Leva_tur1"></label>
+            <input asp-for="Leva_tur1" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_LevaRIK)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="LevaRIK"></label>
+            <input asp-for="LevaRIK" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_LevaN800)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="LevaN800"></label>
+            <input asp-for="LevaN800" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Leva_tur2)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Leva_tur2"></label>
+            <input asp-for="Leva_tur2" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Leva_machinno)
+{
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Leva_machinno"></label>
+            <input asp-for="Leva_machinno" class="form-control" />
+        </div>
+    </div>
+}
+
+@if (Model.Has_Stoinost)
+{
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Stoinost"></label>
+            <input asp-for="Stoinost" class="form-control" />
+        </div>
+    </div>
+
+}
+
+@if (Model.Has_Kod_Nas)
+{
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Kod_Nas"></label>
+            <input asp-for="Kod_Nas" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+            <span asp-validation-for="Kod_Nas" class="text-danger"></span>
+        </div>
+    </div>
+
+}
+
+@if (Model.Has_Kod_Ulica)
+{
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label asp-for="Kod_Ulica"></label>
+            <input asp-for="Kod_Ulica" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+            <span asp-validation-for="Kod_Ulica" class="text-danger"></span>
+        </div>
+    </div>
+
+}
+
+@if (Model.Has_Status)
+{
+    <div class="row mt-2">
+        <div class="form-group col-md-12 form-inline">
+            <div>
+                <label class="checkbox-container text-left">
+                    Активно?
+                    <input asp-for="Status" class="form-check-input" type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+

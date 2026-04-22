@@ -1,0 +1,95 @@
+﻿@using Common.ViewModels.User
+
+@model AllUsersComposite
+
+@{
+    ViewData["Title"] = "Admin Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<div class="row mb-2">
+    <h3>Настройки >> Потребители</h3>
+</div>
+
+<div class="row admin-register-input-row">
+    <div class="col-md-2 admin-register-search-col">
+        <input type="text" class="admin-register-input" id="admin-user-filter" />
+        <button class="btn admin-btn-with-icon d-none" type="button">
+            <img src="~/img/admin-images/Search-Find-128-Blue.png" class="admin-right-input-icon" />
+        </button>
+    </div>
+    <div id="pagination-container" class="col-md-7">
+        <partial model="Model" name="../PartialViews/AdminUserPaginationPartial" />
+    </div>
+    <div class="ml-auto col-lg-2 col-md-3 no-padding admin-register-btn-add-col">
+        <button onclick="location.href='@Url.Action("Register", "Home", new { Area = "Identity" })'" 
+                class="btn fa fa-plus admin-register-btn-add">
+            Добави
+        </button>
+    </div>
+</div>
+
+<div class="row admin-register-table-row">
+
+    <div class="col-md-2 admin-register-form-tab-info" id="user-filters">
+        <partial model="Model" name="../PartialViews/AdminUserFiltersPartial" />
+    </div>
+
+    <partial model="Model.AllUsers" name="../PartialViews/AdminUsersTablePartial" />
+</div>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="admin-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="admin-edit-header">Редактиране на потребител</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Admin" asp-controller="Home" asp-action="EditUser">
+                <div class="modal-body" id="admin-edit-modal-body">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="admin-delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="admin-delete-header">Изтриване</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Admin" asp-controller="Home" asp-action="DeleteUser">
+                <div class="modal-body text-center" id="admin-delete-modal-body">
+                    <input type="hidden" id="user-delete-id" />
+                    Сигурни ли сте че искате да изтриете?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="button" onclick="DeleteUser(this)" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/js/pagination-submit-admin.js"></script>
+    <script src="~/js/admin-crud.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/user-register-form-show.js"></script>
+}
+

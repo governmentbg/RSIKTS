@@ -1,0 +1,39 @@
+﻿@using Common.ViewModels.Spravki
+@using Common.Enums.Spravki
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model NomeklatureViewModel
+
+
+<div class="col-md-3 nomenklatura-container pl-0 pr-0">
+    @if (Model.nomenklatureId == NomenklatureIds.Toa)
+    {
+        <form asp-area="Raioni" asp-controller="Home" asp-action="RaionEdit" class="nomenklatura-form" method="get">
+            <input asp-for="nomenklatureId" type="hidden" />
+
+            <button class="nomenklatura-print-btn" type="submit">
+                <div class="nomenklatura-header">
+                    <div>
+                        <img src="~/img/nomenklature-images/document-128.png" class="nomenklatura-header-img">
+                    </div>
+                    <p>@Model.Description</p>
+                </div>
+            </button>
+        </form>
+    }
+    else
+    {
+        <form asp-area="Spravki" asp-controller="Home" asp-action="NomenklatureDetails" class="nomenklatura-form" method="get">
+            <input asp-for="nomenklatureId" type="hidden" />
+
+            <button class="nomenklatura-print-btn" type="submit">
+                <div class="nomenklatura-header">
+                    <div>
+                        <img src="~/img/nomenklature-images/document-128.png" class="nomenklatura-header-img">
+                    </div>
+                    <p>@Model.Description</p>
+                </div>
+            </button>
+        </form>
+    }
+</div>

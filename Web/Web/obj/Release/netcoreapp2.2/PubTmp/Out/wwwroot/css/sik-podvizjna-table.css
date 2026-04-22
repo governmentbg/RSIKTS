@@ -1,0 +1,73 @@
+﻿.table-sik-podvizjna {
+    border: 1px solid cornflowerblue;
+    margin-bottom: 0;
+    font-family: "Arial";
+    font-size: 12px;
+    width: 100%;
+}
+
+    .table-sik-podvizjna thead {
+        display: table;
+        background-color: cornflowerblue;
+        color: white;
+        width: 100%;
+    }
+
+    .table-sik-podvizjna thead tr {
+        border: none;
+        height: 30px;
+    }
+
+    .table-sik-podvizjna thead th {
+        border: none;
+        border-right: 1px solid cornflowerblue;
+        border-bottom: 1px solid cornflowerblue;
+        padding: 2px;
+    }
+
+    .table-sik-podvizjna tbody {
+        display: block;
+        max-height: 100px;
+        border: none;
+        overflow: auto;
+        overflow-x: hidden;
+        border-bottom: 1px solid cornflowerblue;
+        border-right: 1px solid cornflowerblue;
+        width: 100%;
+    }
+
+    .table-sik-podvizjna tbody tr {
+        height: 25px;
+        border: none;
+        width: 100%;
+    }
+
+    .table-sik-podvizjna tbody td {
+        border: none;
+        padding: 1px;
+        border-bottom: 1px solid cornflowerblue;
+        border-right: 1px solid cornflowerblue;
+    }
+
+    .table-sik-podvizjna tbody tr:hover {
+        background-color: lightgray;
+        color: white;
+    }
+
+    .table-sik-podvizjna tfoot {
+        display: table;
+        height: 25px;
+        background-color: #EAF1FD;
+        color: gray;
+        width: 100%;
+    }
+
+    .table-sik-podvizjna tfoot tr {
+        height: 25px;
+    }
+
+    .table-sik-podvizjna tfoot th {
+        border: none;
+        padding: 2px;
+    }
+

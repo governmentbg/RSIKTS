@@ -1,0 +1,276 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+@using Common.Enums.Spravki
+
+@using Common.Enums.User
+@using Common.Enums
+
+@model Common.ViewModels.Obrabotki.AdminOptionsFilter
+
+@inject Services.Interfaces.Nachislqvaniq.INachislqvaniqServices NachislqvaniqServices
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+
+@{
+    ViewData["Title"] = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var HasNachislqvaniq = NachislqvaniqServices.RaionHasNachislqvaniq(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+}
+
+<link rel="stylesheet" href="~/css/admin-menu.css" />
+<link rel="stylesheet" href="~/css/obrabotki.css" />
+
+<div class="row mb-2 text-center">
+    <h3 style="width: 100%">Настройки</h3>
+</div>
+
+<div id="alerts-container"></div>
+
+<div class="row justify-content-center">
+
+    <!--v.2-->
+    @if (User.IsInRole(Roles.Admin.GetDescription()))
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn" onclick="location.href='@Url.Action("Index"
+                          , "Home"
+                          , new { Area = "Admin" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/users.png" />
+                <p>Потребители</p>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    onclick="location.href='@Url.Action("Index"
+                                                          , "Home"
+                                                          , new { Area = "Admin" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/users.png" />
+                <p>Потребители</p>
+            </button>
+        </div>
+
+    }
+
+    <!--v.2-->
+    @if (User.IsInRole(Roles.Admin.GetDescription()))
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn"
+                    onclick="location.href='@Url.Action("IndexAdditionalSets"
+                                                      , "Home"
+                                                      , new { Area = "Admin" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/technical-service.png" />
+                <p style="line-height:normal;">Допълнителни настройки (Общи, За изб. р-н, Номенклатури, Дати)</p>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    onclick="location.href='@Url.Action("IndexAdditionalSets"
+                                                        , "Home"
+                                                        ,new { Area = "Admin"})'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/technical-service.png" />
+                <p style="line-height:normal;">Допълнителни настройки (Общи, За изб. р-н, Номенклатури, Дати)</p>
+            </button>
+        </div>
+    }
+
+    @if (HasNachislqvaniq)
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    onclick="location.href='@Url.Action("NomenklatureDetails"
+                                                        , "Home"
+                                                        ,new { Area = "Spravki"
+                                                                     , nomenklatureId = NomenklatureIds.DanuchniParametri})'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/tax-percents.png" />
+                <p>Данъчни параметри</p>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn"
+                    onclick="location.href='@Url.Action("NomenklatureDetails"
+                                                        , "Home"
+                                                        ,new { Area = "Spravki"
+                                                                    , nomenklatureId = NomenklatureIds.DanuchniParametri})'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/tax-percents.png" />
+                <p>Данъчни параметри</p>
+            </button>
+        </div>
+    }
+</div>
+
+<div class="row justify-content-center">
+    @if (HasNachislqvaniq)
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    onclick="location.href='@Url.Action("Roli"
+                                                        , "Home"
+                                                        , new { Area = "Normi"
+                                                                        , vidId = 101 })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/payment-settings.png" />
+                <p>
+                    Настройки
+                    плащане по
+                    длъжност
+                </p>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn" onclick="location.href='@Url.Action("Roli"
+                                                                               , "Home"
+                                                                               , new { Area = "Normi"
+                                                                                            , vidId = 101 })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/payment-settings.png" />
+                <p>
+                    Настройки
+                    плащане по
+                    длъжност
+                </p>
+            </button>
+        </div>
+    }
+
+    @if (HasNachislqvaniq)
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    onclick="location.href='@Url.Action("Priznaci"
+                                                        , "Home"
+                                                        , new { Area = "Normi" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/payment-settings.png" />
+                <p>
+                    Настройки
+                    плащане по
+                    Признак на секция
+                </p>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn"
+                    onclick="location.href='@Url.Action("Priznaci"
+                                                        , "Home"
+                                                        , new { Area = "Normi" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/payment-settings.png" />
+                <p>
+                    Настройки
+                    плащане по
+                    Признак на секция
+                </p>
+            </button>
+        </div>
+    }
+
+    @if (HasNachislqvaniq)
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    onclick="location.href='@Url.Action("Operacii"
+                                                        , "Home"
+                                                        , new { Area = "Normi" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/payment-settings.png" />
+                <p>
+                    Настройки
+                    плащане по
+                    дейност
+                </p>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn"
+                    onclick="location.href='@Url.Action("Operacii"
+                                                        , "Home"
+                                                        , new { Area = "Normi" })'">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/payment-settings.png" />
+                <p>
+                    Настройки
+                    плащане по
+                    дейност
+                </p>
+            </button>
+        </div>
+    }
+</div>
+
+<!--v.2-->
+@if (User.IsInRole(Roles.Admin.GetDescription()))
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn" data-toggle="modal" data-target="#admin-options-modal">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/Settings-02-128.png" />
+                <p>
+                    Преминаване
+                    Избор/Тур
+                </p>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        <div class="col-md-3 admin-menu-box pl-0 pr-0">
+            <button class="admin-menu-btn disabled-link"
+                    data-toggle="modal"
+                    data-target="#admin-options-modal">
+                <img class="admin-menu-btn-img" src="~/img/admin-images/Settings-02-128.png" />
+                <p>
+                    Преминаване
+                    Избор/Тур
+                </p>
+            </button>
+        </div>
+    </div>
+}
+
+<!-- Add Modal -->
+<div class="modal fade" id="admin-options-modal" tabindex="-1" role="dialog" aria-labelledby="admin-options-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lica-add-header">Изберете опция</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <div class="modal-content" id="admin-options-body">
+                <partial model="Model" name="../PartialViews/AdminOptionsModal">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ShowIzboriForm() {
+        document.getElementById("new-izbor-form-container").setAttribute("style", "display:block;");
+    }
+
+    function HideIzboriForm() {
+        document.getElementById("new-izbor-form-container").setAttribute("style", "display:none;");
+    }
+</script>
+
+@section Scripts{
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/new-izbor-form-ajax.js"></script>
+}

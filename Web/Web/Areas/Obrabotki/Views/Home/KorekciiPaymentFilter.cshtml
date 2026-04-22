@@ -1,0 +1,208 @@
+﻿@model Common.ViewModels.Obrabotki.KorekciiPaymentFilterViewModel
+@using Common.Enums
+@using Common.Enums.Spravki
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/filter.css" />
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/lica.css" />
+
+@{
+    var AllFitlteredRoli = Model.AllRoli.Where(r => Convert.ToInt32(string.IsNullOrEmpty(r.Value) ? "0" : r.Value) < 410);
+}
+
+<h3>Корекция на плащане в Тур 1</h3>
+
+<div id="alerts-container"></div>
+
+<div class="row filter-row mb-4 text-white" style="z-index:1;top: 125px;margin-top:30px;">
+    <div class="pos-f-t" style="width:100%;">
+        <div class="collapse p-4" id="navbarToggleExternalContent">
+            <form id="lice-filter-form">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Egn"></label>
+                        <input asp-for="Egn" class="form-control col-12 filter-property" type="text" />
+                        <span asp-validation-for="Egn" class="text-danger validation-height col-md-12"></span>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Sekciq"></label>
+                        <select asp-for="Sekciq" asp-items="Model.AllSekcii" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Sekciq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Rolq"></label>
+                        <select asp-for="Rolq" asp-items="AllFitlteredRoli" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Rolq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="Partiq"></label>
+                        <select asp-for="Partiq" asp-items="Model.AllPartii" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Partiq" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Reshenie"></label>
+                        <select asp-for="Reshenie" asp-items="Model.AllResheniq" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Reshenie" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="Deistvie"></label>
+                        <select asp-for="Deistvie" asp-items="Model.AllDeistviq" class="selectpicker form-control show-tick col-12 filter-property" data-live-search="true" data-size="5" id="education"></select>
+                        <span asp-validation-for="Deistvie" class="text-danger validation-height col-md-12"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4 ml-auto">
+                        <button class="btn btn-success"
+                                style="width:49%"
+                                data-toggle="collapse"
+                                data-target="#navbarToggleExternalContent"
+                                aria-controls="navbarToggleExternalContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            Изпълни
+                        </button>
+                        <button class="btn btn-danger col-md-6"
+                                style="width:49%"
+                                onclick="ClearFilters()"
+                                type="button">
+                            Изчисти
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <nav class="navbar navbar-dark">
+            <button class="navbar-toggler filter-toggle-btn"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarToggleExternalContent"
+                    aria-controls="navbarToggleExternalContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <button disabled type="button"
+            class="float-left btn btn-success col-2 ml-auto mt-auto mb-auto"
+            onclick="GenerateKorekciiPayment()"
+            style="height:50px; display: none;"
+            id="generate-report-btn">
+        <span aria-hidden="true">Генериране</span>
+    </button>
+</div>
+
+<div class="row mb-4" id="lica-table-container" style="margin-top:20px;">
+    <table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+        <thead>
+            <tr>
+                <th style="width: 60px;  text-align:center;">ЕГН</th>
+                <th style="width: 200px; text-align:center;">Имена</th>
+                <th style="width: 60px;  text-align:center;">СИК</th>
+                <th style="width: 100px; text-align:center;">Длъжност</th>
+                <th style="width: 100px; text-align:center;">Партия</th>
+                <th style="width: 100px; text-align:center;">Решение</th>
+                <th style="width: 30px;  text-align:center;"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (var i = 0; i < 10; i++)
+            {
+                <tr>
+                    <td style="height:49px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="korekcii-payment-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="korekcii-payment-modal-header">Корекция на плащането</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Obrabotki" asp-controller="Home" asp-action="SetPaymentsCorrection" id="korekcii-payment-form" class="form-horizontal">
+                <div class="modal-body text-center" id="korekcii-payment-modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-success">Корекция</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/korekcii-payment-crud.js"></script>
+
+@section Scripts{
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/korekcii-payment-form-ajax.js"></script>
+
+    <script>
+
+        function ShowCorrectionAmount(e)
+        {
+            e.target.value = e.target.value.replace(/,/g, '.');
+
+           // if (e.target.value.indexOf('.') == -1) { return; }
+           // if ((e.target.value.length - e.target.value.indexOf('.')) > 2) {
+           //     e.target.value = parseFloat(e.target.value).toFixed(2);
+           // }
+
+            if (e.target.value == 0)
+                document.getElementById('final-correction').innerHTML = "0.00"
+            else {
+                var total = document.getElementById('total-sum').innerHTML;
+                var val = e.target.value - total.replace(/,/g, '.');
+
+                document.getElementById('final-correction').innerHTML = parseFloat(val).toFixed(2)
+            }
+        }
+
+        $($(".filter-row")[0]).css("width", $("#lica-table").width() + 34);
+
+        $(window).resize(function () {
+            $($(".filter-row")[0]).css("width", $("#lica-table").width() + 34);
+        });
+
+    </script>
+
+    <script>
+        function ClearFilters() {
+            $(".filter-property").each(function () {
+                $(this).val("");
+            })
+
+            $(".selectpicker").selectpicker("refresh");
+        }
+    </script>
+}

@@ -1,0 +1,92 @@
+﻿@using Common.ViewModels.User
+@using Common.Enums.User
+@using Common.Enums.Obhvati
+@model SSOUserRegisterViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<link rel="stylesheet" href="~/css/admin-register.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+
+<div class="row">
+    <div class="col-md-2 admin-form-tab-info">
+        <div class="admin-register-form-icon-holder">
+            <img src="~/img/admin-images/login-user.png" class="admin-register-form-icon">
+        </div>
+        <p>Нов потребител</p>
+    </div>
+    <div class="col-md-10">
+        <form asp-area="Identity" asp-controller="Home" asp-action="Register" method="post" class="admin-register-form">
+            <div class="row">
+                <h4 class="col-md-10"></h4>
+                <button type="submit" class="btn col-md-2 admin-btn-with-icon"><img src="~/img/admin-images/save.png" class="admin-btn-icon"></button>
+            </div>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group col-md-12">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Names"></label>
+                    <input asp-for="Names" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                    <span asp-validation-for="Names" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Role"></label>
+                    <select asp-for="Role" asp-items="Html.GetEnumSelectList<Roles>()" class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="role-select"></select>
+                </div>
+                <div class="form-group col-md-6" id="partiq-select-container">
+                    <label asp-for="Partiq"></label>
+                    <select asp-for="Partiq" asp-items="Model.AllParti" class="selectpicker form-control show-tick" data-live-search="true" data-size="5"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Obhvat"></label>
+                    <select asp-for="Obhvat" asp-items="Html.GetEnumSelectList<Obhvati>()" class="selectpicker form-control show-tick" data-live-search="true" data-size="5" id="obhavt-select"></select>
+                </div>
+                <div class="form-group col-md-6" id="raion-select-container">
+                    <label asp-for="AdministrativenRaion"></label>
+                    <select asp-for="AdministrativenRaion" asp-items="Model.AllRaioni" class="selectpicker form-control show-tick" data-live-search="true" data-size="5"></select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/user-register-form-show.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script>AttachUserRegisterFormShow();</script>
+}

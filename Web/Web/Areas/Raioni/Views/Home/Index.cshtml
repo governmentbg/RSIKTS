@@ -1,0 +1,107 @@
+﻿@model Common.ViewModels.Raion.RaioniCompositeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/raioni-main.css" />
+
+<div class="row mb-2">
+    <h3>Локални номенклатури >> Административен район</h3>
+</div>
+
+<div class="row raioni-main-number-row">
+    <div class="input-group col-lg-2 col-md-4 raioni-main-number-col">
+        <input class="form-control raioni-main-number-input raioni-main-input" type="text" id="toa-id-filter" />
+    </div>
+    <div class="input-group col-lg-8 col-md-5 raioni-main-number-col" id="pagination-container">
+        <partial model="@Model" name="../PartialViews/RaioniMainPaginationPartial" />
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-12 no-padding raioni-main-btn-add-col"><button onclick="UpdateRaioniMainAddModal(this)" class="btn raioni-main-btn-add">+ Добави</button></div>
+</div>
+
+<div class="row">
+    <partial model="@Model.AllRaioni" name="../PartialViews/RaioniMainTablePartial" />
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="raioni-main-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="raioni-main-add-header">Добавяне на Административен район</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Raioni" asp-controller="Home" asp-action="AddRaion" id="raion-add-form" class="form-horizontal">
+                <div class="modal-body text-center" id="raioni-main-add-modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="submit" class="btn btn-success">Добавяне</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="raioni-main-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="raioni-main-edit-header">Редактиране на Административен район</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Raioni" asp-controller="Home" asp-action="EditRaion" id="raion-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="raioni-main-edit-modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="submit" class="btn btn-success">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="raioni-main-delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="raioni-main-delete-header">Изтриване</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Sik" asp-controller="Home" asp-action="Delete">
+                <div class="modal-body text-center" id="raioni-main-add-modal-body">
+                    <input type="hidden" id="raioni-main-delete-id" />
+                    Сигурни ли сте че искате да изтриете?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="button" onclick="DeleteRaioniMain(this)" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/pagination-raion-main-submit.js"></script>
+    <script src="~/js/raioni-main-crud-main.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/lica-form-navigation.js"></script>
+    <script src="~/js/ulici-dynamic-filter.js"></script>
+    <script src="~/js/raioni-main-form-ajax.js"></script>
+}

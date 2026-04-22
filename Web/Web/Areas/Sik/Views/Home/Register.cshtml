@@ -1,0 +1,178 @@
+﻿@using Common.ViewModels.Sik
+@using Common.Static
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+
+
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model SikCompositeViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var HasNachislqvaniq = NachislqvaniqServices.RaionHasNachislqvaniq(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+}
+
+@inject Services.Interfaces.User.IUserServices UserServices
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Nachislqvaniq.INachislqvaniqServices NachislqvaniqServices
+
+<link rel="stylesheet" href="~/css/lica-register.css" />
+<link rel="stylesheet" href="~/css/sik.css" />
+
+<div class="row mb-2">
+    <h3>Регистри >> Регистър СИК</h3>
+</div>
+
+<div id="alerts-container"></div>
+
+@if (!HasNachislqvaniq)
+{
+    <div class="row lica-register-input-row">
+        <div class="input-group col-lg-2 col-md-4 col-sm-12 lica-register-search-col">
+            <label class="lica-register-input-label" for="egn">СИК (филтър): </label>
+            <input type="text" class="sik-number-input form-control lica-register-input-egn lica-register-input" id="sik-filter-input" />
+            <button class="btn lica-btn-with-icon d-none" type="button">
+                <img src="~/img/lica-images/Search-Find-128-Blue.png" class="lica-right-input-icon" />
+            </button>
+        </div>
+        <div id="pagination-container" class="col-lg-8 col-md-5 col-sm-12">
+            <partial model="Model" name="../PartialViews/SikPaginationPartial" />
+        </div>
+
+        <div class="ml-auto col-lg-2 col-md-3 col-sm-12 no-padding lica-register-btn-add-col"><button onclick="UpdateSikAddModal(this)" class="btn lica-register-btn-add">+ Добави</button></div>
+    </div>
+
+    <div class="row lica-register-table-row">
+
+        <partial model="Model.AllSiks" name="../PartialViews/SikTablePartial" />
+
+    </div>
+}
+else
+{
+    <div class="row mb-2">
+        <h4>Недостъпен! Извършени финансови изчисления. </h4>
+    </div>
+}
+
+<!-- Add Modal -->
+<div class="modal fade"
+     id="sik-add-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="raioni-main-add-header">
+                    Добавяне на секция
+                    [район @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Sik"
+                  asp-controller="Home"
+                  asp-action="AddSik"
+                  id="sik-add-form"
+                  class="form-horizontal">
+                <div class="modal-body text-center" id="sik-add-modal-body">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade"
+     id="sik-edit-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sik-edit-header">
+                    Редактиране на секция
+                    [район @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+
+            <form asp-area="Sik"
+                  asp-controller="Home"
+                  asp-action="EditSik"
+                  id="sik-edit-form"
+                  class="form-horizontal">
+                <div class="modal-body text-center" id="sik-edit-modal-body">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="sik-delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sik-delete-header">
+                    Изтриване
+                    [район @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Raioni" asp-controller="Home" asp-action="Index">
+                <div class="modal-body text-center" id="raioni-main-add-modal-body">
+                    <input type="hidden" id="sik-delete-id" />
+                    Сигурни ли сте че искате да изтриете?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="button" onclick="DeleteSik(this)" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/sik-crud-main.js"></script>
+    <script src="~/js/sik-form-ajax.js"></script>
+    <script src="~/js/sik-form-navigation.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/ulici-dynamic-filter.js"></script>
+
+    <script>
+        function calculateSum() {
+
+            var sum = 0;
+            $(".numbvoters").each(function () {
+                if (!isNaN(this.value) && this.value.length != 0) {
+                    sum += parseFloat(this.value);
+                }
+
+            });
+            $("#sumnumvoters").html(sum.toFixed(0));
+            $('#txtNumbVoters').val(sum.toFixed(0));
+        }
+    </script>
+
+}
+

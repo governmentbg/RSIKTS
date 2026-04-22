@@ -1,0 +1,146 @@
+﻿@using Common.ViewModels.Lica
+@using Common.Static
+
+
+@using Microsoft.AspNetCore.Identity
+@using Common.ViewModels.User
+
+@inject UserManager<SSOUserIdentity> UserManager
+@inject Services.Interfaces.User.IUserServices UserServices
+@inject Services.Interfaces.Nachislqvaniq.INachislqvaniqServices NachislqvaniqServices
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model LicaRegisterComposite
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var HasNachislqvaniq = NachislqvaniqServices.RaionHasNachislqvaniq(UserServices.GetUserRegion(UserManager.GetUserId(User)).Id);
+
+}
+
+<link rel="stylesheet" href="~/css/lica-register.css" />
+
+<div class="row mb-2">
+    <h3>Регистри >> Регистър лица</h3>
+</div>
+
+<input type="hidden" asp-for="Sik" id="sik-hidden-input" />
+
+<div id="alerts-container"></div>
+
+@if (!HasNachislqvaniq)
+{
+    <div class="row lica-register-input-row">
+        <div class="col-lg-4 col-md-5 col-sm-12 lica-register-search-col d-flex flex-row">
+            <label class="lica-register-input-label col-md-5 col-sm-3 pr-0" for="egn">Филтър(ЕГН/Име): </label>
+            <input type="text" class="col-md-7 lica-register-input form-control lica-register-input-egn lica-register-input border-left-0 p-0" id="egn-filter-input" />
+            <button class="btn lica-btn-with-icon d-none" type="button">
+                <img src="~/img/lica-images/Search-Find-128-Blue.png" class="lica-right-input-icon" />
+            </button>
+        </div>
+        <div id="pagination-container" class="col-lg-6 col-md-4 col-sm-12">
+            <partial model="Model" name="../PartialViews/LicaRegisterPaginationPartial" />
+        </div>
+
+        <div class="ml-auto col-lg-2 col-md-3 col-sm-12 no-padding lica-register-btn-add-col">
+            <button onclick="UpdateLicaAddModal()" class="btn lica-register-btn-add">
+                + Добави
+            </button>
+        </div>
+    </div>
+
+    <div class="row lica-register-table-row">
+        <partial model="Model.AllLica" name="../PartialViews/LicaRegisterTablePartial" />
+    </div>
+}
+else
+{
+    <div class="row mb-2">
+        <h4>Недостъпен! Извършени финансови изчисления </h4>
+    </div>
+}
+
+<!-- Add Modal -->
+<div class="modal fade" id="lica-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p></p>
+
+                <h5 class="modal-title" id="lica-add-header">
+                    Добавяне на лице
+                    [район @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Lica" asp-controller="Home" asp-action="AddLica" id="lica-add-form" class="form-horizontal">
+                <div class="modal-body text-center" id="lica-add-modal-body">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="lica-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lica-edit-header">
+                    Редактиране на лице
+                    [район @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Lica" asp-controller="Home" asp-action="EditLica" id="lica-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="lica-edit-modal-body">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="lice-delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lica-delete-header">
+                    Изтриване
+                    [район @UserServices.GetUserRegion(UserManager.GetUserId(User)).Name]
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Lica" asp-controller="Home" asp-action="DeleteLice">
+                <div class="modal-body text-center" id="lica-add-modal-body">
+                    <input type="hidden" id="lice-delete-id" />
+                    Сигурни ли сте че искате да изтриете?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="button" onclick="DeleteLice(this)" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/ulici-dynamic-filter.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/lica-crud-main.js"></script>
+    <script src="~/js/lica-form-ajax.js"></script>
+    <script src="~/js/lica-form-navigation.js"></script>
+    <script src="~/js/pagination-submit-lica-register.js"></script>
+    <script src="~/js/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="~/js/lica-toggle-replacement-list.js"></script>
+}
+

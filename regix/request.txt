@@ -1,0 +1,28 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:reg="http://egov.bg/RegiX" xmlns:sig="http://egov.bg/RegiX/SignedData">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <reg:Execute>
+         <reg:request>
+            <sig:ServiceRequestData>
+               <sig:RequestProcessing></sig:RequestProcessing>
+               <sig:ResponseProcessing></sig:ResponseProcessing>
+               <sig:Operation>TechnoLogica.RegiX.AVBulstat2Adapter.APIService.IAVBulstat2API.GetStateOfPlay</sig:Operation>
+               <sig:Argument>
+                  <GetStateOfPlayRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.bulstat.bg/GetStateOfPlayRequest">
+                        <UIC>1212120908</UIC>
+                        <Case>
+                           <Court>
+                              <Code xmlns="http://www.bulstat.bg/NomenclatureEntry">Code1</Code>
+                           </Court>
+                           <Year>0</Year>
+                           <Number>Number1</Number>
+                        </Case>
+                  </GetStateOfPlayRequest>
+               </sig:Argument>
+               <SignResult>false</SignResult>
+               <ReturnAccessMatrix>false</ReturnAccessMatrix>
+            </sig:ServiceRequestData>
+         </reg:request>
+      </reg:Execute>
+   </soapenv:Body>
+</soapenv:Envelope>

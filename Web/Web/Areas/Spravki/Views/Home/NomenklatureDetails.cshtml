@@ -1,0 +1,119 @@
+﻿@model Common.ViewModels.Spravki.NomenklatureComposite
+@using Common.Enums
+@using Common.Enums.User
+@using Common.Enums.Spravki
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/nomenklature-details.css" />
+
+<div class="row mb-2">
+    <h3>Номенклатура @Model.NomenklatureId.GetDisplayValue()</h3>
+</div>
+
+<input asp-for="NomenklatureId" type="hidden" id="nomenklature-id" />
+
+<div class="row nomenklature-number-row">
+    <div class="input-group col-lg-2 col-md-4 nomenklature-number-col">
+        <input class="form-control nomenklature-number-input nomenklature-input" type="text" id="name-filter" />
+    </div>
+    <div class="input-group col-lg-8 col-md-5 nomenklature-number-col" id="pagination-container">
+        <partial model="@Model" name="../PartialViews/NomenklatureDetailsPaginationPartial" />
+    </div>
+
+    @if (User.IsInRole(Roles.Admin.GetDescription()) || Model.NomenklatureId == NomenklatureIds.Dokumenti)
+    {
+        <div class="col-lg-2 col-md-3 col-sm-12 no-padding nomenklature-btn-add-col">
+            <button onclick="UpdateNomenklatureAddModal(this, '@Model.NomenklatureId')"
+                    class="btn nomenklature-btn-add">
+                + Добави
+            </button>
+        </div>
+    }
+</div>
+
+<div class="row">
+    <partial model="@Model" name="../PartialViews/NomenklatureDetailsTablePartial" />
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="nomenklature-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nomenklature-edit-header">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Spravki" asp-controller="Home" asp-action="EditNomenklatureBasic" id="nomenklature-edit-form">
+                <div class="modal-body" id="nomenklature-edit-modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказване</button>
+                    <button type="submit" class="btn btn-primary">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="nomenklature-add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nomenklature-edit-header">Добавяне</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Spravki" asp-controller="Home" asp-action="AddNomenklature" id="nomenklature-add-form">
+                <div class="modal-body" id="nomenklature-add-modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказване</button>
+                    <button type="submit" class="btn btn-success">Добави</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="nomenklature-delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nomenklature-edit-header">Изтриване</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Spravki" asp-controller="Home" asp-action="NomenklatureDelete">
+                <div class="modal-body text-center" id="nomenklature-add-modal-body">
+                    <input type="hidden" id="nomenklature-delete-nomenklatureId" />
+                    <input type="hidden" id="nomenklature-delete-code" />
+                    <input type="hidden" id="nomenklature-delete-id" />
+                    Сигурни ли сте че искате да изтриете?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="button" onclick="DeleteNomenklature(this)" class="btn btn-danger">Да</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/pagination-submit-nomenklature-details.js"></script>
+    <script src="~/js/nomenklature-edit-modal.js"></script>
+    <script src="~/js/nomenklature-form-ajax.js"></script>
+}

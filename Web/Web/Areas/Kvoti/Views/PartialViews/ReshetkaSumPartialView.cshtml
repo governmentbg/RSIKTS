@@ -1,0 +1,97 @@
+﻿@using Common.Static;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<Common.ViewModels.Kvoti.ReshetkaSumViewModel>
+
+<table class="table table-bordered table-lica-register col-md-12" id="lica-table">
+    <thead>
+        <tr>
+            <th style="width: 360px; text-align: center;vertical-align: top;">Партия</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Председатели</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Заместник председатели</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Секретари</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Членове</th>
+            <th style="width: 100px; text-align: center;vertical-align: top;">Общa сума</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var reshetka in Model)
+        {
+        <tr>
+            <td style="text-align: left;">
+                @reshetka.Nime
+            </td>
+            <td class="text-right">
+                @reshetka.PrecedatelCount / @reshetka.PrecedatelMax
+            </td>
+            <td class="text-right">
+                @reshetka.ZamestnikPrecedatelCount / @reshetka.ZamestnikPrecedatelMax
+            </td>
+            <td class="text-right">
+                @reshetka.SekretarCount / @reshetka.SekretarMax
+            </td>
+            <td class="text-right">
+                @reshetka.ChlenCount / @reshetka.ChlenMax
+            </td>
+            <td class="text-right">
+                @(reshetka.ChlenCount + reshetka.PrecedatelCount + reshetka.ZamestnikPrecedatelCount + reshetka.SekretarCount) / @(reshetka.ChlenMax + reshetka.SekretarMax + reshetka.ZamestnikPrecedatelMax + reshetka.PrecedatelMax)
+            </td>
+        </tr>
+        }
+    <tr>
+        <td></td>
+        <td class="text-right">
+            @Model.Sum(e => e.PrecedatelCount) / @Model.Sum(e => e.PrecedatelMax)
+        </td>
+        <td class="text-right">
+            @Model.Sum(e => e.ZamestnikPrecedatelCount) / @Model.Sum(e => e.ZamestnikPrecedatelMax)
+        </td>
+        <td class="text-right">
+            @Model.Sum(e => e.SekretarCount) / @Model.Sum(e => e.SekretarMax)
+        </td>
+        <td class="text-right">
+            @Model.Sum(e => e.ChlenCount) / @Model.Sum(e => e.ChlenMax)
+        </td>
+        <td class="text-right">
+            @Model.Sum(e => e.ChlenCount + e.PrecedatelCount + e.SekretarCount + e.ZamestnikPrecedatelCount) / @Model.Sum(e => e.ChlenMax + e.PrecedatelMax + e.ZamestnikPrecedatelMax + e.SekretarMax)
+        </td>
+    </tr>
+        @if (Model.Count < PaginationInfo.PageSize)
+        {
+            for (var i = 0; i < PaginationInfo.PageSize - Model.Count; i++)
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="kvoti-edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="parameters-edit-header">Редактиране</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times; Изход</span>
+                </button>
+            </div>
+            <form asp-area="Kvoti" asp-controller="Home" asp-action="EditKvota" id="kvoti-edit-form" class="form-horizontal">
+                <div class="modal-body text-center" id="kvoti-edit-modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-primary">Редактиране</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

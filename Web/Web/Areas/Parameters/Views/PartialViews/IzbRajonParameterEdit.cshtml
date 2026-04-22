@@ -1,0 +1,30 @@
+﻿@model Common.ViewModels.Parameters.IzbRajonParamViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "IzbRajonParameterEdit";
+}
+
+<input type="hidden" asp-for="Nkod" />
+<input type="hidden" asp-for="NIme" />
+
+<div class="row mb-4">
+    <label asp-for="MinMembers"></label>
+    <input asp-for="MinMembers"
+           class="form-control col-md-12"
+           placeholder="*"
+           onfocus="this.placeholder = ''"
+           onblur="this.placeholder = '*'" />
+
+    <span asp-validation-for="MinMembers" class="text-danger"></span>
+</div>
+
+<div class="row mb-4">
+    <label asp-for="MaxMembers"></label>
+    <input asp-for="MaxMembers"
+           class="form-control col-md-12"
+           placeholder="*"
+           onfocus="this.placeholder = ''"
+           onblur="this.placeholder = '*'" />
+
+    <span asp-validation-for="MaxMembers" class="text-danger"></span>
+</div>

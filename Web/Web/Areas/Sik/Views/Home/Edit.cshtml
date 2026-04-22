@@ -1,0 +1,441 @@
+﻿@model Common.ViewModels.Sik.SikEditViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="~/css/sik.css" />
+<link rel="stylesheet" href="~/css/sik-podvizjna-table.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+
+
+<div class="row sik-number-row">
+    <div class="input-group col-lg-2 col-md-2 sik-number-col">
+        <label class="sik-input-label"
+               style="background-color: @(Model.Sik=="000" ? "lightgray" : "white");padding-top: 3px;">
+            СИК:
+        </label>
+
+        <input asp-for="Sik"
+               readonly="@(Model.Sik=="000" ? "readOnly" : null)"
+               class="form-control sik-number-input sik-input"
+               style="background-color:@(Model.Sik=="000" ? "lightgray" : "white")"
+               type="text"
+               id="sik"
+               maxlength="3"
+               placeholder="*"
+               onfocus="this.placeholder = ''"
+               onblur="this.placeholder = '*'" />
+
+        <span asp-validation-for="Sik" class="text-danger validation-height col-md-12"></span>
+    </div>
+
+    <div class="form-group col-md-3 form-inline">
+        <div>
+            <label class="checkbox-container text-left">
+                Активен?
+                <input asp-for="Status"
+                       class="form-check-input sik-input"
+                       type="checkbox"
+                       id="SekStatus">
+                <span class="checkmark"
+                      onclick="for (var i = 0; i < document.getElementsByName('Status').length; i++){
+                                    document.getElementsByName('Status')[i].value = !(document.getElementsByName('Status')[i].value == 'false')
+                               }">
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="input-group col-md-1 sik-number-col ml-auto">
+        <button class="btn sik-btn-save"
+                type="button"
+                onclick="submitSikEdit()">
+            <img class="sik-btn-save-img" src="~/img/lica-images/save.png" />
+        </button>
+    </div>
+</div>
+
+<input type="hidden" asp-for="IdSek" />
+<input type="hidden" asp-for="USER" />
+<input type="hidden" asp-for="AABBCC" />
+<input type="hidden" asp-for="IzbRajon" />
+<input type="hidden" asp-for="isCalc" />
+
+<div class="row sik-form-row">
+    <div class="row col-md-12 sik-form">
+
+        <div class="sik-form-tab-info col-md-2">
+            <p class="form-tab-info-text">Лични данни</p>
+        </div>
+
+        <div class="tab col-md-10">
+            <div class="row">
+                <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                    <label asp-for="Obl"></label>
+                    <select asp-items="Model.AllOblasti"
+                            asp-for="Obl"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true"
+                            data-size="5"
+                            id="oblast">
+                    </select>
+                    <span asp-validation-for="Obl" class="text-danger validation-height col-md-12"></span>
+                </div>
+
+                <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                    <label asp-for="Obs"></label>
+                    <select asp-items="Model.AllObjini"
+                            asp-for="Obs"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true"
+                            data-size="5"
+                            id="objina">
+                    </select>
+                    <span asp-validation-for="Obs" class="text-danger validation-height col-md-12"></span>
+                </div>
+
+                <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                    <label asp-for="TOA"></label>
+                    <select asp-items="Model.AllAdministrativniRaioni" asp-for="TOA" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="raion"></select>
+                    <span asp-validation-for="TOA" class="text-danger validation-height col-md-12"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-8 form-inline required-select">
+                    <label asp-for="Kodnsm"></label>
+                    <select id="naselno-mqsto-select"
+                            asp-items="Model.AllNaseleniMesta"
+                            asp-for="Kodnsm"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true"
+                            data-size="5">
+                    </select>
+                    <span asp-validation-for="Kodnsm"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8 form-inline">
+                    <label asp-for="ULKOD" for="ulica"></label>
+                    <select id="ulica-select"
+                            asp-items="Model.AllUlici"
+                            asp-for="ULKOD"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true" data-size="5">
+                    </select>
+                    <span asp-validation-for="ULKOD"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+                </div>
+                <div class="form-group col-md-4 form-inline">
+                    <label asp-for="Nom"></label>
+                    <input asp-for="Nom"
+                           class="form-control sik-input col-12 text-right"
+                           type="text"
+                           id="nom"
+                           maxlength="6" />
+                    <span asp-validation-for="Nom" class="text-danger validation-height col-md-12"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8 form-inline">
+                    <label asp-for="JK_KV"></label>
+                    <select asp-items="Model.AllKvartali"
+                            asp-for="JK_KV"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true"
+                            data-size="5"
+                            id="ulica">
+                    </select>
+                    <span asp-validation-for="JK_KV" class="text-danger validation-height col-md-12"></span>
+                </div>
+                <div class="form-group col-md-4 form-inline">
+                    <label asp-for="Blok"></label>
+                    <input asp-for="Blok"
+                           class="form-control sik-input col-12 text-right"
+                           type="text"
+                           id="block"
+                           maxlength="6" />
+                    <span asp-validation-for="Blok" class="text-danger validation-height col-md-12"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab col-md-10">
+            <div class="row">
+                <div class="form-group col-md-3 form-inline" style="margin-bottom:0px;">
+                    <label asp-for="AABBCC"></label>
+                    <input asp-for="AABBCC"
+                           class="form-control sik-input col-12"
+                           type="text"
+                           id="fullnumb"
+                           disabled style="text-align: right;" />
+                    <span asp-validation-for="AABBCC"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+                </div>
+
+                @if (ViewData.ModelState.Keys.Contains("MaxBroiToaChlenove") || Model.MaxBroiToaChlenove == 0)
+                {
+                    <div class="form-group col-md-3 form-inline" style="margin-bottom:0px;">
+                        <label asp-for="MaxBroiChlenove"></label>
+                        <input asp-for="MaxBroiChlenove"
+                               class="form-control sik-input col-12"
+                               type="number"
+                               min="0" style="text-align: right;" />
+                        <span asp-validation-for="MaxBroiChlenove"
+                              class="text-danger validation-height col-md-12">
+                        </span>
+                    </div>
+                }
+                else if (!ViewData.ModelState.Keys.Contains("MaxBroiToaChlenove") && Model.MaxBroiToaChlenove != 0)
+                {
+                    <div class="form-group col-md-3 form-inline" style="margin-bottom:0px;">
+                        <label asp-for="MaxBroiChlenove"></label>
+                        <input asp-for="MaxBroiChlenove"
+                               class="form-control sik-input col-12"
+                               type="number"
+                               min="0" style="text-align: right;" readonly />
+                        <span asp-validation-for="MaxBroiChlenove"
+                              class="text-danger validation-height col-12">
+                        </span>
+                    </div>
+                }
+
+                @if (Model.Vidove == 102)
+                {
+                    <div class="form-group col-md-3 form-inline" style="margin-bottom:0px;">
+                        <label asp-for="NUMBVOTERS"></label>
+                        <input id="txtNumbVoters"
+                               asp-for="NUMBVOTERS"
+                               class="form-control sik-input col-12"
+                               type="number"
+                               min="0" style="text-align: right;" readonly/>
+                        <span class="text-danger validation-height col-12">
+                        </span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group col-md-3 form-inline" style="margin-bottom:0px;">
+                        <label asp-for="NUMBVOTERS"></label>
+                        <input id="txtNumbVoters"
+                               asp-for="NUMBVOTERS"
+                               class="form-control sik-input col-12"
+                               type="number"
+                               min="0" style="text-align: right;"  />
+                        <span class="text-danger validation-height col-12">
+                        </span>
+                    </div>
+
+                }
+            </div>
+
+            <div class="row" style="margin-bottom:0px;">
+                <div class="form-group col-md-6 form-inline" style="margin-bottom:0px;">
+                    <label asp-for="Vidove"></label>
+                    <select asp-items="Model.AllVidove"
+                            asp-for="Vidove"
+                            class="selectpicker form-control show-tick col-12 "
+                            data-live-search="true"
+                            data-size="5"
+                            id="vidove"
+                            onchange="if ($(this).val() === '102') {
+                                            $('#pod-izbirateli-table').show();
+                                            document.getElementById('txtNumbVoters').readOnly = true;
+//                                            $('#form-page-selector').css('margin-top', '100px');
+                                        }
+                                        else {
+                                            $('#pod-izbirateli-table').hide();
+                                            document.getElementById('txtNumbVoters').readOnly = false;
+//                                            $('#form-page-selector').css('margin-top', '40px');
+                                        }">
+                        >
+                    </select>
+                    <span asp-validation-for="Vidove"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+                </div>
+
+                <div class="form-group col-md-6 form-inline" style="margin-bottom:0px;">
+                    <label asp-for="Priznaci"></label>
+                    <select asp-items="Model.AllPriznaci"
+                            asp-for="Priznaci"
+                            class="selectpicker form-control show-tick col-12"
+                            data-live-search="true"
+                            data-size="5"
+                            id="priznaci"
+                            title="Няма избран(и)">
+                    </select>
+                    <span asp-validation-for="Priznaci"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+                </div>
+            </div>
+
+            @if (Model.Vidove != 102)
+            {
+                <div class="row"
+                     id="pod-izbirateli-table"
+                     style="display:none; padding-bottom:10px;">
+
+                    <div style="overflow-x:hidden; height:160px; border:thin;" class="col-md-6">
+                        <table id="sikpodvizjni" class="table table-bordered table-sik-podvizjna">
+                            <thead>
+                                <tr>
+                                    <th style="width:60%;">Район</th>
+                                    <th style="width:40%;">Брой избиратели</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @for (var i = 0; i < Model.AllToaForPodvijnaSekciq.Count; i++)
+                                {
+                                    <tr>
+                                        <td style="text-align:left; padding-left:10px;width:80%;">
+                                            <input type="text"
+                                                   value="@Model.AllToaForPodvijnaSekciq[i].Toa"
+                                                   asp-for="AllToaForPodvijnaSekciq[i].Toa" hidden />
+
+                                            <input type="text"
+                                                   style="background: transparent; border: none; text-align: left; padding-right:5px; "
+                                                   value="@Model.AllToaForPodvijnaSekciq[i].Ime"
+                                                   asp-for="AllToaForPodvijnaSekciq[i].Ime" readonly />
+                                        </td>
+                                        <td style=" width: 20%;">
+                                            <input class="numbvoters" type="number" step="1" min="0"
+                                                   style="background: transparent; border: none; text-align: right; padding-right:5px; "
+                                                   value="@Model.AllToaForPodvijnaSekciq[i].Izbirateli"
+                                                   asp-for="AllToaForPodvijnaSekciq[i].Izbirateli"                                                   
+                                                   onkeyup="calculateSum();" onClick="this.select();" />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th style="text-align:right; padding-left:10px;">
+                                        Общо брой избиратели:
+                                    </th>
+                                    <th style="text-align:right; padding-right:24px;">
+                                        <span id="sumnumvoters">@Model.AllToaForPodvijnaSekciq.Sum(t => t.Izbirateli)</span>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="form-group col-md-6 form-inline">
+                        <span asp-validation-for="NUMBVOTERS"
+                              class="text-danger validation-height col-12">
+                        </span>
+                    </div>                
+                </div>
+            }
+            else
+            {
+                <div class="row"
+                     id="pod-izbirateli-table"
+                     style="padding-bottom:10px;">
+
+                    <div style="overflow-x:hidden; height:160px; border:thin;" class="col-md-6">
+                        <table id="sikpodvizjni" class="table table-bordered table-sik-podvizjna">
+                            <thead>
+                                <tr>
+                                    <th style="width:60%;">Район</th>
+                                    <th style="width:40%;">Брой избиратели</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @for (var i = 0; i < Model.AllToaForPodvijnaSekciq.Count; i++)
+                                {
+                                    <tr>
+                                        <td style="text-align:left; padding-left:10px;width:80%;">
+                                            <input type="text"
+                                                   value="@Model.AllToaForPodvijnaSekciq[i].Toa"
+                                                   asp-for="AllToaForPodvijnaSekciq[i].Toa" hidden />
+
+                                            <input type="text"
+                                                   style="background: transparent; border: none; text-align: left; padding-right:5px; "
+                                                   value="@Model.AllToaForPodvijnaSekciq[i].Ime"
+                                                   asp-for="AllToaForPodvijnaSekciq[i].Ime" readonly />
+                                        </td>
+                                        <td style=" width: 20%;">
+                                            <input class="numbvoters" type="number" step="1" min="0"
+                                                   style="background: transparent; border: none; text-align: right; padding-right:5px; "
+                                                   value="@Model.AllToaForPodvijnaSekciq[i].Izbirateli"
+                                                   asp-for="AllToaForPodvijnaSekciq[i].Izbirateli" 
+                                                   onkeyup="calculateSum();" onClick="this.select();"/>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th style="text-align:right; padding-left:10px;">
+                                        Общо брой избиратели:
+                                    </th>
+                                    <th style="text-align:right; padding-right:24px;">
+                                        <span id="sumnumvoters">@Model.AllToaForPodvijnaSekciq.Sum(t => t.Izbirateli)</span>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="form-group col-md-6 form-inline">
+                        <span asp-validation-for="NUMBVOTERS"
+                              class="text-danger validation-height col-12">
+                        </span>
+                    </div>                
+                </div>
+            }
+
+            <div class="row">
+                <div class="form-group col-md-12 form-inline" style="margin-bottom:0px;">
+                    <label asp-for="ADR_IME"></label>
+                    <input asp-for="ADR_IME"
+                           class="form-control sik-input col-12"
+                           type="text"
+                           id="address"
+                           maxlength="250" />
+                    <span asp-validation-for="ADR_IME"
+                          class="text-danger validation-height col-md-12">
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12 form-inline" style="margin-bottom:0px;">
+                    <label asp-for="BORDERS"></label>
+                    <textarea asp-for="BORDERS"
+                              rows="6"
+                              class="form-control sik-textarea-wrap col-12"
+                              id="borders">
+                        @Model.BORDERS
+                    </textarea>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div style="text-align:center;margin-top:40px;">
+    <span class="step" onclick="showTab(0)"></span>
+    <span class="step" onclick="showTab(1)"></span>
+</div>
+
+@section Scripts {
+    <script src="/js/bootstrap-select/js/bootstrap-select.js"></script>
+
+}

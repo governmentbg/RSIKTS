@@ -1,0 +1,17 @@
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\Repository.deps.json
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\Repository.dll
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\Repository.pdb
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\Common.dll
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\DataAccess.dll
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\DTO.dll
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\Common.pdb
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\DataAccess.pdb
+C:\VotingRegister\Web\Repository\bin\Release\netcoreapp2.2\DTO.pdb
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.AssemblyInfoInputs.cache
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.AssemblyInfo.cs
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.csproj.CoreCompileInputs.cache
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.csproj.CopyComplete
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.dll
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.pdb
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.csproj.AssemblyReference.cache
+C:\VotingRegister\Web\Repository\obj\Release\netcoreapp2.2\Repository.GeneratedMSBuildEditorConfig.editorconfig

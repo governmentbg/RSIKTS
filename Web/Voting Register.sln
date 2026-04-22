@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{17830A62-F702-4DDF-BAEE-DAB464E237EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{DBB6E9D0-99AB-4ECF-9EE6-3AE0C649FD05}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{769F2BA0-F9E3-436D-9275-DFB5AC992BEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{C4EC4A4D-E074-4E3B-BE5A-391685D140E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{9E6D8755-1D96-4ED3-8E4C-778C1F507FFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{126D2727-AB65-4D03-BF00-3A83FDB44223}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17830A62-F702-4DDF-BAEE-DAB464E237EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17830A62-F702-4DDF-BAEE-DAB464E237EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17830A62-F702-4DDF-BAEE-DAB464E237EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17830A62-F702-4DDF-BAEE-DAB464E237EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB6E9D0-99AB-4ECF-9EE6-3AE0C649FD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB6E9D0-99AB-4ECF-9EE6-3AE0C649FD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB6E9D0-99AB-4ECF-9EE6-3AE0C649FD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB6E9D0-99AB-4ECF-9EE6-3AE0C649FD05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{769F2BA0-F9E3-436D-9275-DFB5AC992BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{769F2BA0-F9E3-436D-9275-DFB5AC992BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{769F2BA0-F9E3-436D-9275-DFB5AC992BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{769F2BA0-F9E3-436D-9275-DFB5AC992BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4EC4A4D-E074-4E3B-BE5A-391685D140E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4EC4A4D-E074-4E3B-BE5A-391685D140E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4EC4A4D-E074-4E3B-BE5A-391685D140E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4EC4A4D-E074-4E3B-BE5A-391685D140E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E6D8755-1D96-4ED3-8E4C-778C1F507FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E6D8755-1D96-4ED3-8E4C-778C1F507FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E6D8755-1D96-4ED3-8E4C-778C1F507FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E6D8755-1D96-4ED3-8E4C-778C1F507FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126D2727-AB65-4D03-BF00-3A83FDB44223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126D2727-AB65-4D03-BF00-3A83FDB44223}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126D2727-AB65-4D03-BF00-3A83FDB44223}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126D2727-AB65-4D03-BF00-3A83FDB44223}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E7B2EC4-579C-4A16-80B1-5099677A1B83}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/tbsoftbulgaria
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Web\\Web.csproj
+		SccProjectName1 = Web
+		SccLocalPath1 = Web
+		SccProjectUniqueName2 = DataAccess\\DataAccess.csproj
+		SccProjectName2 = DataAccess
+		SccLocalPath2 = DataAccess
+		SccProjectUniqueName3 = Repository\\Repository.csproj
+		SccProjectName3 = Repository
+		SccLocalPath3 = Repository
+		SccProjectUniqueName4 = Services\\Services.csproj
+		SccProjectName4 = Services
+		SccLocalPath4 = Services
+		SccProjectUniqueName5 = Common\\Common.csproj
+		SccProjectName5 = Common
+		SccLocalPath5 = Common
+		SccProjectUniqueName6 = DTO\\DTO.csproj
+		SccProjectName6 = DTO
+		SccLocalPath6 = DTO
+	EndGlobalSection
+EndGlobal

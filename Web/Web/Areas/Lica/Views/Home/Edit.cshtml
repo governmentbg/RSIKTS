@@ -1,0 +1,356 @@
+﻿@model Common.ViewModels.Lica.LicaEditViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<link rel="stylesheet" href="~/css/lica.css" />
+<link rel="stylesheet" href="~/js/bootstrap-select/css/bootstrap-select.css" />
+
+<input type="hidden" asp-for="FromSelectedSik" />
+
+<div class="row lica-egn-row">
+    <div class="input-group col-lg-2 col-md-2 lica-egn-col">
+        <select asp-for="Vid" 
+                class="selectpicker form-control show-tick col-12" 
+                data-live-search="true" 
+                data-size="5" 
+                id="videgn">
+            <option value="0">ЕГН</option>
+            <option value="2">ЛНЧ</option>
+        </select>
+        <span class="text-danger validation-height col-md-12"></span>
+    </div>
+    <div class="input-group col-lg-4 col-md-5 lica-egn-col">
+        <input asp-for="Egn" 
+               class="form-control lica-input-egn lica-input" 
+               type="text" 
+               id="egn" 
+               placeholder="*" 
+               onfocus="this.placeholder = ''" 
+               onblur="checkGrao();"
+               />
+        <span asp-validation-for="Egn" class="text-danger validation-height col-md-12" style="padding-left: 0px; padding-right: 0px; min-width: 250px;"></span>
+    </div>
+    <div>
+        <p class="text-danger" style="padding: 10px;">@Model.ImpMessage</p>
+    </div>
+    <div class="input-group col-md-1 lica-egn-col ml-auto">
+        <button class="btn lica-btn-save"><img class="lica-btn-save-img" src="~/img/lica-images/save.png" /></button>
+    </div>
+</div>
+
+<input asp-for="USER" type="hidden" id="user-id" />
+<input asp-for="Id" type="hidden" id="lice-id" />
+<input asp-for="Raion" type="hidden" id="raion" />
+
+<div class="row lica-form-row">
+    <div class="col-md-12 lica-form">
+        <div class="row lica-info-form-row">
+
+            <div class="lica-form-tab-info col-md-2">
+                <p class="form-tab-info-text">Лични данни</p>
+            </div>
+
+            <div class="col-md-10">
+                <div class="tab">
+                    <div class="row">
+                        <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Ime1"></label>
+                            <input asp-for="Ime1" class="form-control lica-input col-12" type="text" id="ime" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                            <span asp-validation-for="Ime1" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                        <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Ime2"></label>
+                            <input asp-for="Ime2" class="form-control lica-input col-12" type="text" id="surname" />
+                            <span asp-validation-for="Ime2" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                        <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Ime3"></label>
+                            <input asp-for="Ime3" class="form-control lica-input col-12" type="text" id="family-primary" placeholder="*" onfocus="this.placeholder = ''" onblur="this.placeholder = '*'" />
+                            <span asp-validation-for="Ime3" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Obrazovanie"></label>
+                            <select asp-for="Obrazovanie" asp-items="Model.AllObrazovaniq" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="education"></select>
+                            <span asp-validation-for="Obrazovanie" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                        <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Specialnost"></label>
+                            <select asp-for="Specialnost" asp-items="Model.AllSpecialnosti" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="profesion"></select>
+                            <span asp-validation-for="Specialnost" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+
+                    <!--
+                        <div class="row">
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Lk"></label>
+                                <input asp-for="Lk" class="form-control lica-input col-12" type="text" id="lk" />
+                                <span asp-validation-for="Lk" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="IzdadenaNa"></label>
+                                <input asp-for="IzdadenaNa" class="form-control lica-input col-12" id="lk" />
+                                <span asp-validation-for="IzdadenaNa" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="RuNaMVR"></label>
+                                <select asp-for="RuNaMVR" asp-items="Model.AllRuNaMvr" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="mvr"></select>
+                                <span asp-validation-for="RuNaMVR" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                    -->
+
+                    <div class="row flex-row-reverse">
+
+                        <div class="form-group col-md-8 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Nacionalnost"></label>
+                            <select asp-for="Nacionalnost" asp-items="Model.AllNacionalnosti" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="nationality"></select>
+                            <span asp-validation-for="Nacionalnost" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+
+                    <div class="row flex-row-reverse">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Telephone"></label>
+                            <input asp-for="Telephone" class="form-control lica-input col-12" id="telephone" />
+                            <span asp-validation-for="Telephone" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="IdSik"></label>
+                            <select asp-for="IdSik" asp-items="Model.AllSik" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="sik-select"></select>
+                            <span asp-validation-for="IdSik" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <div class="row flex-row-reverse">
+                        <div class="form-group col-md-12 form-inline mt-sm-auto mb-lg-auto required-select">
+                            <label asp-for="PoliticheskaSila"></label>
+                            <select asp-for="PoliticheskaSila" 
+                                    asp-items="Model.AllPoliticheskiSili" 
+                                    class="selectpicker form-control show-tick col-12" 
+                                    data-live-search="true" 
+                                    data-size="5" 
+                                    id="political-power"></select>
+                            <span asp-validation-for="PoliticheskaSila" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6 form-inline mt-2" style="height:120px;">
+                            <div>
+                                <label class="checkbox-container mb-3" style="justify-content:left;">
+                                    Регистрация/Редакция на лица
+                                    <input asp-for="JeZamestva"
+                                           class="form-check-input"
+                                           type="radio"
+                                           id="redakciq-check"
+                                           value="0"
+                                           onclick='$("#zamestiteli-select-container").hide();
+                                                    $("#vzaimni-zamestiteli-select-container").hide();
+                                                    $("#rolq-select").attr("disabled", false);
+                                                    $("#rolq-select").selectpicker("refresh");'>
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="checkbox-container mb-3"
+                                       style="justify-content:left;">
+                                    Замяна
+                                    <input asp-for="JeZamestva"
+                                           class="form-check-input"
+                                           type="radio"
+                                           id="zamestitel-check"
+                                           value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                @if (Model.isSikActive)
+                                {
+                                    <label class="checkbox-container mb-3" style="justify-content:left;">
+                                        Взаимна замяна
+                                        <input asp-for="JeZamestva"
+                                               class="form-check-input"
+                                               type="radio"
+                                               id="vzaimen-zamestitel-check"
+                                               value="2">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                }
+                             </div>
+                        </div>
+
+                        <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto required-select"
+                                id="zamestiteli-select-container">
+                            <label asp-for="IdLiceZamestvan">Заместен</label>
+                            <select asp-for="IdLiceZamestvan"
+                                    asp-items="Model.AllLica"
+                                    class="selectpicker form-control show-tick col-12"
+                                    data-live-search="true"
+                                    data-size="5"
+                                    id="zamestiteli-select"
+                                    title="Изберете заместен">
+                            </select>
+                            <span asp-validation-for="IdLiceZamestvan"
+                                    class="text-danger validation-height col-md-12">
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto required-select"
+                                id="vzaimni-zamestiteli-select-container">
+                            <label asp-for="IdLiceZamestvan2">Взаимна замяна със:</label>
+                            <select asp-for="IdLiceZamestvan2"
+                                    asp-items="Model.AllLicaFromPartia"
+                                    class="selectpicker form-control show-tick col-12"
+                                    data-live-search="true"
+                                    data-size="5"
+                                    id="vzaimni-zamestiteli-select"
+                                    title="Изберете заместен">
+                            </select>
+                            <span asp-validation-for="IdLiceZamestvan2"
+                                    class="text-danger validation-height col-md-12">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto required-select">
+                            <label asp-for="Rolq"></label>
+                            <select asp-for="Rolq" 
+                                    asp-items="Model.AllRoli" 
+                                    class="selectpicker form-control show-tick col-12" 
+                                    data-live-search="true" 
+                                    data-size="5" 
+                                    id="rolq-select">
+                            </select>
+
+                            <span asp-validation-for="Rolq" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                        <div class="form-group col-md-6 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Reshenie"></label>
+                            <select asp-for="Reshenie" asp-items="Model.AllResheniq" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="functions"></select>
+                            <span asp-validation-for="Reshenie" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12 form-inline mt-sm-auto mb-lg-auto">
+                            <label asp-for="Deinosti"></label>
+                            <select asp-for="Deinosti" asp-items="Model.AllDeinosti" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="profesion" title="Няма избран(и)"></select>
+                            <span asp-validation-for="Deinosti" class="text-danger validation-height col-md-12"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12 form-inline mt-sm-auto mb-lg-auto">
+                            <div>
+                                <label class="checkbox-container text-left">
+                                    Доход по-голям от максималния осигурителен доход
+                                    <input asp-for="DohodaEpoGolqm" class="form-check-input" type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                    <div class="tab">
+                        <div class="row">
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Oblast"></label>
+                                <select asp-for="Oblast" asp-items="Model.AllOblasti" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="oblast-select"></select>
+                                <span asp-validation-for="Oblast" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Objina"></label>
+                                <select asp-for="Objina" asp-items="Model.AllObjini" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="objina-select"></select>
+                                <span asp-validation-for="Objina" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Raion"></label>
+                                <select asp-for="Raion" asp-items="Model.AllAdministrativniRaioni" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="raion-select"></select>
+                                <span asp-validation-for="Raion" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-8 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="NaselenoMqsto"></label>
+                                <select asp-for="NaselenoMqsto" asp-items="Model.AllNaseleniMesta" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="naselno-mqsto-select"></select>
+                                <span asp-validation-for="NaselenoMqsto" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="ZipCode"></label>
+                                <input asp-for="ZipCode" class="form-control lica-input col-12" type="text" id="zip-code" />
+                                <span asp-validation-for="ZipCode" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-8 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Ulica"></label>
+                                <select asp-for="Ulica" asp-items="Model.AllUlici" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="ulica-select"></select>
+                                <span asp-validation-for="Ulica" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Nomer"></label>
+                                <input asp-for="Nomer" class="form-control lica-input col-12" type="text" id="number" />
+                                <span asp-validation-for="Nomer" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-8 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Jk"></label>
+                                <select asp-for="Jk" asp-items="Model.AllKvartali" class="selectpicker form-control show-tick col-12" data-live-search="true" data-size="5" id="ulica-select"></select>
+                                <span asp-validation-for="Jk" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Blok"></label>
+                                <input asp-for="Blok" class="form-control lica-input col-12" type="text" id="number" />
+                                <span asp-validation-for="Blok" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Vhod"></label>
+                                <input asp-for="Vhod" class="form-control lica-input col-12" type="text" id="entrace" />
+                                <span asp-validation-for="Vhod" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Etaj"></label>
+                                <input asp-for="Etaj" class="form-control lica-input col-12" type="text" id="floor" />
+                                <span asp-validation-for="Etaj" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                            <div class="form-group col-md-4 form-inline mt-sm-auto mb-lg-auto">
+                                <label asp-for="Apartament"></label>
+                                <input asp-for="Apartament" class="form-control lica-input col-12" type="text" id="apartment" />
+                                <span asp-validation-for="Apartament" class="text-danger validation-height col-md-12"></span>
+                            </div>
+                        </div>
+                    </div>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="text-align:center;margin-top:40px;">
+    <span class="step" onclick="showTab(0)"></span>
+    <span class="step" onclick="showTab(1)"></span>
+</div>
+
+@section Scripts {
+    <script src="/js/lica-form-navigation.js"></script>
+    <script src="/js/bootstrap-select/js/bootstrap-select.js"></script>
+}
